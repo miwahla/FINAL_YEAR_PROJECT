@@ -75,3 +75,18 @@ dist/
 .vscode/
 .idea/
 *.swp
+
+# ---- LeafEye: excluded from main repo ----
+# Haider's sub-repo (integrated into root — original kept for reference only)
+backend/haider-repository/
+
+# Trained model weights & vector DB (large binary files, regenerated locally)
+backend/efficientnet_leafeye.pt
+backend/chroma_db/
+backend/plants.json
+
+# Node TTS server (replaced by FastAPI — kept for reference only)
+backend/server.js
+backend/package.json
+backend/package-lock.json
+backend/tts.py

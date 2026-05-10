@@ -1,7 +1,14 @@
 import { Audio } from 'expo-av';
 import { useState, useRef } from 'react';
+import { supabase } from '../lib/supabase';
 
-const BACKEND_URL = process.env.EXPO_PUBLIC_BACKEND_URL || 'http://localhost:3000';
+const BACKEND_URL = process.env.EXPO_PUBLIC_ML_BACKEND_URL ?? 'http://localhost:8000';
+
+async function getAuthHeader(): Promise<Record<string, string>> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return {};
+  return { Authorization: `Bearer ${session.access_token}` };
+}
 
 export function useTts() {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,8 +18,16 @@ export function useTts() {
 
   const stop = async () => {
     if (soundRef.current) {
-      await soundRef.current.stopAsync();
-      await soundRef.current.unloadAsync();
+      try {
+        await soundRef.current.stopAsync();
+      } catch {
+        // "Seeking interrupted" is thrown when stop is called during load/seek — safe to ignore
+      }
+      try {
+        await soundRef.current.unloadAsync();
+      } catch {
+        // ignore unload errors on already-stopped sounds
+      }
       soundRef.current = null;
     }
     setIsPlaying(false);
@@ -27,9 +42,10 @@ export function useTts() {
     await stop();
 
     try {
+      const authHeader = await getAuthHeader();
       const response = await fetch(`${BACKEND_URL}/api/tts`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeader },
         body: JSON.stringify({ text, language }),
       });
 

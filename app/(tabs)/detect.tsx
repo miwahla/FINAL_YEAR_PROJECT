@@ -1,11 +1,10 @@
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
   Alert,
   Image,
-  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,102 +12,46 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { supabase } from "../../lib/supabase";
 
-type CropKey = "Cotton" | "Wheat" | "Maize" | "Chilli" | "Coriander" | "Lemon";
+const API_BASE = process.env.EXPO_PUBLIC_ML_BACKEND_URL ?? "http://localhost:8000";
 
-type DetectionOutcome = {
-  status: "healthy" | "diseased";
-  diseaseName?: string;
-  confidence: number; // fake confidence
-  remedy: string;
-  medicineName?: string;
-  buyLink?: string;
-};
-
-const CROPS: CropKey[] = ["Cotton", "Wheat", "Maize", "Chilli", "Coriander", "Lemon"];
-
-// Hardcoded “knowledge base”
-const DISEASE_LIBRARY: Record<CropKey, DetectionOutcome[]> = {
-  Cotton: [
-    {
-      status: "diseased",
-      diseaseName: "Cotton Leaf Curl Virus (CLCuV)",
-      confidence: 0.87,
-      remedy:
-        "Remove severely affected plants, control whitefly early, keep field weed-free, and prefer tolerant varieties. Avoid excessive nitrogen.",
-      medicineName: "Imidacloprid (for whitefly control)",
-      buyLink: "https://www.daraz.pk/catalog/?q=imidacloprid",
-    },
-    {
-      status: "diseased",
-      diseaseName: "Bollworm Damage",
-      confidence: 0.82,
-      remedy:
-        "Use pheromone traps, remove infected bolls, and spray only when threshold is crossed. Rotate modes of action to avoid resistance.",
-      medicineName: "Emamectin benzoate",
-      buyLink: "https://www.daraz.pk/catalog/?q=emamectin%20benzoate",
-    },
-  ],
-  Wheat: [
-    {
-      status: "diseased",
-      diseaseName: "Rust (Leaf/Stripe Rust)",
-      confidence: 0.84,
-      remedy:
-        "Use resistant varieties, avoid late sowing, and apply fungicide when rust appears and spreads rapidly.",
-      medicineName: "Propiconazole",
-      buyLink: "https://www.daraz.pk/catalog/?q=propiconazole",
-    },
-  ],
-  Maize: [
-    {
-      status: "diseased",
-      diseaseName: "Leaf Blight",
-      confidence: 0.81,
-      remedy:
-        "Remove crop residue, ensure balanced nutrition, and spray fungicide if disease is spreading in humid conditions.",
-      medicineName: "Mancozeb",
-      buyLink: "https://www.daraz.pk/catalog/?q=mancozeb",
-    },
-  ],
-  Chilli: [
-    {
-      status: "diseased",
-      diseaseName: "Chilli Leaf Curl",
-      confidence: 0.86,
-      remedy:
-        "Rogue infected plants early, control whitefly, and maintain field hygiene. Use reflective mulch if possible.",
-      medicineName: "Thiamethoxam",
-      buyLink: "https://www.daraz.pk/catalog/?q=thiamethoxam",
-    },
-  ],
-  Coriander: [
-    {
-      status: "diseased",
-      diseaseName: "Powdery Mildew",
-      confidence: 0.80,
-      remedy:
-        "Avoid overcrowding, irrigate in the morning, and spray fungicide when white powdery patches appear.",
-      medicineName: "Wettable Sulfur",
-      buyLink: "https://www.daraz.pk/catalog/?q=wettable%20sulfur",
-    },
-  ],
-  Lemon: [
-    {
-      status: "diseased",
-      diseaseName: "Citrus Canker (Suspected)",
-      confidence: 0.78,
-      remedy:
-        "Prune infected twigs, disinfect tools, avoid overhead irrigation, and spray copper-based fungicide/bactericide as recommended.",
-      medicineName: "Copper Oxychloride",
-      buyLink: "https://www.daraz.pk/catalog/?q=copper%20oxychloride",
-    },
-  ],
-};
-
-function clamp01(x: number) {
-  return Math.max(0, Math.min(1, x));
+async function getAuthHeader(): Promise<Record<string, string>> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return {};
+  return { Authorization: `Bearer ${session.access_token}` };
 }
+
+type CropKey =
+  | "Cotton"
+  | "Wheat"
+  | "Maize"
+  | "Potato"
+  | "Tomato"
+  | "Sugarcane"
+  | "Onion"
+  | "Sunflower"
+  | "Rice";
+
+const CROPS: CropKey[] = [
+  "Cotton",
+  "Wheat",
+  "Maize",
+  "Potato",
+  "Tomato",
+  "Sugarcane",
+  "Onion",
+  "Sunflower",
+  "Rice",
+];
+
+type DetectionResult = {
+  crop: string;
+  disease: string;
+  display_disease: string;
+  confidence: number;
+  is_healthy: boolean;
+};
 
 export default function DetectScreen() {
   const router = useRouter();
@@ -116,105 +59,105 @@ export default function DetectScreen() {
   const [selectedCrop, setSelectedCrop] = useState<CropKey>("Cotton");
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [detecting, setDetecting] = useState(false);
-  const [result, setResult] = useState<DetectionOutcome | null>(null);
+  const [result, setResult] = useState<DetectionResult | null>(null);
 
-  // Hardcoded “healthy chance” — tweak as you like
-  const HEALTHY_PROB = 0.45;
-
-  const cropOptions = useMemo(() => CROPS, []);
-
-  const pickImage = async () => {
+  const pickImage = async (fromCamera: boolean) => {
     setResult(null);
 
-    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!perm.granted) {
-      Alert.alert("Permission required", "Please allow photo access to upload an image.");
-      return;
+    if (fromCamera) {
+      const perm = await ImagePicker.requestCameraPermissionsAsync();
+      if (!perm.granted) {
+        Alert.alert("Permission required", "Please allow camera access.");
+        return;
+      }
+      const res = await ImagePicker.launchCameraAsync({
+        mediaTypes: ["images"],
+        quality: 0.85,
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+      if (!res.canceled) setImageUri(res.assets?.[0]?.uri ?? null);
+    } else {
+      const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!perm.granted) {
+        Alert.alert("Permission required", "Please allow photo access.");
+        return;
+      }
+      const res = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ["images"],
+        quality: 0.85,
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+      if (!res.canceled) setImageUri(res.assets?.[0]?.uri ?? null);
     }
-
-    const res = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 0.85,
-      allowsEditing: true,
-    });
-
-    if (res.canceled) return;
-
-    const uri = res.assets?.[0]?.uri;
-    if (uri) setImageUri(uri);
   };
 
-  const runFakeDetection = async () => {
+  const runDetection = async () => {
     if (!imageUri) {
-      Alert.alert("Upload required", "Please upload a plant photo first.");
+      Alert.alert("Photo required", "Please take or upload a leaf photo first.");
       return;
     }
 
     setDetecting(true);
     setResult(null);
 
-    // 0.25 second loader
-    await new Promise((r) => setTimeout(r, 250));
+    try {
+      const formData = new FormData();
+      formData.append("crop", selectedCrop.toLowerCase());
+      formData.append("image", {
+        uri: imageUri,
+        type: "image/jpeg",
+        name: "leaf.jpg",
+      } as any);
 
-    // Fake logic: healthy vs diseased
-    const roll = Math.random();
-    if (roll < HEALTHY_PROB) {
-      const conf = clamp01(0.82 + Math.random() * 0.14);
-      setResult({
-        status: "healthy",
-        confidence: conf,
-        remedy:
-          "Plant looks healthy. Keep balanced irrigation, avoid waterlogging, and monitor leaves weekly for early signs of pests.",
+      const authHeader = await getAuthHeader();
+      const res = await fetch(`${API_BASE}/detect`, {
+        method: "POST",
+        headers: authHeader,
+        body: formData,
       });
-    } else {
-      const options = DISEASE_LIBRARY[selectedCrop];
-      const chosen = options[Math.floor(Math.random() * options.length)];
-      // Add tiny randomness to confidence (keep realistic)
-      const conf = clamp01(chosen.confidence - 0.05 + Math.random() * 0.08);
-      setResult({ ...chosen, confidence: conf });
-    }
 
-    setDetecting(false);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ detail: `Server error ${res.status}` }));
+        throw new Error(err.detail ?? `Server error ${res.status}`);
+      }
+
+      const data: DetectionResult = await res.json();
+      setResult(data);
+    } catch (e: any) {
+      Alert.alert("Detection failed", e.message ?? "Could not reach the server.");
+    } finally {
+      setDetecting(false);
+    }
   };
 
-  const openBuyLink = async () => {
-    if (!result?.buyLink) return;
-    const ok = await Linking.canOpenURL(result.buyLink);
-    if (!ok) {
-      Alert.alert("Link error", "Cannot open this link on your device.");
-      return;
-    }
-    Linking.openURL(result.buyLink);
-  };
-
-  // IMPORTANT: set this to your actual AI chat route
-  // Common possibilities in expo-router:
-  // router.push("/ai-chat") or router.push("/(tabs)/ai-chat")
-  const goToChatbot = () => {
-    router.push("/(tabs)/chatbot");
-
+  const askChatbot = () => {
+    if (!result) return;
+    const msg = result.is_healthy
+      ? `My ${result.crop} plant looks healthy. Any tips to keep it that way?`
+      : `I detected ${result.display_disease} in my ${result.crop} plant (${(result.confidence * 100).toFixed(0)}% confidence). What is the treatment or remedy?`;
+    router.push({
+      pathname: "/(tabs)/chatbot",
+      params: { initialMessage: msg },
+    });
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.heading}>Detect Disease</Text>
-        <Text style={styles.subheading}>
-          Choose a crop and upload a photo
-        </Text>
+        <Text style={styles.subheading}>Select your crop, then take or upload a leaf photo.</Text>
 
         {/* Crop selector */}
         <Text style={styles.label}>Select Crop</Text>
         <View style={styles.pillsRow}>
-          {cropOptions.map((c) => {
+          {CROPS.map((c) => {
             const active = c === selectedCrop;
             return (
               <TouchableOpacity
                 key={c}
-                onPress={() => {
-                  setSelectedCrop(c);
-                  setResult(null);
-                }}
+                onPress={() => { setSelectedCrop(c); setResult(null); }}
                 style={[styles.pill, active && styles.pillActive]}
                 activeOpacity={0.9}
               >
@@ -224,13 +167,27 @@ export default function DetectScreen() {
           })}
         </View>
 
-        {/* Upload */}
+        {/* Photo buttons */}
         <View style={styles.block}>
-          <Text style={styles.label}>Upload Photo</Text>
-
-          <TouchableOpacity onPress={pickImage} style={styles.primaryBtn} activeOpacity={0.9}>
-            <Text style={styles.primaryBtnText}>{imageUri ? "Change Photo" : "Upload Photo"}</Text>
-          </TouchableOpacity>
+          <Text style={styles.label}>Leaf Photo</Text>
+          <View style={styles.photoRow}>
+            <TouchableOpacity
+              style={[styles.photoBtn, styles.photoBtnDark]}
+              onPress={() => pickImage(true)}
+              activeOpacity={0.9}
+            >
+              <Text style={styles.photoBtnText}>Take Photo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.photoBtn, styles.photoBtnGrey]}
+              onPress={() => pickImage(false)}
+              activeOpacity={0.9}
+            >
+              <Text style={[styles.photoBtnText, { color: "#111827" }]}>
+                {imageUri ? "Change Photo" : "Upload Photo"}
+              </Text>
+            </TouchableOpacity>
+          </View>
 
           {imageUri ? (
             <Image source={{ uri: imageUri }} style={styles.preview} />
@@ -241,58 +198,48 @@ export default function DetectScreen() {
           )}
 
           <TouchableOpacity
-            onPress={runFakeDetection}
-            style={[styles.detectBtn, !imageUri && styles.detectBtnDisabled]}
+            onPress={runDetection}
+            style={[styles.detectBtn, (!imageUri || detecting) && styles.detectBtnDisabled]}
             activeOpacity={0.9}
             disabled={!imageUri || detecting}
           >
-            <Text style={styles.detectBtnText}>{detecting ? "Detecting..." : "Run Detection"}</Text>
+            {detecting ? (
+              <View style={styles.detectingRow}>
+                <ActivityIndicator size="small" color="#fff" />
+                <Text style={[styles.detectBtnText, { marginLeft: 8 }]}>Analyzing...</Text>
+              </View>
+            ) : (
+              <Text style={styles.detectBtnText}>Run Detection</Text>
+            )}
           </TouchableOpacity>
-
-          {detecting && (
-            <View style={styles.loadingRow}>
-              <ActivityIndicator size="small" />
-              <Text style={styles.loadingText}>Analyzing image...</Text>
-            </View>
-          )}
         </View>
 
         {/* Result */}
         {result && (
-          <View style={styles.resultCard}>
+          <View style={[styles.resultCard, result.is_healthy ? styles.resultCardHealthy : styles.resultCardDisease]}>
             <Text style={styles.resultTitle}>
-              {result.status === "healthy" ? "Result: Healthy ✅" : "Result: Disease Detected ⚠️"}
+              {result.is_healthy ? "Result: Healthy" : "Disease Detected"}
             </Text>
 
-            <Text style={styles.resultMeta}>
-              Confidence: {(result.confidence * 100).toFixed(0)}%
-            </Text>
-
-            {result.status === "diseased" && (
+            {!result.is_healthy && (
               <>
                 <Text style={styles.resultLabel}>Disease</Text>
-                <Text style={styles.resultText}>{result.diseaseName}</Text>
+                <Text style={styles.resultValue}>{result.display_disease}</Text>
               </>
             )}
 
-            <Text style={styles.resultLabel}>Suggested Remedy</Text>
-            <Text style={styles.resultText}>{result.remedy}</Text>
+            <Text style={styles.resultLabel}>Confidence</Text>
+            <Text style={styles.resultValue}>{(result.confidence * 100).toFixed(1)}%</Text>
 
-            {result.status === "diseased" && result.medicineName && (
-              <>
-                <Text style={styles.resultLabel}>Suggested Medicine</Text>
-                <Text style={styles.resultText}>{result.medicineName}</Text>
+            <Text style={styles.resultLabel}>Crop</Text>
+            <Text style={styles.resultValue}>{result.crop}</Text>
 
-                {!!result.buyLink && (
-                  <TouchableOpacity onPress={openBuyLink} style={styles.buyBtn} activeOpacity={0.9}>
-                    <Text style={styles.buyBtnText}>Buy / View Online</Text>
-                  </TouchableOpacity>
-                )}
-              </>
-            )}
-
-            <TouchableOpacity onPress={goToChatbot} style={styles.chatBtn} activeOpacity={0.9}>
-              <Text style={styles.chatBtnText}>Discuss / gain more info from chatbot</Text>
+            <TouchableOpacity onPress={askChatbot} style={styles.chatBtn} activeOpacity={0.9}>
+              <Text style={styles.chatBtnText}>
+                {result.is_healthy
+                  ? "Get Care Tips from AI Assistant"
+                  : "Get Treatment Advice from AI Assistant"}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -303,56 +250,47 @@ export default function DetectScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#f9fafb" },
-  container: { padding: 16, paddingBottom: 28 },
+  container: { padding: 16, paddingBottom: 32 },
 
-  heading: { fontSize: 22, fontWeight: "800", marginBottom: 4 },
-  subheading: { fontSize: 14, color: "#4b5563", marginBottom: 14, lineHeight: 20 },
+  heading: { fontSize: 22, fontWeight: "800", color: "#111827", marginBottom: 4 },
+  subheading: { fontSize: 13, color: "#4b5563", lineHeight: 19, marginBottom: 14 },
+
+  label: { fontSize: 13, fontWeight: "700", color: "#111827", marginBottom: 8 },
+
+  pillsRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginBottom: 4 },
+  pill: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, backgroundColor: "#e5e7eb" },
+  pillActive: { backgroundColor: "#16a34a" },
+  pillText: { fontSize: 12, fontWeight: "700", color: "#111827" },
+  pillTextActive: { color: "#fff" },
 
   block: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     borderRadius: 16,
     padding: 14,
+    marginTop: 12,
+    elevation: 2,
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 2,
-    marginTop: 10,
   },
 
-  label: { fontSize: 13, fontWeight: "700", color: "#111827", marginBottom: 8 },
-
-  pillsRow: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
-  pill: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 999,
-    backgroundColor: "#e5e7eb",
-  },
-  pillActive: { backgroundColor: "#22C55E" },
-  pillText: { fontSize: 12, fontWeight: "700", color: "#111827" },
-  pillTextActive: { color: "#ffffff" },
-
-  primaryBtn: {
-    backgroundColor: "#111827",
-    paddingVertical: 10,
-    borderRadius: 12,
-    alignItems: "center",
-  },
-  primaryBtnText: { color: "#fff", fontWeight: "800", fontSize: 13 },
+  photoRow: { flexDirection: "row", gap: 10, marginBottom: 10 },
+  photoBtn: { flex: 1, paddingVertical: 10, borderRadius: 12, alignItems: "center" },
+  photoBtnDark: { backgroundColor: "#111827" },
+  photoBtnGrey: { backgroundColor: "#e5e7eb" },
+  photoBtnText: { color: "#fff", fontWeight: "800", fontSize: 13 },
 
   preview: {
     width: "100%",
     height: 220,
     borderRadius: 14,
-    marginTop: 10,
     backgroundColor: "#e5e7eb",
   },
   previewPlaceholder: {
     width: "100%",
     height: 220,
     borderRadius: 14,
-    marginTop: 10,
     backgroundColor: "#f3f4f6",
     alignItems: "center",
     justifyContent: "center",
@@ -362,49 +300,41 @@ const styles = StyleSheet.create({
   previewHint: { color: "#6b7280", fontWeight: "700" },
 
   detectBtn: {
-    backgroundColor: "#22C55E",
-    paddingVertical: 12,
+    backgroundColor: "#16a34a",
+    paddingVertical: 13,
     borderRadius: 12,
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 12,
   },
   detectBtnDisabled: { opacity: 0.45 },
-  detectBtnText: { color: "#fff", fontWeight: "900", fontSize: 13 },
-
-  loadingRow: { flexDirection: "row", alignItems: "center", marginTop: 10, gap: 10 },
-  loadingText: { color: "#4b5563", fontWeight: "700" },
+  detectBtnText: { color: "#fff", fontWeight: "900", fontSize: 14 },
+  detectingRow: { flexDirection: "row", alignItems: "center" },
 
   resultCard: {
-    backgroundColor: "#F0FDF4",
     borderRadius: 18,
-    padding: 14,
-    marginTop: 14,
+    padding: 16,
+    marginTop: 16,
     borderLeftWidth: 4,
-    borderLeftColor: "#22C55E",
   },
-  resultTitle: { fontSize: 16, fontWeight: "900", color: "#111827" },
-  resultMeta: { marginTop: 4, fontSize: 12, color: "#6b7280", fontWeight: "700" },
-
-  resultLabel: { marginTop: 12, fontSize: 12, fontWeight: "900", color: "#111827" },
-  resultText: { marginTop: 4, fontSize: 13, color: "#111827", lineHeight: 19 },
-
-  buyBtn: {
-    marginTop: 12,
-    backgroundColor: "#111827",
-    paddingVertical: 10,
-    borderRadius: 12,
-    alignItems: "center",
+  resultCardHealthy: {
+    backgroundColor: "#f0fdf4",
+    borderLeftColor: "#16a34a",
   },
-  buyBtnText: { color: "#fff", fontWeight: "900", fontSize: 13 },
+  resultCardDisease: {
+    backgroundColor: "#fff7ed",
+    borderLeftColor: "#f97316",
+  },
+
+  resultTitle: { fontSize: 17, fontWeight: "900", color: "#111827", marginBottom: 8 },
+  resultLabel: { fontSize: 11, fontWeight: "800", color: "#6b7280", marginTop: 10, textTransform: "uppercase", letterSpacing: 0.5 },
+  resultValue: { fontSize: 15, fontWeight: "700", color: "#111827", marginTop: 2 },
 
   chatBtn: {
-    marginTop: 10,
-    backgroundColor: "#ffffff",
+    marginTop: 16,
+    backgroundColor: "#16a34a",
     paddingVertical: 12,
     borderRadius: 12,
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#22C55E",
   },
-  chatBtnText: { color: "#15803D", fontWeight: "900", fontSize: 13 },
+  chatBtnText: { color: "#fff", fontWeight: "900", fontSize: 13 },
 });
