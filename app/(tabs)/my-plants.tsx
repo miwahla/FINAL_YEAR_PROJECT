@@ -13,10 +13,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useTheme } from "../../contexts/theme";
 import { PlantRow } from "../../lib/db";
 import { getMyPlants, removeFromMyPlants } from "../../lib/my-plants";
 
-// Same images mapping as plants.tsx
 const plantImages: Record<string, any> = {
   Cotton: require("../../assets/images/cotton.png"),
   Maize: require("../../assets/images/maize.png"),
@@ -42,6 +42,7 @@ const getPlantImage = (name_en: string) => plantImages[name_en] ?? null;
 
 export default function MyPlantsScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
 
   const [plants, setPlants] = useState<PlantRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,18 +59,10 @@ export default function MyPlantsScreen() {
     }
   };
 
-  // Reload whenever this tab is focused
-  useFocusEffect(
-    useCallback(() => {
-      load();
-    }, [])
-  );
+  useFocusEffect(useCallback(() => { load(); }, []));
 
   const handlePressPlant = (plant: PlantRow) => {
-    router.push({
-      pathname: "/plant-detail",
-      params: { plantId: plant.id },
-    });
+    router.push({ pathname: "/plant-detail", params: { plantId: plant.id } });
   };
 
   const handleRemove = async (plant: PlantRow) => {
@@ -83,16 +76,10 @@ export default function MyPlantsScreen() {
           style: "destructive",
           onPress: async () => {
             try {
-              // Optimistic UI (instant remove)
               setPlants((prev) => prev.filter((p) => p.id !== plant.id));
-
               await removeFromMyPlants(plant.id);
-
-              // Optional: re-load to be 100% synced
-              // await load();
             } catch (e) {
               console.log("❌ Error removing plant:", e);
-              // fallback: reload to recover
               await load();
             }
           },
@@ -107,7 +94,7 @@ export default function MyPlantsScreen() {
     return (
       <TouchableOpacity
         onPress={() => handlePressPlant(item)}
-        style={styles.card}
+        style={[styles.card, { backgroundColor: colors.card }]}
         activeOpacity={0.9}
       >
         <View style={styles.cardInner}>
@@ -115,18 +102,14 @@ export default function MyPlantsScreen() {
 
           <View style={styles.cardTextWrapper}>
             <View style={styles.nameRow}>
-              <Text style={styles.nameEn}>{item.name_en}</Text>
-              <Text style={styles.nameUr}>{item.name_ur}</Text>
+              <Text style={[styles.nameEn, { color: colors.text }]}>{item.name_en}</Text>
+              <Text style={[styles.nameUr, { color: "#15803D" }]}>{item.name_ur}</Text>
             </View>
-            <Text style={styles.cardHint}>Tap to view details</Text>
+            <Text style={[styles.cardHint, { color: colors.textSub }]}>Tap to view details</Text>
           </View>
 
-          {/* REMOVE BUTTON */}
           <TouchableOpacity
-            onPress={(e) => {
-              e.stopPropagation();
-              handleRemove(item);
-            }}
+            onPress={(e) => { e.stopPropagation(); handleRemove(item); }}
             style={styles.removeBtn}
             activeOpacity={0.85}
           >
@@ -138,16 +121,16 @@ export default function MyPlantsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.bg }]}>
       <View style={styles.container}>
-        <Text style={styles.heading}>My Plants</Text>
-        <Text style={styles.subheading}>
-          Plants you’ve added will appear here for quick access.
+        <Text style={[styles.heading, { color: colors.text }]}>My Plants</Text>
+        <Text style={[styles.subheading, { color: colors.textSub }]}>
+          Plants you've added will appear here for quick access.
         </Text>
 
         {loading ? (
           <View style={styles.loaderWrap}>
-            <ActivityIndicator size="small" />
+            <ActivityIndicator size="small" color={colors.textSub} />
           </View>
         ) : (
           <FlatList
@@ -157,9 +140,9 @@ export default function MyPlantsScreen() {
             contentContainerStyle={styles.listContent}
             ListEmptyComponent={
               <View style={styles.emptyWrap}>
-                <Text style={styles.emptyTitle}>No saved plants yet</Text>
-                <Text style={styles.emptyText}>
-                  Go to Plants and tap “Add” on any plant to save it here.
+                <Text style={[styles.emptyTitle, { color: colors.text }]}>No saved plants yet</Text>
+                <Text style={[styles.emptyText, { color: colors.textSub }]}>
+                  Go to Plants and tap "Add" on any plant to save it here.
                 </Text>
               </View>
             }
@@ -171,32 +154,14 @@ export default function MyPlantsScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#f9fafb",
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 12,
-  },
-  heading: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginBottom: 4,
-  },
-  subheading: {
-    fontSize: 14,
-    color: "#4b5563",
-    marginBottom: 14,
-  },
+  safeArea: { flex: 1 },
+  container: { flex: 1, paddingHorizontal: 16, paddingTop: 12 },
+  heading: { fontSize: 22, fontWeight: "700", marginBottom: 4 },
+  subheading: { fontSize: 14, marginBottom: 14 },
 
-  listContent: {
-    paddingBottom: 20,
-  },
+  listContent: { paddingBottom: 20 },
 
   card: {
-    backgroundColor: "#F0FDF4",
     borderRadius: 18,
     padding: 12,
     marginBottom: 12,
@@ -208,76 +173,20 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: "#22C55E",
   },
-  cardInner: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  cardImage: {
-    width: 52,
-    height: 52,
-    borderRadius: 16,
-    marginRight: 12,
-  },
-  cardTextWrapper: {
-    flex: 1,
-  },
-  nameRow: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-  },
-  nameEn: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#111827",
-  },
-  nameUr: {
-    fontSize: 18,
-    color: "#15803D",
-    marginLeft: 8,
-    textAlign: "right",
-  },
-  cardHint: {
-    marginTop: 4,
-    fontSize: 12,
-    color: "#6b7280",
-  },
+  cardInner: { flexDirection: "row", alignItems: "center" },
+  cardImage: { width: 52, height: 52, borderRadius: 16, marginRight: 12 },
+  cardTextWrapper: { flex: 1 },
+  nameRow: { flexDirection: "row", alignItems: "flex-start" },
+  nameEn: { flex: 1, fontSize: 18, fontWeight: "600" },
+  nameUr: { fontSize: 18, marginLeft: 8, textAlign: "right" },
+  cardHint: { marginTop: 4, fontSize: 12 },
 
-  // Remove button styles
-  removeBtn: {
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 12,
-    backgroundColor: "#EF4444",
-    marginLeft: 10,
-  },
-  removeBtnText: {
-    color: "#ffffff",
-    fontWeight: "700",
-    fontSize: 12,
-  },
+  removeBtn: { paddingHorizontal: 12, paddingVertical: 7, borderRadius: 12, backgroundColor: "#EF4444", marginLeft: 10 },
+  removeBtnText: { color: "#ffffff", fontWeight: "700", fontSize: 12 },
 
-  loaderWrap: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  loaderWrap: { flex: 1, alignItems: "center", justifyContent: "center" },
 
-  emptyWrap: {
-    paddingTop: 40,
-    alignItems: "center",
-    paddingHorizontal: 18,
-  },
-  emptyTitle: {
-    fontSize: 16,
-    fontWeight: "700",
-    marginBottom: 6,
-    color: "#111827",
-  },
-  emptyText: {
-    fontSize: 14,
-    color: "#6b7280",
-    textAlign: "center",
-    lineHeight: 20,
-  },
+  emptyWrap: { paddingTop: 40, alignItems: "center", paddingHorizontal: 18 },
+  emptyTitle: { fontSize: 16, fontWeight: "700", marginBottom: 6 },
+  emptyText: { fontSize: 14, textAlign: "center", lineHeight: 20 },
 });

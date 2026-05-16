@@ -1,6 +1,5 @@
-import { useFocusEffect } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -13,12 +12,11 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useTheme } from "../../contexts/theme";
 import { getPlantsByType, PlantRow } from "../../lib/db";
-import { addToMyPlants, getMyPlants } from "../../lib/my-plants";
 
 type TabKey = "crops" | "home";
 
-// plants.tsx is in app/(tabs), images are in assets/images
 const plantImages: Record<string, any> = {
   Cotton: require("../../assets/images/cotton.png"),
   Maize: require("../../assets/images/maize.png"),
@@ -44,32 +42,14 @@ const getPlantImage = (name_en: string) => plantImages[name_en] ?? null;
 
 export default function PlantsScreen() {
   const router = useRouter();
+  const { colors, isDark } = useTheme();
 
   const [activeTab, setActiveTab] = useState<TabKey>("crops");
   const [plants, setPlants] = useState<PlantRow[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [myPlantIds, setMyPlantIds] = useState<Set<string>>(new Set());
-
   const type = useMemo(() => (activeTab === "crops" ? "crop" : "home"), [activeTab]);
 
-  // Load "My Plants" IDs (so we can show Add / Added)
-  const loadMyPlantIds = useCallback(async () => {
-    try {
-      const saved = await getMyPlants();
-      setMyPlantIds(new Set(saved.map((p) => p.id)));
-    } catch (e) {
-      console.log("❌ Error loading my plants ids:", e);
-    }
-  }, []);
-
-  useFocusEffect(
-    useCallback(() => {
-      loadMyPlantIds();
-    }, [loadMyPlantIds])
-  );
-
-  // Load plants from local SQLite (fast), then fetch saved IDs from Supabase in background
   useEffect(() => {
     let cancelled = false;
 
@@ -85,42 +65,23 @@ export default function PlantsScreen() {
         console.log("❌ Error loading plants:", e);
         if (!cancelled) setLoading(false);
       }
-
-      // Load Supabase saved IDs after plants are already shown
-      loadMyPlantIds().catch(() => {});
     };
 
     load();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [type, loadMyPlantIds]);
+    return () => { cancelled = true; };
+  }, [type]);
 
   const handlePressPlant = (plant: PlantRow) => {
-    router.push({
-      pathname: "/plant-detail",
-      params: { plantId: plant.id },
-    });
-  };
-
-  const handleAdd = async (plantId: string) => {
-    try {
-      await addToMyPlants(plantId);
-      setMyPlantIds((prev) => new Set([...prev, plantId]));
-    } catch (e) {
-      console.log("❌ Error adding to my plants:", e);
-    }
+    router.push({ pathname: "/plant-detail", params: { plantId: plant.id } });
   };
 
   const renderItem = ({ item }: { item: PlantRow }) => {
     const imgSource = getPlantImage(item.name_en);
-    const isAdded = myPlantIds.has(item.id);
 
     return (
       <TouchableOpacity
         onPress={() => handlePressPlant(item)}
-        style={styles.card}
+        style={[styles.card, { backgroundColor: isDark ? "#1a3a30" : "#badad3ff" }]}
         activeOpacity={0.9}
       >
         <View style={styles.cardInner}>
@@ -134,93 +95,50 @@ export default function PlantsScreen() {
 
           <View style={styles.cardTextWrapper}>
             <View style={styles.titleRow}>
-              <Text style={styles.nameEn} numberOfLines={1}>
+              <Text style={[styles.nameEn, { color: isDark ? "#a7f3d0" : "#064E3B" }]} numberOfLines={1}>
                 {item.name_en}
               </Text>
-
-              {/* ✅ Fix: Wheat urdu was getting clipped — give it a pill with padding + maxWidth */}
               <View style={styles.urduPill}>
-                <Text style={styles.nameUr} numberOfLines={1}>
+                <Text style={[styles.nameUr, { color: isDark ? "#d1fae5" : "#121211ff" }]} numberOfLines={1}>
                   {item.name_ur}
                 </Text>
               </View>
             </View>
-
-            <Text style={styles.cardHint} numberOfLines={1}>
+            <Text style={[styles.cardHint, { color: colors.textSub }]} numberOfLines={1}>
               Tap to view details
             </Text>
           </View>
-
-          {/* ADD BUTTON */}
-          <TouchableOpacity
-            onPress={(e) => {
-              e.stopPropagation();
-              if (!isAdded) handleAdd(item.id);
-            }}
-            style={[styles.addBtn, isAdded && styles.addBtnAdded]}
-            activeOpacity={0.85}
-          >
-            <Text style={[styles.addBtnText, isAdded && styles.addBtnTextAdded]}>
-              {isAdded ? "Added" : "Add"}
-            </Text>
-          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     );
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDark ? colors.bg : "#e8eee4ff" }]}>
       <View style={styles.container}>
-        {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.heading}>Plants</Text>
-          <Text style={styles.subheading}>Choose what you want to explore</Text>
+          <Text style={[styles.heading, { color: colors.text }]}>Plants</Text>
+          <Text style={[styles.subheading, { color: colors.textSub }]}>Choose what you want to explore</Text>
         </View>
 
-        {/* Segmented Control */}
-        <View style={styles.segment}>
-          <TouchableOpacity
-            style={[
-              styles.segmentBtn,
-              activeTab === "crops" && styles.segmentActive,
-            ]}
-            onPress={() => setActiveTab("crops")}
-            activeOpacity={0.9}
-          >
-            <Text
-              style={[
-                styles.segmentText,
-                activeTab === "crops" && styles.segmentActiveText,
-              ]}
+        <View style={[styles.segment, { backgroundColor: isDark ? colors.bg2 : "#E5E7EB" }]}>
+          {(["crops", "home"] as TabKey[]).map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              style={[styles.segmentBtn, activeTab === tab && [styles.segmentActive, { backgroundColor: colors.card }]]}
+              onPress={() => setActiveTab(tab)}
+              activeOpacity={0.9}
             >
-              Field Crops
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              styles.segmentBtn,
-              activeTab === "home" && styles.segmentActive,
-            ]}
-            onPress={() => setActiveTab("home")}
-            activeOpacity={0.9}
-          >
-            <Text
-              style={[
-                styles.segmentText,
-                activeTab === "home" && styles.segmentActiveText,
-              ]}
-            >
-              Homegrown
-            </Text>
-          </TouchableOpacity>
+              <Text style={[styles.segmentText, { color: activeTab === tab ? colors.text : colors.textSub }]}>
+                {tab === "crops" ? "Field Crops" : "Homegrown"}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
 
-        {/* List */}
         {loading ? (
           <View style={styles.loaderWrap}>
-            <ActivityIndicator size="small" />
+            <ActivityIndicator size="small" color={colors.textSub} />
           </View>
         ) : (
           <FlatList
@@ -231,10 +149,8 @@ export default function PlantsScreen() {
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={
               <View style={styles.emptyWrap}>
-                <Text style={styles.emptyTitle}>Nothing here yet</Text>
-                <Text style={styles.emptyText}>
-                  No plants found for this category.
-                </Text>
+                <Text style={[styles.emptyTitle, { color: colors.text }]}>Nothing here yet</Text>
+                <Text style={[styles.emptyText, { color: colors.textSub }]}>No plants found for this category.</Text>
               </View>
             }
           />
@@ -245,208 +161,62 @@ export default function PlantsScreen() {
 }
 
 const GREEN = "#22C55E";
-const BG = "#e8eee4ff";
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: BG,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 10,
-  },
+  safeArea: { flex: 1 },
+  container: { flex: 1, paddingHorizontal: 16, paddingTop: 10 },
 
-  header: {
-    marginBottom: 14,
-  },
-  heading: {
-    fontSize: 28,
-    fontWeight: "800",
-    color: "#111827",
-  },
-  subheading: {
-    fontSize: 14,
-    color: "#6B7280",
-    marginTop: 4,
-  },
+  header: { marginBottom: 14 },
+  heading: { fontSize: 28, fontWeight: "800" },
+  subheading: { fontSize: 14, marginTop: 4 },
 
-  /* Segmented */
-  segment: {
-    flexDirection: "row",
-    backgroundColor: "#E5E7EB",
-    borderRadius: 16,
-    padding: 4,
-    marginBottom: 14,
-  },
-  segmentBtn: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: 12,
-    alignItems: "center",
-  },
+  segment: { flexDirection: "row", borderRadius: 16, padding: 4, marginBottom: 14 },
+  segmentBtn: { flex: 1, paddingVertical: 10, borderRadius: 12, alignItems: "center" },
   segmentActive: {
-    backgroundColor: "#FFFFFF",
     ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        shadowOffset: { width: 0, height: 4 },
-      },
+      ios: { shadowColor: "#000", shadowOpacity: 0.08, shadowRadius: 8, shadowOffset: { width: 0, height: 4 } },
       android: { elevation: 2 },
     }),
   },
-  segmentText: {
-    fontSize: 14,
-    color: "#6B7280",
-    fontWeight: "700",
-  },
-  segmentActiveText: {
-    color: "#111827",
-  },
+  segmentText: { fontSize: 14, fontWeight: "700" },
 
-  listContent: {
-    paddingBottom: 24,
-  },
+  listContent: { paddingBottom: 24 },
 
-  /* Card */
   card: {
-    backgroundColor: "#badad3ff",
     borderRadius: 18,
     padding: 12,
     marginBottom: 12,
-
     borderLeftWidth: 4,
     borderLeftColor: GREEN,
-
     ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOpacity: 0.06,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 6 },
-      },
+      ios: { shadowColor: "#000", shadowOpacity: 0.06, shadowRadius: 10, shadowOffset: { width: 0, height: 6 } },
       android: { elevation: 3 },
     }),
   },
-  cardInner: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  cardInner: { flexDirection: "row", alignItems: "center" },
 
   imageWrap: {
-    width: 56,
-    height: 56,
-    borderRadius: 5,
+    width: 56, height: 56, borderRadius: 5,
     backgroundColor: "#D1FAE5",
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
-    overflow: "hidden",
+    alignItems: "center", justifyContent: "center",
+    marginRight: 12, overflow: "hidden",
   },
-  cardImage: {
-    width: "100%",
-    height: "100%",
-  },
-  imageFallback: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    backgroundColor: "#f3eda7ff",
-  },
+  cardImage: { width: "100%", height: "100%" },
+  imageFallback: { width: 26, height: 26, borderRadius: 13, backgroundColor: "#f3eda7ff" },
 
-  cardTextWrapper: {
-    flex: 1,
-    minWidth: 0, // ✅ important so text can shrink instead of pushing out
-  },
+  cardTextWrapper: { flex: 1, minWidth: 0 },
+  titleRow: { flexDirection: "row", alignItems: "center", gap: 10 },
 
-  titleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
+  nameEn: { flex: 1, minWidth: 0, fontSize: 17, fontWeight: "800" },
 
-  nameEn: {
-    flex: 1,
-    minWidth: 0,
-    fontSize: 17,
-    fontWeight: "800",
-    color: "#064E3B",
-  },
+  urduPill: { maxWidth: 120, paddingLeft: 4, paddingRight: 10, paddingVertical: 2 },
+  nameUr: { fontSize: 18, fontWeight: "700", textAlign: "right", includeFontPadding: false },
 
-  /* ✅ Urdu pill prevents clipping + keeps it readable */
-  urduPill: {
-    maxWidth: 110, // adjust if you want more space
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 1,
-    backgroundColor: "#badad3ff",
-    borderWidth: 1,
-    borderColor: "#badad3ff",
-  },
-  nameUr: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#121211ff",
-    textAlign: "right",
-    includeFontPadding: false,
-  },
+  cardHint: { marginTop: 6, fontSize: 12 },
 
-  cardHint: {
-    marginTop: 6,
-    fontSize: 12,
-    color: "#6B7280",
-  },
+  loaderWrap: { flex: 1, alignItems: "center", justifyContent: "center" },
 
-  /* Add button */
-  addBtn: {
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 999,
-    backgroundColor: GREEN,
-    marginLeft: 10,
-    ...Platform.select({
-      ios: {
-        shadowColor: GREEN,
-        shadowOpacity: 0.35,
-        shadowRadius: 8,
-        shadowOffset: { width: 0, height: 6 },
-      },
-      android: { elevation: 1 },
-    }),
-  },
-  addBtnAdded: {
-    backgroundColor: "#E5E7EB",
-  },
-  addBtnText: {
-    color: "#FFFFFF",
-    fontWeight: "800",
-    fontSize: 12,
-  },
-  addBtnTextAdded: {
-    color: "#111827",
-  },
-
-  loaderWrap: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  emptyWrap: {
-    paddingTop: 60,
-    alignItems: "center",
-  },
-  emptyTitle: {
-    fontSize: 16,
-    fontWeight: "800",
-    color: "#111827",
-    marginBottom: 6,
-  },
-  emptyText: {
-    fontSize: 13,
-    color: "#6B7280",
-  },
+  emptyWrap: { paddingTop: 60, alignItems: "center" },
+  emptyTitle: { fontSize: 16, fontWeight: "800", marginBottom: 6 },
+  emptyText: { fontSize: 13 },
 });

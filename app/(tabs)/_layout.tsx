@@ -5,10 +5,11 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import { useTheme } from "../../contexts/theme";
 
 const VISIBLE_TABS = ["index", "plants", "detect", "my-plants", "chatbot"];
 
-function NotchedBackground() {
+function NotchedBackground({ fill, hairline }: { fill: string; hairline: string }) {
   return (
     <View style={styles.notchBgWrap} pointerEvents="none">
       <Svg width="100%" height="100%" viewBox="0 0 100 30" preserveAspectRatio="none">
@@ -27,20 +28,21 @@ function NotchedBackground() {
             H0
             Z
           "
-          fill="#FFFFFF"
+          fill={fill}
         />
       </Svg>
-      <View style={styles.topHairline} />
+      <View style={[styles.topHairline, { backgroundColor: hairline }]} />
     </View>
   );
 }
 
 function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const { colors } = useTheme();
   const visibleRoutes = state.routes.filter((r) => VISIBLE_TABS.includes(r.name));
 
   return (
-    <View style={styles.tabBarWrap}>
-      <NotchedBackground />
+    <View style={[styles.tabBarWrap, { backgroundColor: colors.tabBar }]}>
+      <NotchedBackground fill={colors.tabBar} hairline={colors.tabBarBorder} />
 
       <View style={styles.tabBarRow}>
         {visibleRoutes.map((route) => {
@@ -63,7 +65,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           const iconName = (() => {
             switch (route.name) {
               case "index":
-                return isFocused ? "home" : "home-outline";
+                return isFocused ? "settings-sharp" : "settings-outline";
               case "plants":
                 return isFocused ? "leaf" : "leaf-outline";
               case "detect":
@@ -78,7 +80,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           })();
 
           const activeColor = isCenter ? "#16a34a" : "#2563EB";
-          const color = isFocused ? activeColor : "#6B7280";
+          const color = isFocused ? activeColor : colors.textSub;
 
           return (
             <TouchableOpacity
@@ -87,7 +89,7 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               activeOpacity={0.85}
               style={[styles.tabItem, isCenter && styles.centerTabItem]}
             >
-              <View style={isCenter ? styles.centerBtn : styles.iconBtn}>
+              <View style={isCenter ? [styles.centerBtn, { backgroundColor: colors.card }] : styles.iconBtn}>
                 <Ionicons name={iconName as any} size={isCenter ? 28 : 22} color={color} />
               </View>
             </TouchableOpacity>
@@ -100,9 +102,9 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
 export default function TabsLayout() {
   return (
-    <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }}>
+    <Tabs tabBar={(props) => <CustomTabBar {...props} />} screenOptions={{ headerShown: false }} initialRouteName="plants">
       {/* must match filenames exactly */}
-      <Tabs.Screen name="index" options={{ title: "Home" }} />
+      <Tabs.Screen name="index" options={{ title: "Settings" }} />
       <Tabs.Screen name="plants" options={{ title: "Plants" }} />
       <Tabs.Screen name="detect" options={{ title: "Detect" }} />
       <Tabs.Screen name="my-plants" options={{ title: "My Plants" }} />

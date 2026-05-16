@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
+import { useTheme } from "../contexts/theme";
 import {
     Alert,
     ImageBackground,
@@ -14,6 +15,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTts } from "../hooks/use-tts";
 import { getPlantWithSections, PlantSectionRow } from "../lib/db";
+import { addToMyPlants, getMyPlants } from "../lib/my-plants";
 
 type Lang = "en" | "ur";
 
@@ -54,6 +56,7 @@ function getPlantBg(plantId: string) {
 export default function PlantDetailScreen() {
   const router = useRouter();
   const { plantId } = useLocalSearchParams<{ plantId?: string }>();
+  const { isDark } = useTheme();
 
   const [loading, setLoading] = useState(true);
   const [plantNameEn, setPlantNameEn] = useState("");
@@ -61,6 +64,7 @@ export default function PlantDetailScreen() {
   const [sections, setSections] = useState<PlantSectionRow[]>([]);
   const [expandedIds, setExpandedIds] = useState<Record<number, boolean>>({});
   const [lang, setLang] = useState<Lang>("en");
+  const [isAdded, setIsAdded] = useState(false);
 
   const { speak: ttsSpeak, stop: ttsStop, isLoading: ttsLoading, error: ttsError } = useTts();
 
@@ -70,7 +74,7 @@ export default function PlantDetailScreen() {
 
   const isUrdu = lang === "ur";
 
-  // Fetch plant + sections from DB
+  // Fetch plant + sections from DB, check if already saved
   useEffect(() => {
     if (!plantId) return;
 
@@ -83,7 +87,21 @@ export default function PlantDetailScreen() {
         setSections(res.sections);
       })
       .finally(() => setLoading(false));
+
+    getMyPlants().then((saved) => {
+      setIsAdded(saved.some((p) => p.id === String(plantId)));
+    }).catch(() => {});
   }, [plantId]);
+
+  const handleAdd = async () => {
+    if (isAdded || !plantId) return;
+    try {
+      await addToMyPlants(String(plantId));
+      setIsAdded(true);
+    } catch (e) {
+      console.log("❌ Error adding to my plants:", e);
+    }
+  };
 
   const bgSource = useMemo(() => {
     if (!plantId) return DEFAULT_BG;
@@ -138,9 +156,8 @@ export default function PlantDetailScreen() {
   }
 
   return (
-    <ImageBackground source={bgSource} style={styles.bg} resizeMode="cover">
-      {/* Soft overlay to keep everything readable */}
-      <View style={styles.bgOverlay} />
+    <ImageBackground source={bgSource} style={styles.bg} resizeMode="cover" imageStyle={styles.bgImage}>
+      <View style={[styles.bgOverlay, { backgroundColor: isDark ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.35)" }]} />
 
       <SafeAreaView style={styles.safeAreaTransparent}>
         <ScrollView
@@ -194,9 +211,25 @@ export default function PlantDetailScreen() {
             </View>
 
             <View style={styles.headerTitles}>
-              <Text style={styles.plantName} numberOfLines={1}>
-                {headerTitle.en}
-              </Text>
+              <View style={styles.headerNameRow}>
+                <Text style={styles.plantName} numberOfLines={1}>
+                  {headerTitle.en}
+                </Text>
+                <TouchableOpacity
+                  style={[styles.addBtn, isAdded && styles.addBtnAdded]}
+                  onPress={handleAdd}
+                  activeOpacity={0.85}
+                >
+                  <Ionicons
+                    name={isAdded ? "checkmark" : "add"}
+                    size={16}
+                    color={isAdded ? "#16a34a" : "#fff"}
+                  />
+                  <Text style={[styles.addBtnText, isAdded && styles.addBtnTextAdded]}>
+                    {isAdded ? "Added" : "Add"}
+                  </Text>
+                </TouchableOpacity>
+              </View>
               {!!headerTitle.ur && (
                 <View style={styles.urduPill}>
                   <Text
@@ -315,6 +348,7 @@ const GREEN_LIGHT = "#EAF7EE";
 const styles = StyleSheet.create({
   /* Background */
   bg: { flex: 1 },
+  bgImage: { transform: [{ scale: 1.15 }] },
 
   // overlay makes text readable while still showing image
   bgOverlay: {
@@ -383,11 +417,50 @@ const styles = StyleSheet.create({
     gap: 8,
   },
 
+  headerNameRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+
   plantName: {
+    flex: 1,
     fontSize: 28,
     fontWeight: "900",
     color: "#111827",
     letterSpacing: -0.3,
+  },
+
+  addBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 999,
+    backgroundColor: "#16a34a",
+    ...Platform.select({
+      ios: {
+        shadowColor: "#16a34a",
+        shadowOpacity: 0.35,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 4 },
+      },
+      android: { elevation: 2 },
+    }),
+  },
+  addBtnAdded: {
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderWidth: 1,
+    borderColor: "#16a34a",
+  },
+  addBtnText: {
+    color: "#fff",
+    fontWeight: "800",
+    fontSize: 13,
+  },
+  addBtnTextAdded: {
+    color: "#16a34a",
   },
 
   urduPill: {

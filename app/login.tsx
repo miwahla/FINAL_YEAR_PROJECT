@@ -62,15 +62,15 @@ const STRINGS: Record<
   ur: {
     appName: "LeafEye",
     loginTab: "لاگ اِن",
-    signupTab: "سائن اَپ",
+    signupTab: "نیا اکاؤنٹ",
     email: "ای میل",
     password: "پاس ورڈ",
     confirmPassword: "پاس ورڈ دوبارہ",
     loginButton: "لاگ اِن",
-    signupButton: "اکاؤنٹ بنائیں",
-    loginTitle: "واپس آئیں",
+    signupButton: "نیا اکاؤنٹ بنائیں",
+    loginTitle: "دوبارہ خوش آمدید",
     signupTitle: "نیا اکاؤنٹ بنائیں",
-    switchToSignup: "اکاؤنٹ نہیں؟ سائن اَپ کریں",
+    switchToSignup: "اکاؤنٹ نہیں؟ نیا اکاؤنٹ بنائیں",
     switchToLogin: "پہلے سے اکاؤنٹ ہے؟ لاگ اِن کریں",
     fillAll: "براہ کرم تمام خانے پُر کریں۔",
     wrongCreds: "ای میل یا پاس ورڈ غلط ہے۔",
@@ -160,7 +160,7 @@ export default function LoginScreen() {
         if (error) {
           setError(t.wrongCreds);
         } else {
-          router.replace("/(tabs)");
+          router.replace("/(tabs)/plants");
         }
       } else {
         const { error } = await supabase.auth.signUp({
@@ -170,7 +170,7 @@ export default function LoginScreen() {
         if (error) {
           setError(error.message);
         } else {
-          router.replace("/(tabs)");
+          router.replace("/(tabs)/plants");
         }
       }
     } catch (e) {
