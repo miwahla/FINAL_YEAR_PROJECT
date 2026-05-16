@@ -4651,6 +4651,1097 @@ Fumigate warehouses using Aluminum Phosphide tablets under expert supervision.`,
     `تازہ پودینہ: تنوں کو کمرے کے درجہ حرارت پر پانی کے گلاس میں (پھولوں کی طرح) 1 سے 2 ہفتوں کے لیے رکھیں۔ متبادل طور پر گیلے کاغذی تولیے میں لپیٹیں، زپ لاک بیگ میں رکھیں اور 2 ہفتوں تک فریج میں رکھیں۔ خشک پودینہ: رنگ اور خوشبو محفوظ رکھنے کے لیے سایہ میں خشک کریں (براہ راست دھوپ نہیں) — 1 سے 2 ہفتے لگتے ہیں۔ خشک پودینہ روشنی اور گرمی سے دور ایئر ٹائٹ شیشے کے برتنوں میں 1 سال تک ذخیرہ کریں۔ پودینہ منجمد بھی کیا جا سکتا ہے — دھوئیں، خشک کریں، کاٹیں اور پانی کے ساتھ آئس کیوب ٹریز میں منجمد کریں۔`
   );
 
+  // ── DISEASE DETAILS & REMEDIES ──────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "cotton", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `BACTERIAL BLIGHT (bacterial_blight)
+Cause: Xanthomonas campestris pv. malvacearum bacteria. Spreads via infected seed, wind-driven rain, insects. Favored by warm (28-35C), wet, humid conditions.
+Symptoms: Angular, water-soaked lesions on leaves turning dark brown to black. Black arm on stems, vein blackening, premature defoliation, tattered leaf appearance.
+Treatment: Treat seed with streptomycin sulfate before planting. Spray Copper Oxychloride (Blitox 50 WP, 2.5 g/L) every 10-15 days. Remove and destroy infected plant debris. Avoid overhead irrigation and excess nitrogen. Use resistant varieties.
+
+CURL VIRUS / COTTON LEAF CURL VIRUS (curl_virus)
+Cause: Cotton Leaf Curl Multan Virus (CLCuMV), transmitted persistently by whitefly Bemisia tabaci. Hot dry weather favors whitefly buildup. Most devastating cotton disease in Pakistan since 1985.
+Symptoms: Upward or downward leaf curling, vein thickening and darkening, cup-shaped enations on leaf undersides, shortened internodes, severe stunting, drastic reduction in boll formation.
+Treatment: No chemical cure once infected. Control whitefly: spray acetamiprid (Mospilan 20 SP), thiamethoxam (Actara 25 WG), or spiromesifen (Oberon). Rotate insecticide groups. Remove infected plants early. Install yellow sticky traps. Plant virus-resistant varieties (NIBGE-approved varieties in Pakistan).
+
+HERBICIDE DAMAGE (herbicide_damage)
+Cause: Accidental exposure to herbicides, especially synthetic auxins (2,4-D, dicamba) via misapplication or spray drift from neighboring fields.
+Symptoms: Epinasty (leaf and petiole twisting/bending), leaf curling, blistering, S-shaped petioles. Bleaching with pigment inhibitors. Gradient symptom pattern across field indicates drift.
+Treatment: No biological cure. Stop all herbicide applications immediately. Provide adequate irrigation and balanced fertilizer to support recovery. Mild to moderate injury usually recovers without significant yield loss.
+
+LEAF HOPPER / JASSIDS (leaf_hopper_jassids)
+Cause: Amrasca biguttula biguttula insect. Nymphs and adults suck sap from leaf undersides and inject phytotoxic saliva. Hot, dry weather favors outbreaks. Resistance to imidacloprid documented in Pakistan.
+Symptoms: Hopper burn — yellowing at leaf margins turning reddish then brown (marginal necrosis), downward leaf curling. Brick-red discoloration, leaf crinkle, stunted growth, premature leaf drop.
+Treatment: Spray acetamiprid (Mospilan 20 SP), flonicamid (Teppeki), or profenofos (Curacron 500 EC, 1 mL/L). Neem oil (5 mL/L) is effective and delays resistance. Rotate insecticide classes. Monitor with yellow sticky traps weekly.
+
+LEAF REDDENING (leaf_reddening)
+Cause: Primarily potassium deficiency, drought stress, or waterlogging. Root damage by nematodes (Meloidogyne spp.) can also cause this. Sandy, low-potassium soils at high temperatures favor occurrence.
+Symptoms: Reddish-purple pigmentation starting at leaf margins and tips, spreading inward. Leaves may appear limp or leathery. Unlike CLCuV, no vein thickening or enations.
+Treatment: Apply potassium sulfate (60-80 kg K2O/ha). Foliar spray potassium nitrate (1-2%) for quick relief. Ensure proper irrigation. Test soil for nutrients and pH. Control nematodes with carbofuran granules if present.
+
+LEAF VARIEGATION (leaf_variegation)
+Cause: Mixed CLCuV complex infections producing irregular chlorotic patterning, or zinc/iron deficiency. When viral, transmitted by whitefly Bemisia tabaci.
+Symptoms: Irregular mosaic patches of yellow, pale, and normal green tissue on leaves. If viral, may be accompanied by mild curl, stunting, or vein thickening. Nutritional variegation is more uniform and symmetric.
+Treatment: If viral: control whitefly with acetamiprid (Mospilan) or spiromesifen (Oberon); remove and destroy infected plants. If nutritional: zinc sulfate foliar spray (0.5%) or ferrous sulfate (0.5%) for iron deficiency.`,
+    `بیکٹیریل بلائٹ: وجہ: زینتھوموناس بیکٹیریا، گرم نم موسم میں پھیلتا ہے۔ علامات: پتوں پر زاویہ دار سیاہ بھورے دھبے، تنوں پر سیاہ بازو، قبل از وقت پتوں کا گرنا۔ علاج: بیج کو اسٹریپٹومائسن سے ٹریٹ کریں، بلیٹاکس 50 (2.5 گرام/لیٹر) ہر 10-15 دن اسپرے کریں۔
+کرل وائرس: وجہ: CLCuMV وائرس، سفید مکھی سے پھیلتا ہے، پاکستان میں کپاس کی سب سے تباہ کن بیماری۔ علامات: پتوں کا مڑنا، رگوں کا موٹا ہونا، پتوں کے نیچے کپ نما اُبھار، شدید بونا پن۔ علاج: موسپیلان، ایکٹارہ یا اوبیرون سے سفید مکھی کنٹرول کریں، مزاحم اقسام لگائیں۔
+جڑی بوٹی مار نقصان: وجہ: 2,4-D جیسی ادویات کی غلط اسپرے یا ڈرفٹ۔ علامات: پتوں اور ڈنٹھلوں کا مڑنا، ابھرنا۔ علاج: اسپرے فوری بند کریں، پانی اور متوازن کھاد دیں۔
+لیف ہاپر/جیسیڈ: وجہ: امراسکا کیڑا پتوں کا رس چوستا ہے۔ علامات: کنارے پیلے پھر سرخ پھر بھورے، پتے نیچے مڑتے ہیں۔ علاج: موسپیلان، ٹیپیکی یا کیورکران 500 اسپرے، ہفتہ وار پیلے ٹریپ۔
+پتوں کا سرخ ہونا: وجہ: پوٹاشیم کمی یا خشکی۔ علامات: پتوں کے کنارے سرخ-بنفشی۔ علاج: پوٹاشیم سلفیٹ ڈالیں، پوٹاشیم نائٹریٹ (1-2%) اسپرے کریں۔
+پتوں کا رنگ بدلنا: وجہ: CLCuV مخلوط انفیکشن یا زنک/آئرن کمی۔ علامات: بے ترتیب پیلے اور ہرے موزیک دھبے۔ علاج: سفید مکھی کنٹرول یا زنک سلفیٹ/فیرس سلفیٹ اسپرے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "maize", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `FUNGAL LEAF SPOT (fungal_leaf)
+Cause: Various Bipolaris and Exserohilum fungi. Spread by airborne conidia, surviving in infected debris. Favored by warm (25-30C), high humidity, and dense canopy.
+Symptoms: Small, oval to elongated tan/brown lesions with dark borders on leaves. Lesions coalesce under severe infection. Lower older leaves affected first.
+Treatment: Spray azoxystrobin (Amistar 250 SC) or propiconazole (Tilt 250 EC) at first lesions; repeat every 14 days. Plant resistant hybrids. Rotate crops. Remove infected debris.
+
+GRAY LEAF SPOT (gray_leaf_spot)
+Cause: Cercospora zeae-maydis fungus. Survives on maize residue. Spreads by wind-dispersed conidia. Favored by warm (25-30C), high humidity (>90% RH), prolonged dew or fog. Continuous maize cropping increases risk.
+Symptoms: Yellowish, water-soaked lesions on lower leaves enlarging into long, narrow, rectangular gray-tan spots (5-70 mm) restricted by veins. Severe fields appear scorched.
+Treatment: Apply azoxystrobin (Amistar 250 SC) or pyraclostrobin (Headline EC) or propiconazole (Tilt 250 EC) at tasseling stage. Rotate crops. Till soil to bury infected debris. Plant resistant hybrids.
+
+HOLCUS LEAF SPOT (holcus_leaf_spot)
+Cause: Pseudomonas syringae pv. syringae bacterium. Infection during cool, wet weather. Generally superficial, does not significantly impact yield.
+Symptoms: Small, round white to tan spots (3-6 mm) with brown or purple borders on lower and middle leaves. Resembles chemical burn or frost injury.
+Treatment: No management usually required — condition is self-limiting as weather warms. Ensure good plant nutrition. Copper-based bactericide spray is rarely warranted.
+
+ABIOTIC DISEASE / STRESS (abiotic_disease)
+Cause: Environmental stresses — drought, waterlogging, nutrient deficiencies (N, Zn, P), herbicide injury, extreme temperatures, or salt stress. Not pathogen-caused.
+Symptoms: Nitrogen deficiency: V-shaped yellowing from leaf tip on lower leaves. Zinc deficiency: white-yellow striping on young leaves. Drought: leaf rolling. Waterlogging: yellowing in low-lying areas. Herbicide: twisting or bleaching.
+Treatment: Identify specific cause via field history and soil testing. Nitrogen deficiency: apply urea (46 kg N/ha). Zinc deficiency: zinc sulfate (25 kg/ha) or 0.5% foliar spray. Drought: irrigate timely. Improve drainage for waterlogging.
+
+CURVULARIA LEAF SPOT (curvularia)
+Cause: Curvularia lunata fungus. Survives in soil and crop debris. Spread by wind. Favored by hot (above 30C), humid conditions and plant stress.
+Symptoms: Small tan lesions (2-5 mm) with brown margins and yellowish halo. Lesions can join into larger necrotic areas. Severely infected leaves dry back from tips.
+Treatment: Crop rotation and tillage reduce inoculum. Azoxystrobin (Amistar 250 SC) or mancozeb (Dithane M-45) during high disease pressure for suppression. Balanced fertilization reduces plant stress.
+
+HELMINTHOSPORIOSIS — Northern/Southern Corn Leaf Blight (helminthosporiosis)
+Cause: Exserohilum turcicum (NCLB) or Bipolaris maydis (SCLB). Survive in crop debris, spread by airborne conidia. Favored by moderate temperatures (18-27C), heavy dew, and dense plantings.
+Symptoms: NCLB: long (3-15 cm), cigar-shaped, gray-green to tan lesions on lower leaves progressing upward. SCLB: smaller, tan lesions with distinct dark borders on lower leaves.
+Treatment: Apply azoxystrobin (Amistar 250 SC), pyraclostrobin (Headline), or propiconazole (Tilt 250 EC) at tasseling. Use resistant hybrids. Rotate crops 1-2 years. Plow under crop residue.
+
+RUST — Maize Common Rust (rust)
+Cause: Puccinia sorghi fungus. Spreads by wind-dispersed urediniospores. Favored by cool (16-23C) temperatures, high humidity, and frequent dew.
+Symptoms: Numerous small, powdery, brick-red to brown pustules scattered over both leaf surfaces, sheaths, and husks. Heavily infected leaves turn yellow and die.
+Treatment: Spray propiconazole (Tilt 250 EC) or trifloxystrobin + tebuconazole (Nativo 75 WG) at first pustule. Mancozeb (Dithane M-45) provides moderate suppression. Plant rust-resistant hybrids. Destroy crop debris.
+
+STRIPE DISEASE — Maize Stripe Virus (stripe_disease)
+Cause: Maize stripe tenuivirus (MStpV), transmitted persistently by planthopper Peregrinus maidis. Favored by warm, humid environments with grassy weed hosts nearby.
+Symptoms: Chlorotic pale yellow to white stripes running from leaf base toward apex. Affected plants stunted with shortened internodes. Red to purple streaks may also appear.
+Treatment: No cure once infected. Control planthopper: spray thiamethoxam (Actara 25 WG) or use imidacloprid seed treatment. Remove infected plants and weed grass hosts. Plant resistant varieties.
+
+VIROSIS — Maize Dwarf Mosaic Virus (virosis)
+Cause: Maize Dwarf Mosaic Virus (MDMV), non-persistently transmitted by aphids (Rhopalosiphum maidis). Weed grasses (Johnson grass, sorghum) are reservoir hosts.
+Symptoms: Mosaic pattern of pale green, yellow-green, and dark green areas on leaves. Distinct chlorotic stripes between veins. Plant stunting; poor ear formation.
+Treatment: No chemical cure. Control aphids: spray imidacloprid (Confidor 200 SL) or acetamiprid (Mospilan 20 SP). Use reflective mulches. Eradicate Johnson grass from field margins. Plant resistant hybrids.`,
+    `فنگل لیف اسپاٹ: وجہ: بائپولیرس فنگس، گرم نم موسم میں۔ علامات: پتوں پر بھورے دھبے۔ علاج: ایمیسٹار یا ٹلٹ 250 اسپرے، فصل چکر۔
+گرے لیف اسپاٹ: وجہ: سرکوسپورا فنگس۔ علامات: پتوں پر لمبے تنگ سرمئی دھبے۔ علاج: ایمیسٹار یا ٹلٹ تسلہ کے وقت اسپرے، مزاحم اقسام۔
+ہولکس لیف اسپاٹ: وجہ: سیوڈوموناس بیکٹیریا۔ علامات: چھوٹے سفید-تان دھبے۔ علاج: عموماً علاج نہیں چاہیے، موسم گرم ہونے پر ٹھیک ہو جاتا ہے۔
+غیر حیاتی بیماری: وجہ: خشکی، پانی بھراؤ، غذائی کمی۔ علاج: مٹی ٹیسٹ، یوریا یا زنک سلفیٹ ڈالیں، آبپاشی یقینی بنائیں۔
+کروولیریا: وجہ: کروولیریا فنگس، گرم نم حالات۔ علامات: تان دھبے پیلے ہالے کے ساتھ۔ علاج: ایمیسٹار یا مینکوزیب اسپرے۔
+ہیلمنتھوسپوریوسس: وجہ: ایکسرہیلم فنگس۔ علامات: سگار کی شکل کے لمبے بھورے دھبے نیچے سے اوپر۔ علاج: ایمیسٹار یا ٹلٹ تسلہ کے وقت اسپرے۔
+زنگ: وجہ: پکسینیا فنگس، ٹھنڈی نم ہوا سے پھیلتی ہے۔ علامات: پتوں پر اینٹ رنگ کے پھپھوندی گچھے۔ علاج: ٹلٹ 250 یا نیٹیوو 75 اسپرے کریں۔
+دھاری بیماری: وجہ: پلانٹ ہاپر سے منتقل وائرس۔ علامات: پتوں پر پیلی سفید دھاریاں، بونا پن۔ علاج: ایکٹارہ سے پلانٹ ہاپر کنٹرول کریں۔
+وائرل بیماری: وجہ: MDMV وائرس، تیلوں سے پھیلتا ہے۔ علامات: پتوں پر موزیک، بونا پن۔ علاج: کنفیڈور یا موسپیلان سے تیلا کنٹرول کریں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "onion", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `IRIS YELLOW SPOT VIRUS (iris_yellow_virus)
+Cause: Iris yellow spot virus (IYSV) tospovirus, transmitted persistently by onion thrips (Thrips tabaci). Favored by warm, dry conditions promoting thrips populations and large continuous allium production.
+Symptoms: Tan to straw-colored, diamond- or lens-shaped lesions with pale green or yellow halo on leaves and scapes. Concentric ring patterns (alternating green and tan) within lesions are diagnostic. Lodging of scapes in seed crops.
+Treatment: No cure once infected. Control thrips: spray spinosad (Tracer 120 SC), abamectin (Agrimek), or lambda-cyhalothrin (Karate 2.5 WG) every 7-10 days. Rotate insecticide classes. Use blue sticky traps. Remove infected debris and weed hosts.
+
+STEMPHYLIUM BLIGHT (stemphylium_blight)
+Cause: Stemphylium vesicarium fungus. Spreads via airborne conidia. Favored by extended leaf wetness (more than 12 hours), high humidity, and moderate temperatures (15-25C). Often follows thrips or purple blotch damage.
+Symptoms: Small yellow spots enlarging into ovate-elongate lesions (1-2 cm) with tan-brown centers turning dark brown to black. Dark velvety sporulation visible under humid conditions. Entire leaf blighting in severe cases.
+Treatment: Apply mancozeb (Dithane M-45, 2.5 g/L), iprodione (Rovral 50 WP), or chlorothalonil (Bravo 500 SC) every 7-10 days. Rotate with tebuconazole (Folicur 250 EW). Use drip irrigation; avoid overhead watering.
+
+PURPLE BLOTCH (purple_blotch)
+Cause: Alternaria porri fungus. Spread by airborne conidia and rain splash. Favored by 28-30C, relative humidity 80-90%, and free moisture on leaves. Thrips damage predisposes plants to infection.
+Symptoms: White lesions with purple centers developing concentric rings and dark-brown sporulation. Yellow streaks along leaf from lesion are diagnostic. Severely affected leaves die back from tips.
+Treatment: Apply iprodione (Rovral 50 WP, 2 g/L), mancozeb (Dithane M-45), or tebuconazole (Folicur 250 EW) every 7-10 days. Add sticker-spreader for better coverage on waxy onion leaves. Avoid overhead irrigation. Use certified disease-free seed.
+
+ALTERNARIA LEAF BLIGHT (alternaria)
+Cause: Alternaria alternata and related species. Spreads by wind-dispersed conidia and infected seed. Favored by warm (25-30C), high humidity, and plant stress. Often occurs alongside purple blotch.
+Symptoms: Small brown elliptical spots enlarging into brown necrotic streaks. Lesion centers may develop dark purple-black sporulation. Tip dieback under high disease pressure.
+Treatment: Apply mancozeb (Dithane M-45), chlorothalonil (Bravo 500 SC), or azoxystrobin (Amistar 250 SC) every 7-10 days. Improve potassium nutrition to reduce susceptibility. Use disease-free seed treated with thiram or mancozeb. Rotate with non-allium crops for 2-3 years.
+
+BULB BLIGHT / NECK ROT (bulb_blight)
+Cause: Botrytis allii and Botrytis cinerea fungi. Infection through neck tissue in field; symptoms often visible in storage. Cool (15-20C), humid conditions favor spread. Enters through wounds or natural openings at the neck.
+Symptoms: Soft, water-soaked brownish discoloration beginning at neck and progressing downward. Gray, felty mold (Botrytis sporulation) develops on rotting tissue under humid conditions. Hard, black sclerotia may form between scales. Musty smell.
+Treatment: Apply chlorothalonil (Bravo 500 SC, 2 g/L) or iprodione (Rovral 50 WP) in the last 4 weeks before harvest, targeting the neck tissue. Harvest only when fully mature. Avoid late-season irrigation to allow neck to dry naturally. Cure harvested bulbs at 27-35C for 7-10 days. Store at 0-2C with low humidity and good air circulation.
+
+FUSARIUM BASAL ROT (fusarium)
+Cause: Fusarium oxysporum f. sp. cepae. Soilborne pathogen surviving in soil for many years. Infection through roots and basal plate at high soil temperatures (above 25C). Spread via contaminated soil, water, and infected transplants.
+Symptoms: Leaf yellowing from tips downward. Roots turn pink then rot to brown-black. Basal plate shows brown discoloration. Infected plants easily pulled from soil due to root destruction. In severe cases, entire plant dies.
+Treatment: Drench seedbeds with carbendazim (Bavistin 50 WP, 1 g/L). Dip transplant roots in 0.1% carbendazim solution for 30 minutes before planting. Practice 5-year rotation away from alliums. Use raised beds for improved drainage. Soil solarization in hot months reduces inoculum.
+
+ONION VIROSIS — Yellow Dwarf Virus (virosis)
+Cause: Onion Yellow Dwarf Virus (OYDV) and Leek Yellow Stripe Virus (LYSV), both potyviruses. Transmitted persistently by aphids (Myzus persicae, Aphis gossypii). Infected sets and transplants are primary sources.
+Symptoms: Yellow streaks or stripes on leaves running parallel to leaf axis. Leaves flattened and twisted. Stunted plants with reduced tillering and significantly reduced bulb size.
+Treatment: No cure once infected. Control aphids: spray imidacloprid (Confidor 200 SL), dimethoate, or thiamethoxam (Actara 25 WG) when aphids are detected. Use reflective silver mulches. Remove infected plants. Use virus-free certified transplants and sets.`,
+    `ایرس یلو وائرس: وجہ: IYSV وائرس، تھرپس کیڑے سے پھیلتا ہے۔ علامات: پتوں پر ہیرے کی شکل کے تان دھبے۔ علاج: اسپنوسیڈ (ٹریسر) یا ایگریمیک سے تھرپس کنٹرول کریں۔
+اسٹمفیلیم بلائٹ: وجہ: اسٹمفیلیم فنگس، پتوں کی نمی سے۔ علامات: زرد دھبے بھورے زخموں میں بدلتے ہیں۔ علاج: ڈائیتھین ایم-45 یا روول اسپرے، ڈرپ آبپاشی استعمال کریں۔
+جامنی دھبے: وجہ: الٹرنیریا پوری فنگس، گرم نم موسم میں۔ علامات: سفید دھبے جامنی رنگ کے ساتھ، پتوں پر زرد لکیریں۔ علاج: روول یا فولی کر اسپرے کریں۔
+الٹرنیریا: وجہ: الٹرنیریا فنگس۔ علامات: بھورے بیضوی دھبے جو بڑھتے ہیں۔ علاج: ڈائیتھین ایم-45 یا ایمیسٹار اسپرے کریں، 2-3 سالہ فصل چکر۔
+بلب بلائٹ/نیک روٹ: وجہ: بوٹریٹس فنگس، ٹھنڈی نم حالات میں۔ علامات: گردن پر نرم سڑن، سرمئی پھپھوندی، بدبو۔ علاج: برایوو یا روول آخری 4 ہفتوں میں اسپرے، 27-35°C پر 7-10 دن کیورنگ کریں۔
+فیوزیریم: وجہ: فیوزیریم مٹی میں رہنے والا فنگس۔ علامات: پتے پیلے، جڑیں گل جاتی ہیں، بیسل پلیٹ بھوری۔ علاج: باوسٹن سے پودشالہ ڈرینچ، پانچ سالہ فصل چکر۔
+وائرل بیماری: وجہ: OYDV وائرس، تیلوں سے پھیلتا ہے۔ علامات: پتوں پر زرد دھاریاں، مڑے ہوئے پتے، بونے پودے۔ علاج: کنفیڈور سے تیلا کنٹرول، وائرس مکت پنیری استعمال کریں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "potato", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `BLACK SCURF — Rhizoctonia (black_scurf)
+Cause: Rhizoctonia solani fungus. Survives as sclerotia on seed tubers or in soil for years. Infection in cool (8-18C), moist soils. Continuous potato cultivation increases soil inoculum.
+Symptoms: Hard, black, irregular crusty growths (sclerotia) on tuber surface — can be rubbed off. Below ground: dark stem canker on sprouts, damping-off, aerial tuber formation, purple or red discoloration of stems.
+Treatment: Use certified disease-free seed tubers. Treat seed pieces with thiabendazole (Mertect 340F) or fludioxonil (Maxim MZ). Tolclofos-methyl (Rizolex) applied in-furrow at planting is highly effective. Plant into warm soil (above 10C). Practice 3-4 year crop rotation.
+
+BLACKLEG (blackleg)
+Cause: Pectobacterium atrosepticum (cool climates) and Dickeya species (warmer climates) bacteria. Seed-borne; spread through soil water and insects. Favored by cool, wet soils below 18C and waterlogging.
+Symptoms: Black, slimy decay beginning at seed piece and extending up the stem (black leg appearance), foul smell. Above-ground plants yellow, wilt, and collapse. Soft, wet rot in tubers starting at stolon end.
+Treatment: No effective chemical cure. Use certified disease-free seed. Allow cut seed pieces to suberize at 15-20C for 24-48 hours before planting. Ensure good drainage. Disinfect cutting knives with 1% bleach between cuts. Practice 3-4 year rotation.
+
+BLACKSPOT BRUISING — Internal Bruising (blackspot_bruising)
+Cause: Physiological/mechanical disorder from impact injury during harvest, transport, or handling. Cold tuber temperature (below 7C) increases susceptibility. Not caused by a pathogen.
+Symptoms: Dark gray to black spots visible inside tuber when cut; normal external appearance. Spots are dry with no smell. Caused by enzymatic browning (oxidation), not rotting.
+Treatment: Prevention only. Harvest at pulp temperature above 10C. Handle tubers gently; reduce drop heights on harvester equipment. Ensure adequate soil moisture before harvest. Cure tubers at 15-18C for 10-14 days before final cold storage. Select less bruise-susceptible varieties.
+
+BROWN ROT — Bacterial Wilt (brown_rot)
+Cause: Ralstonia solanacearum (Race 3, Biovar 2) soilborne bacterium. Spreads via infected seed tubers, irrigation water, soil, and farm equipment. Favored by warm soils (above 20C) and waterlogging. A quarantine pathogen in many countries.
+Symptoms: Wilting initially limited to top of plant, eventually permanent plant death. Cut tuber reveals brown vascular ring. Diagnostic sign: white to cream bacterial slime exudes when tuber is squeezed.
+Treatment: No effective chemical control available. Use only certified disease-free seed tubers. Rest infected fields from potato for 5-6 years. Avoid contaminated irrigation water. Disinfect all farm equipment. Rogue out and destroy infected plants immediately. Improve field drainage.
+
+COMMON SCAB (common_scab)
+Cause: Streptomyces scabies bacterium in soil. Infection through lenticels during tuber initiation. Favored by dry soil conditions, soil pH above 5.5, and temperatures of 20-22C. Sandy, well-drained soils at high pH are most conducive.
+Symptoms: Tan to dark brown, rough, corky, circular lesions on tuber surface (superficial, raised, or pitted scab). Does not affect internal flesh. Reduces marketability.
+Treatment: Maintain soil pH at 5.2 or below — most effective management strategy. Apply elemental sulfur to lower pH. Regular irrigation during tuber initiation (4-6 weeks after emergence) suppresses scab. Treat seed with thiabendazole (Mertect) or mancozeb. Rotate — avoid growing after beet, carrot, or turnip.
+
+DRY ROT — Fusarium (dry_rot)
+Cause: Fusarium sambucinum, F. solani, and other Fusarium species. Survive in soil and on infected tubers for years. Enter through cut surfaces, lenticels, and wounds. Favored by warm soils (above 15C).
+Symptoms: Internal decay — dry, shrunken, brown to dark brown tissue with cavities lined with white to pink mycelium. Infected seed pieces fail to emerge or produce weak plants. Tubers in store shrivel with concentric rings of discolored tissue.
+Treatment: Treat cut seed pieces with fludioxonil (Maxim MZ) or thiabendazole (Mertect 340F) — highly effective. Allow seed pieces to suberize before planting. Plant into warm soil (above 10C) for rapid emergence. Store at 4C with good air circulation. Practice 3-4 year crop rotation.
+
+PINK ROT — Phytophthora (pink_rot)
+Cause: Phytophthora erythroseptica water mold. Thrives in waterlogged, anaerobic soils. Spreads via infested soil, infected seed tubers, and irrigation/flood water. Favored by saturated conditions and warm temperatures (15-25C).
+Symptoms: Water-soaked, rubbery infected flesh initially cream-colored. Diagnostic sign: cut flesh turns from salmon-pink to dark brown or black within 30 minutes of air exposure. Foul, fermented odor may be present. Wilting and yellowing in field plants.
+Treatment: Improve field drainage — most critical management step. Avoid planting in waterlogged soils. Apply mefenoxam (Ridomil Gold) or metalaxyl-M in-furrow at planting — highly effective against oomycetes. Practice 3-4 year crop rotation. Do not over-irrigate.
+
+SOFT ROT — Erwinia (soft_rot)
+Cause: Pectobacterium carotovorum (formerly Erwinia carotovora) bacterium. Enters through wounds, lenticels, and insect damage. Favored by warm (25-35C), high humidity, and anaerobic conditions (film of water on tubers). Rapid spread in storage with poor ventilation.
+Symptoms: Water-soaked spots rapidly enlarging into slimy, soft, foul-smelling mass. Outer skin may remain intact while interior collapses. Affects entire pockets in storage.
+Treatment: Harvest mature tubers at low pulp temperature (below 15C). Handle gently to minimize wounds. Ensure tubers are dry at harvest. Apply foliar calcium sprays (calcium chloride 100-200 kg Ca/ha) during bulking. Disinfect storage with formalin or copper sulfate. Store at 4-8C with excellent air circulation.`,
+    `کالی کھرنڈ: وجہ: رائزوکٹونیا فنگس، ٹھنڈی نم مٹی میں۔ علامات: کند پر سیاہ سخت کھرنڈ، تنے پر گہرے زخم۔ علاج: میرٹیکٹ یا میکسم سے بیج ٹریٹمنٹ، ریزولیکس ان-فرو، 10°C سے اوپر درجہ حرارت پر کاشت۔
+کالی ٹانگ: وجہ: پیکٹوبیکٹیریم بیکٹیریا، بیج سے پھیلتا ہے۔ علامات: تنے پر سیاہ بدبودار سڑن، پودا گر جاتا ہے۔ علاج: مزاحم بیج، بیج کو 48 گھنٹے خشک کریں، اچھی نکاسی یقینی بنائیں۔
+کالے دھبے: وجہ: کٹائی کے دوران چوٹ، ٹھنڈے کند زیادہ حساس ہوتے ہیں۔ علامات: اندر سے سیاہ دھبے، باہر سے نارمل، کوئی بدبو نہیں۔ علاج: 10°C سے اوپر کٹائی، دھیرے سنبھالیں، 15-18°C پر کیورنگ کریں۔
+بھوری سڑن: وجہ: رالسٹونیا بیکٹیریا، آبپاشی کے پانی سے پھیلتا ہے۔ علامات: مرجھاؤ، کند کا عروقی دائرہ بھورا، سفید بیکٹیریل رس۔ علاج: کوئی کیمیائی علاج نہیں، صرف مزاحم بیج، صاف پانی، آلات صاف کریں۔
+عام کھرنڈ: وجہ: اسٹریپٹومائسس بیکٹیریا خشک الکلائن مٹی میں۔ علامات: کند کی سطح پر کھردرے کارکی دھبے۔ علاج: مٹی کا pH 5.2 سے نیچے رکھیں، کند بننے کے وقت باقاعدہ آبپاشی کریں۔
+خشک سڑن: وجہ: فیوزیریم فنگس، بیج اور مٹی سے۔ علامات: اندر سے خشک بھوری سڑن، خالی گہاریں۔ علاج: میکسم یا میرٹیکٹ سے بیج ٹریٹمنٹ، 4°C پر ذخیرہ۔
+گلابی سڑن: وجہ: فائٹوفتھورا، پانی بھری مٹی میں۔ علامات: کند کاٹنے پر گوشت 30 منٹ میں گلابی پھر سیاہ ہو جاتا ہے۔ علاج: ریڈومل گولڈ ان-فرو ڈالیں، نکاسی بہتر کریں۔
+نرم سڑن: وجہ: ایروینیا بیکٹیریا، گرم نم حالات میں۔ علامات: بدبودار پانی دار نرم سڑن۔ علاج: ٹھنڈے کند کاٹیں، خشک ذخیرہ کریں، 4-8°C پر محفوظ رکھیں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "rice", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `BACTERIAL LEAF BLIGHT (bacterial_leaf_blight)
+Cause: Xanthomonas oryzae pv. oryzae bacterium. Spreads via irrigation water, rain splash, and wind-driven rain. Enters through hydathodes at leaf margins. Favored by high nitrogen, warm (25-34C), high humidity, and flooding. A major disease in Pakistan's Punjab and Sindh rice-growing regions.
+Symptoms: Kresek phase (seedlings): leaves roll and wilt, turning straw-colored; plants may die. Leaf blight phase (older plants): water-soaked yellow-orange stripes from leaf tips or margins with wavy margins progressing toward leaf base. Bacterial ooze (yellow droplets) on lesions in early morning.
+Treatment: Apply copper oxychloride (Blitox 50 WP, 3 g/L) or copper hydroxide (Kocide 2000) every 7-10 days. Drench nursery beds with 0.1% copper oxychloride. Reduce nitrogen fertilizer during humid and rainy weather. Drain flood water promptly. Use resistant varieties (IR64, resistant Basmati lines). Remove and destroy infected stubble after harvest.
+
+RICE BLAST (rice_blast)
+Cause: Magnaporthe oryzae fungus (Pyricularia oryzae). Spreads by wind-dispersed conidia during leaf wetness periods. Highly favored by high humidity (above 90% RH), temperatures of 20-28C, heavy dew, and excess nitrogen. One of the most destructive rice diseases worldwide.
+Symptoms: Leaf blast: spindle-shaped spots with gray or white centers and brown-red margins on leaves. Collar blast: brown lesion at leaf collar causing leaf to fall. Neck blast (most damaging): brown-gray lesion at panicle base causing panicle to break and fall over (white head) with incomplete grain filling. Node blast: dark brown-black lesions at nodes.
+Treatment: Treat seed with tricyclazole (Beam 75 WP) or carbendazim (Bavistin) before sowing. Foliar spray: tricyclazole (Beam 75 WP, 0.6 g/L) or isoprothiolane (Fuji-One 40 EC, 1.5 mL/L) at first sign; repeat after 10-14 days. Propiconazole (Tilt 250 EC) also effective. Apply at tillering, booting, and early heading stages. Reduce nitrogen during blast-conducive weather. Use resistant varieties.
+
+TUNGRO (tungro)
+Cause: Complex of two viruses: Rice tungro spherical virus (RTSV) and Rice tungro bacilliform virus (RTBV). Transmitted by the green leafhopper (Nephotettix virescens). Favored by high leafhopper populations. Common in Pakistan's Sindh and Punjab rice areas.
+Symptoms: Stunted plants with reduced tillering. Young leaves turn bright yellow-orange — most characteristic symptom. Older leaves show rust-colored spots and interveinal chlorosis. Plants rarely produce panicles; grains are sterile or poorly filled.
+Treatment: No chemical cure for the virus. Control leafhopper vector: apply carbofuran (Furadan 3G) granules at transplanting, or spray thiamethoxam (Actara 25 WG), imidacloprid (Confidor 200 SL), or buprofezin (Applaud 25 WP) when leafhopper populations exceed 1 per hill. Remove and destroy infected plants early. Use resistant or tolerant varieties (IR36 and resistant lines). Synchronize planting in a region to break disease cycle.`,
+    `بیکٹیریل پتہ بلائٹ: وجہ: زینتھوموناس بیکٹیریا، آبپاشی کے پانی سے پھیلتا ہے، پاکستانی پنجاب اور سندھ میں اہم بیماری۔ علامات: کریسک: پودشالہ میں پتے مرجھاتے ہیں۔ بڑے پودوں میں: پتوں کے کنارے زرد-نارنجی لکیریں، صبح کو بیکٹیریل رطوبت۔ علاج: بلیٹاکس 50 (3 گرام/لیٹر) ہر 7-10 دن، نائٹروجن کم کریں، مزاحم اقسام لگائیں۔
+رائس بلاسٹ: وجہ: میگناپورتھی فنگس، ہوا سے پھیلتی ہے، زیادہ نائٹروجن سے خطرہ بڑھتا ہے۔ علامات: پتوں پر کشتی نما دھبے، گردن پر حملے سے خوشہ ٹوٹ کر گر جاتا ہے (وائٹ ہیڈ)۔ علاج: بیج کو بیم 75 سے ٹریٹ کریں، فجی ون 40 (1.5 ملی/لیٹر) اسپرے کریں۔
+ٹنگرو: وجہ: دو وائرسوں کا مجموعہ، گرین لیف ہاپر سے منتقل ہوتا ہے۔ علامات: پودے بونے، نوجوان پتے چمکیلے زرد-نارنجی، خوشے نہیں بنتے۔ علاج: فیوراڈان 3 جی ٹرانسپلانٹنگ پر، ایکٹارہ یا کنفیڈور فولیار، مزاحم اقسام لگائیں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sugarcane", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `BANDED CHLOROSIS (banded_chlorosis)
+Cause: Physiological cold injury to unrolled leaf tissue within the spindle when temperatures drop below 10C. Not caused by a pathogen.
+Symptoms: Horizontal bands of light green to white tissue (5-10 cm wide) crossing the entire leaf width, alternating with normal green tissue. Appears on multiple recently emerged leaves simultaneously. Plants generally recover as temperatures normalize.
+Treatment: No chemical treatment needed. Avoid planting susceptible varieties in areas prone to cold spells. Ensure adequate nitrogen and potassium nutrition to support vigorous regrowth. Select cold-tolerant varieties.
+
+BROWN SPOT — Cercospora (brown_spot)
+Cause: Cercospora longipes fungus. Spreads by airborne conidia during humid conditions. Favored by high humidity (above 80%), warm (25-30C), and dense crop canopy. An emerging serious threat in South Asian sugarcane production.
+Symptoms: Gray-brown to dark brown circular lesions on leaves with gray centers and dark-brown to purple margins (0.5-1.0 cm). Lesions coalesce under high pressure. Shot-hole appearance as lesion centers fall out. Severely infected leaves dry up prematurely.
+Treatment: Spray potassium silicate (0.5%) at 120 and 150 days after planting — highly effective. Apply copper oxychloride (Blitox 50 WP, 3 g/L) or mancozeb (Dithane M-45, 2.5 g/L) preventively. Remove and destroy infected leaves. Grow resistant varieties.
+
+BROWN RUST (brown_rust)
+Cause: Puccinia melanocephala (common brown rust) or Puccinia kuehnii (orange rust) fungi. Spread by wind-dispersed urediniospores. Favored by moderate temperatures (20-28C), high humidity, rain, and dew. Rust epidemics can develop rapidly in susceptible varieties.
+Symptoms: Elongated oval reddish-brown pustules on leaf undersides; yellow-green flecks on upper surface. Pustules rupture releasing powdery reddish-brown spores. Severely infected leaves yellow and die.
+Treatment: Apply propiconazole (Tilt 250 EC, 1 mL/L), azoxystrobin + propiconazole (Quilt Xcel), or pyraclostrobin (Headline EC) at first pustule appearance. Repeat after 3-4 weeks if epidemic continues. Use resistant varieties as the primary long-term management strategy.
+
+GRASSY SHOOT (grassy_shoot)
+Cause: Phytoplasma transmitted by planthopper Pyrilla perpusilla. Also spreads through infected setts (planting material). Colonizes phloem and disrupts normal plant development.
+Symptoms: Profuse production of numerous thin, narrow, pale yellow grass-like tillers from plant base. Severely stunted plants with extremely narrow erect leaves resembling grass. Shortened internodes on main stalk. No economic yield possible from severely affected plants.
+Treatment: No cure for phytoplasma infection. Remove and burn infected plants immediately before planthopper-mediated spread. Control planthopper with imidacloprid (Confidor) or thiamethoxam (Actara) foliar sprays. Use disease-free setts from certified nurseries. Hot water treatment of setts (50C for 2 hours) eliminates phytoplasma from planting material.
+
+POKKAH BOENG (pokkah_boeng)
+Cause: Fusarium moniliforme (F. verticillioides) and F. subglutinans fungi. Infects young developing leaves in the spindle during warm, humid conditions. Favored by 25-30C and high relative humidity.
+Symptoms: (1) Chlorosis at base of young top leaves. (2) Twisted top — leaves crumpled, stunted, with notched margins. (3) Top rot — growing point killed, spindle rots with foul smell. (4) Knife-cut stage — dead top with ladder-like cuts on the stalk. Red or pink stalk discoloration.
+Treatment: Apply carbendazim (Bavistin 50 WP, 1 g/L) or propiconazole (Tilt 250 EC) or tebuconazole (Folicur 250 EW) as foliar spray targeting inside the leaf whorl/spindle. Remove and destroy severely infected tops. Reduce excess nitrogen fertilization. Plant less susceptible varieties.
+
+SETT ROT — Pineapple Disease (sett_rot)
+Cause: Ceratocystis paradoxa fungus. Infects newly planted sett cut surfaces shortly after planting. Favored by dry, hot soils at planting time and late or deep planting. Named for the pineapple-like smell of infected setts.
+Symptoms: Sett tissue turns red then progressively darkened, hollowed, and blackened internally. Characteristic sweet, pineapple-like odor (diagnostic). Buds and young shoots die before or shortly after emergence, resulting in poor germination and patchy stands.
+Treatment: Treat setts with carbendazim (Bavistin 50 WP, 0.1%) or thiophanate-methyl solution for 15-20 minutes before planting. Alternatively dust cut ends with Trichoderma-based biocontrol agent powder. Plant into moist (not dry or hot) soils. Use hot water treatment of setts (50C for 2 hours) for disease-free sett production.
+
+VIRAL DISEASE — Sugarcane Mosaic (viral_disease)
+Cause: Sugarcane Mosaic Virus (SCMV), a potyvirus. Transmitted non-persistently by multiple aphid species (Rhopalosiphum maidis, Aphis sacchari, and others). Also spreads through infected setts. Aphids transmit the virus within minutes of feeding.
+Symptoms: Irregular mosaic pattern of pale green, yellowish-green, and normal green on young emerging leaves, most visible in bright sunlight. Mild stunting in affected plants. Symptoms vary by cane variety, temperature, and virus strain.
+Treatment: No effective pesticide treatment for the virus. Plant only healthy, certified disease-free setts. Use mosaic-resistant varieties — host plant resistance is the primary management strategy. Rogue out infected plants in seed nurseries. Sanitize cutting tools between plants in nurseries.
+
+YELLOW LEAF — Sugarcane Yellow Leaf Virus (yellow_leaf)
+Cause: Sugarcane Yellow Leaf Virus (SCYLV), a polerovirus. Transmitted persistently by the aphid Melanaphis sacchari (sugarcane aphid). Also spreads through infected setts. Mixed infections with phytoplasmas can intensify symptoms.
+Symptoms: Underside of the midrib (midvein) of young leaves at the top of mature plants turns bright, intense yellow — the most diagnostic symptom. Yellowing extends from the midrib across the entire leaf blade as disease progresses. Mild stunting and reduced yield are variable.
+Treatment: No in-season chemical cure. Use certified disease-free setts from clean nurseries as the primary management tool. Control aphid vectors with imidacloprid (Confidor) or thiamethoxam (Actara). Rogue out infected plants from seed nurseries. Obtain new planting material from tissue culture-produced, virus-tested plants.
+
+SMUT (smut)
+Cause: Sporisorium scitamineum fungus. Spreads by windborne teliospores settling on buds of setts or young shoots. Teliospores survive in soil for up to 10 years. Infection occurs at bud stage during germination. Favored by dry conditions at planting and high temperatures (25-35C).
+Symptoms: Black, whip-like structure (smut sori) emerging from growing point at plant apex, curling outward up to 1 meter or more in length. Whip initially covered with a silver-white membrane that ruptures releasing masses of black teliospores. Affected plants produce thinner stalks with grass-like tillers. No economic yield possible from smutted stools.
+Treatment: Do not plant setts with more than 2% smut infection rate. Treat setts by hot water treatment (50C for 2 hours) to eliminate spores and internal mycelium. Use tissue culture-produced, smut-free planting material. Rogue out and burn smutted plants immediately before the whip ruptures and releases spores. Avoid replanting infected ratoons — destroy and replant with clean material. Practice 2-3 year rotation in heavily infested fields.`,
+    `بینڈڈ کلوروسس: وجہ: سردی سے پتوں کو نقصان (10°C سے کم)، کوئی پیتھوجن نہیں۔ علامات: پتوں پر افقی سفید-ہلکی سبز پٹیاں۔ علاج: کوئی کیمیائی علاج نہیں، مناسب کھاد، سرد علاقوں میں مزاحم اقسام لگائیں۔
+بھورے دھبے: وجہ: سرکوسپورا فنگس، نم گرم موسم میں۔ علامات: پتوں پر گول سرمئی-بھورے دھبے۔ علاج: پوٹاشیم سلیکیٹ (0.5%) 120 اور 150 دن بعد اسپرے، ڈائیتھین ایم-45 اسپرے۔
+بھوری زنگ: وجہ: پکسینیا فنگس، ہوا سے پھیلتی ہے۔ علامات: پتوں کے نیچے سرخ-بھورے پھپھوندی گچھے۔ علاج: ٹلٹ 250 یا ہیڈلائن اسپرے کریں، مزاحم اقسام لگائیں۔
+گھاس جیسی ٹہنی: وجہ: فائٹوپلازما، پائریلا پلانٹ ہاپر سے پھیلتا ہے۔ علامات: گھاس نما پتلی زرد ٹہنیاں، شدید بونا پن۔ علاج: کوئی علاج نہیں، متاثرہ پودے جلائیں، گرم پانی سے سیٹ ٹریٹمنٹ۔
+پوکا بوئنگ: وجہ: فیوزیریم فنگس۔ علامات: پتے مڑے ہوئے، کٹے کنارے، گلنے والا چوٹی، تنے پر سرخی۔ علاج: باوسٹن یا ٹلٹ اسپرے کریں، زیادہ نائٹروجن سے گریز۔
+سیٹ سڑن: وجہ: سیراٹوسسٹس فنگس، کٹے سیٹوں پر حملہ۔ علامات: اندر سے سیاہ سڑن، انناس جیسی خوشبو، انکرنا نہیں ہوتا۔ علاج: باوسٹن محلول (0.1%) میں 15-20 منٹ ڈبوئیں، نم مٹی میں فوری لگائیں۔
+وائرل بیماری: وجہ: SCMV وائرس، تیلوں سے پھیلتا ہے۔ علامات: نوجوان پتوں پر موزیک دھبے۔ علاج: مزاحم اقسام، وائرس مکت سیٹ لگائیں، پودشالہ میں متاثرہ پودے ہٹائیں۔
+پیلے پتے: وجہ: SCYLV وائرس، تیلوں سے پھیلتا ہے۔ علامات: اوپری پتوں کی درمیانی رگ کا نیچے سے چمکیلا پیلا ہونا۔ علاج: ٹشو کلچر سے وائرس مکت سیٹ، تیلا کنٹرول کریں۔
+سمٹ: وجہ: اسپوریسوریم فنگس، ہوا سے کلیوں پر حملہ، مٹی میں 10 سال تک زندہ رہتی ہے۔ علامات: تنے کے سرے سے لمبا سیاہ کوڑے نما ڈھانچہ۔ علاج: گرم پانی ٹریٹمنٹ (50°C، 2 گھنٹے)، متاثرہ پودے فوری جلائیں کوڑا پھٹنے سے پہلے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sunflower", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `DOWNY MILDEW (downy_mildew)
+Cause: Plasmopara halstedii obligate oomycete pathogen. Spreads via soilborne oospores (survive many years in soil) and wind-dispersed sporangia. Highly favored by cool (12-20C), wet conditions immediately after planting.
+Symptoms: Infected seedlings show stunting and yellowing. Pale green to yellow areas on upper leaf surface with white, cottony, downy sporulation on corresponding lower leaf surface — most visible in early morning. Severely infected plants have shortened internodes, thickened stems, and systemic chlorosis. May fail to produce heads.
+Treatment: Apply mefenoxam (metalaxyl-M) + fludioxonil (Apron XL + Maxim) as seed treatment before planting — the most effective management strategy. Foliar mancozeb or copper-based fungicides provide moderate secondary protection. Practice 3-4 year crop rotation. Use resistant hybrid varieties. Improve soil drainage.
+
+GRAY MOLD — Botrytis (gray_mold)
+Cause: Botrytis cinerea fungus. Spreads via airborne conidia in cool, humid conditions. Survives as sclerotia in soil and plant debris for years. Favored by cool (15-20C), prolonged high humidity (above 90% RH), wet cloudy weather, dense plantings, and wounds.
+Symptoms: Characteristic silver-gray, dusty spore masses on affected tissue. Petals infected first (water-soaked), then soft brown rot on the head (capitulum) covered with gray mold. Affected buds fail to open. Infected tissue has musty smell.
+Treatment: Apply copper sulfate (Kocide 2000) or mancozeb (Dithane M-45) preventively during cool, wet periods, especially at and after flowering. Fenhexamid (Teldor) or iprodione (Rovral) provide good Botrytis control. Improve plant spacing and airflow. Avoid excess nitrogen. Remove and destroy infected debris after harvest. Rotate fungicide modes of action to prevent resistance.
+
+LEAF SCARS — Alternaria / Cercospora Leaf Spot (leaf_scars)
+Cause: Alternaria helianthi (Alternaria leaf spot) or Cercospora helianthicola (Cercospora leaf spot) fungi, or mechanical damage from hail, insects, and wind leaving scar tissue. Both fungi survive on infected debris and spread by wind-dispersed conidia. Warm (25-30C), humid conditions favor infection.
+Symptoms: Alternaria: dark brown, circular spots (1-3 cm) with concentric rings and a yellow halo; dark fuzzy sporulation in humid conditions. Severe infections cause defoliation. Cercospora: brown to gray spots with white, papery scar-like centers scattered across leaf surface. Both can result in premature defoliation.
+Treatment: Apply mancozeb (Dithane M-45, 2.5 g/L) or copper oxychloride (Blitox 50 WP) every 10-14 days from early flowering. Azoxystrobin (Amistar 250 SC) or tebuconazole (Folicur 250 EW) provide good systemic control. Remove crop debris promptly after harvest. Practice 3-year crop rotation. Maintain proper plant spacing for air circulation.`,
+    `ڈاؤنی ملڈیو: وجہ: پلاسموپارا اومائسیٹ، ٹھنڈی (12-20°C) نم مٹی میں پودشالہ میں حملہ کرتی ہے۔ علامات: پودے بونے زرد، پتوں کے نیچے سفید روئیں دار پھپھوندی۔ علاج: بیج کو ایپرون ایکس ایل + میکسم سے ٹریٹ کریں (سب سے مؤثر)، 3-4 سالہ فصل چکر، مزاحم اقسام لگائیں۔
+سرمئی پھپھوندی: وجہ: بوٹریٹس فنگس، ٹھنڈی (15-20°C) نم حالات میں۔ علامات: سروں اور پتوں پر چاندی نما سرمئی پھپھوندی، بدبو۔ علاج: کوکائیڈ 2000 یا ڈائیتھین ایم-45 پھول آنے کے وقت اسپرے، ہوا گردش بہتر بنائیں، ٹیلڈور یا روول بھی مؤثر ہیں۔
+پتوں کے نشان: وجہ: الٹرنیریا یا سرکوسپورا فنگس، ہوا سے پھیلتی ہیں۔ علامات: الٹرنیریا: پیلے ہالے والے گول سیاہ-بھورے دھبے۔ سرکوسپورا: سفید کاغذی مرکز والے بھورے دھبے۔ علاج: ڈائیتھین ایم-45 یا ایمیسٹار ہر 10-14 دن اسپرے، مناسب فاصلہ، فصل چکر۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "tomato", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `BACTERIAL DISEASE — Bacterial Speck (bacterial_disease)
+Cause: Pseudomonas syringae pv. tomato bacterium. Spreads via rain splash, wind-driven rain, contaminated seed, and transplants. Favored by cool (18-22C), wet conditions and overhead irrigation.
+Symptoms: Tiny (1-2 mm) dark brown to black water-soaked spots with yellow halo on leaves. On fruit: small, slightly raised spots with white halo. Severely infected leaves yellow and drop.
+Treatment: Apply copper hydroxide (Kocide 2000, 3 g/L) combined with mancozeb (Dithane M-45) every 7-10 days. Use certified or hot-water-treated seed (50C for 25 minutes). Use drip irrigation; avoid overhead watering. Remove infected debris.
+
+BLOSSOM END ROT (blossom_end_rot)
+Cause: Physiological calcium deficiency in developing fruit due to inconsistent or insufficient water supply impairing calcium uptake. Excess nitrogen, high soil salinity, and extreme pH exacerbate it. Not contagious.
+Symptoms: Dark, leathery, sunken areas on blossom (bottom) end of fruit. Initially pale green, turning tan to dark brown or black. Lesion grows flat and dry. Secondary Alternaria mold may colonize the dead tissue. Affects first fruit clusters most commonly.
+Treatment: Maintain consistent soil moisture with mulching and drip irrigation. Apply foliar calcium: calcium chloride (0.4-0.6%) or calcium nitrate (0.4%) weekly during fruit set and expansion. Avoid excess potassium and ammonium-nitrogen. Maintain soil pH at 6.5-6.8. Include calcium superphosphate in basal fertilizer.
+
+MITE — Spider Mite / Tomato Russet Mite (mite)
+Cause: Tetranychus urticae (two-spotted spider mite) and Aculops lycopersici (tomato russet mite). Favored by hot, dry conditions (above 28C) and low humidity. Populations build rapidly after broad-spectrum pesticide use that kills natural enemies.
+Symptoms: Spider mite: fine stippling (tiny yellow dots) on leaves, fine silk webbing on leaf undersides; leaves turn yellow, bronze, and dry up. Russet mite: bronze-brown roughening of stems and leaves from base upward; leaves curl downward; fruit shows cracking and brownish surface.
+Treatment: Spider mites: apply abamectin (Agrimek 1.8 EC, 0.5 mL/L), spiromesifen (Oberon 240 SC), or neem oil (5 mL/L). Russet mite: wettable sulfur (Thiovit Jet 80 WG) applied early is highly effective; abamectin also works. Rotate miticide classes to prevent resistance. Preserve natural predatory mites (Phytoseiidae).
+
+ALTERNARIA — Early Blight (alternaria)
+Cause: Alternaria solani and Alternaria tomatophila fungi. Survive on infected debris and seeds. Spreads by wind-dispersed conidia and rain splash. Favored by warm (24-29C), high humidity, and alternating wet/dry periods. Stressed plants most susceptible.
+Symptoms: Dark brown, circular spots on older lower leaves with characteristic concentric rings (target-board pattern) and yellow halo. Spots enlarge to 1-2 cm. Defoliation progresses from bottom upward. Stem collar rot may occur near soil line. Fruit shows dark, sunken, leathery spots at stem end.
+Treatment: Apply mancozeb (Dithane M-45, 2.5 g/L) or chlorothalonil (Bravo 500 SC) preventively. Azoxystrobin (Amistar 250 SC) or difenoconazole (Score 250 EC) provide excellent curative control every 7-10 days. Remove infected lower leaves. Use drip irrigation and mulch. Rotate crops for 2-3 years.
+
+FUSARIUM WILT (fusarium)
+Cause: Fusarium oxysporum f. sp. lycopersici (races 1, 2, and 3). Soilborne pathogen surviving decades in soil. Colonizes vascular system blocking water and nutrient transport. Favored by warm soils (above 28C) and acidic pH (below 6.5).
+Symptoms: One-sided (unilateral) yellowing and wilting initially — only one branch or one side of leaflet wilts first. Wilting may recover at night early in disease. Entire plant eventually wilts permanently and dies. Cut stem reveals brown vascular ring in cross-section — diagnostic sign.
+Treatment: No effective chemical cure once infection is established. Plant resistant varieties — look for F, FF, or FFF on seed label (Race 1, 2, 3 resistance). Soil solarization (clear plastic over moist soil for 4-6 weeks in summer). Apply Trichoderma harzianum biocontrol agent to soil before planting. Maintain soil pH above 6.5. Practice 4-5 year rotation away from solanaceous crops.
+
+LATE BLIGHT — Phytophthora (late_blight)
+Cause: Phytophthora infestans oomycete. Spreads by wind-dispersed sporangia and infected plant debris. Highly favored by cool (12-18C), wet, and humid conditions with prolonged leaf wetness. One of the most destructive plant diseases in history.
+Symptoms: Large, dark brown, water-soaked lesions on leaves that rapidly enlarge. White downy sporulation visible on lesion underside in humid conditions. Brown-black lesions on stems. Fruit shows dark, oily-looking brown rot spreading rapidly. Entire plant can collapse within days under severe conditions.
+Treatment: Apply mancozeb (Dithane M-45, 2.5 g/L) or chlorothalonil (Bravo 500 SC) preventively. Metalaxyl-M (Ridomil Gold MZ) provides curative activity against Phytophthora. Cymoxanil + mancozeb (Curzate M-8) or dimethomorph (Acrobat MZ) are highly effective. Spray every 5-7 days during humid, wet weather. Remove and destroy infected plant parts immediately. Avoid overhead irrigation.
+
+VIROSIS — Mosaic / Spotted Wilt (virosis)
+Cause: Tomato Mosaic Virus (ToMV), Tobacco Mosaic Virus (TMV, mechanically transmitted), and Tomato Spotted Wilt Virus (TSWV, transmitted by thrips Frankliniella occidentalis). TMV/ToMV spread through contaminated tools and plant contact. Favored by high vector populations.
+Symptoms: ToMV/TMV: mosaic of light and dark green areas on leaves, leaf distortion, mottling, fern-leaf symptom in some strains. Fruit may show internal browning. TSWV: bronze necrotic spots and rings on leaves, brown streaking on stems, ringspot patterns on fruit, plant stunting, wilting.
+Treatment: No cure once infected. For TMV/ToMV: disinfect hands with soap or 10% milk solution (denatures virus); disinfect tools with 1% bleach solution. Do not smoke near plants. Use resistant varieties (Tm-2 gene for ToMV). For TSWV: control thrips with spinosad (Tracer 120 SC) or abamectin; use reflective mulches; remove infected plants immediately. Plant Sw-5 resistant varieties.
+
+BACTERIAL SPOT (bacterial_spot)
+Cause: Xanthomonas euvesicatoria and related species complex. Spreads by rain splash, overhead irrigation, contaminated seed, and transplants. Favored by warm (24-30C), wet, humid conditions and overhead irrigation.
+Symptoms: Small (1-3 mm) water-soaked spots on leaves turning brown-black with yellow halo; shot-hole appearance as centers fall out. On fruit: small, raised, water-soaked spots becoming dark and scabby — larger and raised compared to bacterial speck.
+Treatment: Apply copper hydroxide (Kocide 2000, 3 g/L) combined with mancozeb (Dithane M-45) every 7-10 days. Use streptomycin sulfate (Agrimycin 17) for high-pressure situations where permitted. Use hot-water-treated seed (50C for 25 minutes). Avoid overhead irrigation. Rotate with non-solanaceous crops for 2 years.
+
+EARLY BLIGHT (early_blight)
+Cause: Alternaria solani — same pathogen as the Alternaria entry above. Survives on infected plant debris and seeds. Spreads by wind-dispersed conidia and rain splash. Favored by warm (24-29C), high humidity, and plant stress.
+Symptoms: Dark brown spots with characteristic target-board pattern of concentric rings on older lower leaves. Yellow halo surrounds lesions (1-2 cm). Defoliation from bottom upward. Collar rot at soil line. Dark, sunken, leathery fruit lesions at stem end.
+Treatment: Apply mancozeb (Dithane M-45) or chlorothalonil (Bravo 500 SC) preventively every 7-10 days. Difenoconazole (Score 250 EC) provides excellent curative control. Stake and prune plants to improve airflow. Remove infected lower leaves regularly. Use drip irrigation and mulch soil surface.
+
+LEAF CURL — Tomato Yellow Leaf Curl Virus (leaf_curl)
+Cause: Tomato Yellow Leaf Curl Virus (TYLCV), a begomovirus transmitted persistently by whitefly Bemisia tabaci (the same vector as cotton leaf curl in Pakistan). Not seed-transmitted. Favored by high whitefly populations and hot dry weather.
+Symptoms: Yellowing and upward curling of young leaves — most characteristic sign. Leaf margins curl upward and inward; leaves appear small and cupped. Severe plant stunting with bushy appearance, flower drop before fruit set. Plants in advanced stages have small, yellowish, cupped leaves.
+Treatment: No cure once infected. Control whitefly: apply imidacloprid (Confidor 200 SL) as soil drench at transplanting, or spray acetamiprid (Mospilan 20 SP), thiamethoxam (Actara 25 WG), or spiromesifen (Oberon 240 SC). Use yellow sticky traps. Install 40-mesh net screens in nurseries. Remove infected plants early. Plant TYLCV-resistant varieties (Ty-1, Ty-3 resistance genes).
+
+LEAF MOLD (leaf_mold)
+Cause: Passalora fulva (formerly Cladosporium fulvum) fungus. Spreads by airborne conidia. Favored by high humidity (above 85%), poor air circulation, and temperatures of 22-25C. Primarily a problem in protected cultivation (greenhouses, tunnels) but occurs in open fields during humid seasons.
+Symptoms: Pale greenish-yellow spots (less than 6 mm) on upper leaf surface. Olive-green to grayish-brown, velvety mold on lower leaf surface directly below yellow spots — diagnostic. Infected leaves yellow and drop causing severe defoliation.
+Treatment: Apply chlorothalonil (Bravo 500 SC, 2 g/L), mancozeb (Dithane M-45), or copper fungicide every 7-10 days. Tebuconazole (Folicur 250 EW) or difenoconazole (Score 250 EC) provide good systemic control. Improve ventilation in greenhouses and tunnels (reduce humidity below 85%). Avoid wetting foliage during irrigation. Remove and destroy infected leaves.
+
+SEPTORIA LEAF SPOT (septoria_leaf_spot)
+Cause: Septoria lycopersici fungus. Survives on infected plant debris and solanaceous weeds. Spreads by rain splash and water. Favored by warm, wet, humid conditions (20-25C) and overhead irrigation. One of the most common tomato foliar diseases in humid regions.
+Symptoms: Numerous small (3-6 mm) circular spots with whitish to gray centers and dark brown borders on lower leaves first. Tiny black specks (pycnidia — fungal fruiting bodies) in spot centers, visible under a hand lens and diagnostic. Spots are more numerous and smaller than early blight with no concentric rings. Infected leaves yellow and drop rapidly.
+Treatment: Apply mancozeb (Dithane M-45, 2.5 g/L) or chlorothalonil (Bravo 500 SC) preventively every 7-10 days. Azoxystrobin (Amistar 250 SC) or difenoconazole (Score 250 EC) provide excellent control. Remove infected lower leaves regularly. Use drip irrigation. Mulch soil surface to prevent spore splash. Practice 2-3 year crop rotation with non-solanaceous crops.`,
+    `بیکٹیریل بیماری: وجہ: سیوڈوموناس بیکٹیریا، ٹھنڈی نم حالات میں۔ علامات: پتوں پر پیلے ہالے والے چھوٹے سیاہ دھبے۔ علاج: کوکائیڈ 2000 + ڈائیتھین ایم-45 ہر 7-10 دن اسپرے۔
+پھول سرے کی سڑن: وجہ: کیلشیم کمی، بے قاعدہ آبپاشی سے۔ علامات: پھل کے نچلے سرے پر سیاہ گہرا دھنسا ہوا دھبہ۔ علاج: ڈرپ آبپاشی، کیلشیم کلورائیڈ (0.4-0.6%) ہفتہ وار فولیار، مٹی pH 6.5-6.8 رکھیں۔
+مائٹ: وجہ: مکڑی یا رسٹ مائٹ، گرم خشک موسم میں۔ علامات: مکڑی: پیلے نقطے، جال۔ رسٹ: تنوں پر کانسی کھردراہٹ نیچے سے اوپر۔ علاج: ایگریمیک یا تھیووٹ (گندھک) اسپرے کریں۔
+الٹرنیریا/ارلی بلائٹ: وجہ: الٹرنیریا فنگس۔ علامات: پرانے پتوں پر ہدف نشان نما بھورے دھبے۔ علاج: ڈائیتھین ایم-45 یا اسکور 250 ہر 7-10 دن اسپرے، ملچنگ کریں۔
+فیوزیریم ویلٹ: وجہ: فیوزیریم مٹی میں برسوں رہتا ہے۔ علامات: ایک طرف کا مرجھاؤ پہلے، تنے میں بھوری رگیں۔ علاج: F/FF/FFF مزاحم اقسام، ٹریکوڈرما، مٹی سولرائزیشن، 4-5 سالہ فصل چکر۔
+لیٹ بلائٹ: وجہ: فائٹوفتھورا، ٹھنڈی (12-18°C) نم حالات میں تیزی سے پھیلتی ہے۔ علامات: بڑے پانی دار بھورے دھبے، نیچے سفید پھپھوندی، پودا چند دنوں میں گر سکتا ہے۔ علاج: ریڈومل گولڈ ایم زیڈ یا کرزیٹ ایم-8 ہر 5-7 دن اسپرے۔
+وائرل بیماری: وجہ: ToMV (ہاتھوں/آلات سے) یا TSWV (تھرپس سے)۔ علامات: موزیک دھبے، پتے مڑے ہوئے۔ علاج: دودھ سے ہاتھ، 1% بلیچ سے آلات صاف کریں، اسپنوسیڈ سے تھرپس کنٹرول کریں۔
+بیکٹیریل اسپاٹ: وجہ: زینتھوموناس بیکٹیریا، بارش اور اوپری آبپاشی سے۔ علامات: پتوں اور پھل پر سیاہ خارشتی دھبے۔ علاج: کوکائیڈ 2000 + ڈائیتھین اسپرے، ڈرپ آبپاشی۔
+ارلی بلائٹ: الٹرنیریا جیسی بیماری (اوپر دیکھیں)۔ علاج: ڈائیتھین ایم-45 یا اسکور 250 اسپرے، نچلے پتے ہٹائیں۔
+لیف کرل/TYLCV: وجہ: TYLCV وائرس، سفید مکھی سے (کپاس کے CLCuV جیسا)۔ علامات: نوجوان پتے اوپر مڑتے ہیں، پودا بونا، پھول جھڑتے ہیں۔ علاج: کنفیڈور ڈرینچ، موسپیلان یا ایکٹارہ اسپرے، Ty-1/Ty-3 مزاحم اقسام۔
+لیف مولڈ: وجہ: پاساسالورا فنگس، زیادہ نمی (>85%) میں۔ علامات: پتوں کے اوپر پیلے دھبے، نیچے زیتونی مخملی پھپھوندی۔ علاج: برایوو یا فولی کر اسپرے، گرین ہاؤس ہوا گردش بہتر کریں۔
+سیپٹوریا دھبے: وجہ: سیپٹوریا فنگس، بارش کے چھینٹوں سے۔ علامات: نچلے پتوں پر بے شمار چھوٹے سفید-مرکز دھبے، درمیان میں سیاہ نقطے۔ علاج: ڈائیتھین ایم-45 یا ایمیسٹار ہر 7-10 دن، ملچنگ، ڈرپ آبپاشی۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "wheat", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `SEPTORIA — Septoria Tritici Blotch (septoria)
+Cause: Zymoseptoria tritici fungus (formerly Mycosphaerella graminicola). Survives on wheat stubble. Spreads via wind-dispersed ascospores (primary inoculum) and rain-splashed pycnidiospores (secondary spread). Favored by cool (10-15C), wet weather with 24 or more hours of continuous leaf wetness. A major wheat disease in Pakistan's Punjab region.
+Symptoms: Pale yellow to light green flecks developing into irregular brown blotches bounded by leaf veins. Characteristic small black dots (pycnidia) within tan, necrotic lesion centers — visible to the naked eye and diagnostic. Lesions coalesce causing extensive leaf death. Lower leaves infected first; disease moves up the canopy as the season progresses.
+Treatment: Apply propiconazole (Tilt 250 EC, 1 mL/L), tebuconazole (Folicur 250 EW), or epoxiconazole at first detection on lower leaves. Azoxystrobin (Amistar 250 SC) or pyraclostrobin, or in mixture with triazoles (Amistar Xtra), provides excellent control. Apply at GS31 (1st node) and GS39 (flag leaf) stages for season-long protection. Use resistant varieties. Practice crop rotation and plow in infected wheat stubble. Avoid excessively dense seeding.
+
+STRIPE RUST — Yellow Rust (stripe_rust)
+Cause: Puccinia striiformis f. sp. tritici fungus. Spreads by wind-dispersed urediniospores that can travel hundreds of kilometers. Highly favored by cool (7-15C) temperatures and high humidity or dew. The most important wheat disease in Pakistan's northern and central wheat belt, capable of devastating yield losses.
+Symptoms: Parallel rows (stripes) of bright yellow-orange, powdery pustules running along leaf veins, giving a distinct striped appearance. Severely affected plants appear entirely yellow from a distance. Pustules may appear on leaf sheaths and glumes. Black telial stage develops later on stubble. Unlike leaf rust, pustules are in distinct stripes and are more orange-yellow in color.
+Treatment: Apply propiconazole (Tilt 250 EC, 1 mL/L), tebuconazole (Folicur 250 EW), or triadimefon (Bayleton 25 WP) at first visible pustule; repeat after 14 days if conditions remain favorable. Azoxystrobin + propiconazole (Amistar Xtra) or trifloxystrobin + tebuconazole (Nativo 75 WG) provide excellent control. Apply as early as possible to protect the flag leaf. Monitor weekly during cool humid season (January-March in Pakistan). Plant resistant varieties (PARC-registered varieties with Yr resistance genes such as NARC-2011).
+
+LEAF RUST — Brown Rust (leaf_rust)
+Cause: Puccinia triticina fungus (formerly P. recondita f. sp. tritici). Spreads by wind-dispersed urediniospores. Favored by moderate temperatures (15-22C) and prolonged leaf wetness or dew. More heat-tolerant than stripe rust and becomes more important as spring temperatures warm (February-April in Pakistan).
+Symptoms: Small, circular to oval, orange-red to brick-red pustules scattered randomly on the upper leaf surface — NOT in stripes (distinguishes it from stripe rust). Pustules surrounded by a yellow halo. Severely infected leaves turn yellow and dry prematurely. A telial (black) stage develops later on older leaves and sheaths.
+Treatment: Apply propiconazole (Tilt 250 EC, 1 mL/L) or tebuconazole (Folicur 250 EW) at first pustule appearance; repeat after 14 days if needed. Azoxystrobin (Amistar 250 SC) or Nativo 75 WG (trifloxystrobin + tebuconazole) provide excellent systemic and protective control. Flag leaf and penultimate leaf protection is critical for yield preservation. Plant resistant varieties — consult PARC (Pakistan Agricultural Research Council) for currently recommended resistant varieties. Timely planting avoids extended exposure during the high-risk February-April period.`,
+    `سیپٹوریا: وجہ: زائمو سیپٹوریا فنگس، ٹھنڈے (10-15°C) نم موسم میں گندم کے ٹھنٹھوں سے پھیلتی ہے، پاکستانی پنجاب میں اہم بیماری۔ علامات: پتوں پر بے قاعدہ بھورے دھبے جن کے اندر چھوٹے سیاہ نقطے (پکنیڈیا) ہوتے ہیں۔ نچلے پتوں سے اوپر بڑھتی ہے۔ علاج: ٹلٹ 250 یا فولی کر GS31 اور GS39 مراحل پر اسپرے، ایمیسٹار ایکسٹرا بھی مؤثر، مزاحم اقسام، گندم کے ٹھنٹھ زمین میں دبائیں۔
+دھاری زنگ/پیلی زنگ: وجہ: پکسینیا اسٹرائی فارمس فنگس، سینکڑوں کلومیٹر ہوا سے پھیلتی ہے، 7-15°C کا ٹھنڈا موسم سازگار، پاکستان کی سب سے اہم گندم کی بیماری۔ علامات: پتوں کی رگوں کے ساتھ چمکیلے پیلے-نارنجی پاؤڈری دھاریں۔ علاج: ٹلٹ 250 یا نیٹیوو 75 پہلے گچھوں پر اسپرے، جنوری-مارچ ہفتہ وار نگرانی، PARC سے تصویب شدہ Yr مزاحم اقسام لگائیں۔
+پتہ زنگ/بھوری زنگ: وجہ: پکسینیا ٹریٹی سینا فنگس، فروری-اپریل میں زیادہ اہم ہو جاتی ہے۔ علامات: پتوں کی اوپری سطح پر بکھرے ہوئے اینٹ رنگ کے گول گچھے، دھاریاں نہیں (پیلی زنگ سے فرق)۔ علاج: ٹلٹ 250 یا فولی کر پہلے گچھوں پر اسپرے، 14 دن بعد دہرائیں، PARC سے مزاحم اقسام لگائیں۔`
+  );
+
+  // ── RECOMMENDED PRODUCTS (zaraidawai.pk) ────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "cotton", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides and bactericides are available for purchase in Pakistan at zaraidawai.pk:
+
+BACTERIAL BLIGHT:
+- Copper Oxychloride 50% WP (Suvastu Agri) — broad-spectrum contact bactericide/fungicide. Apply 1 kg per acre. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- Craft (Copper Oxychloride 50% WP, Matanza Life Sciences) — forms long-lasting copper film on leaves. Apply 1 kg per acre. https://zaraidawai.pk/product/craft-copper-oxychloride/
+- Kocide 3000 (Copper Hydroxide 53.4%, FMC) — premium copper formulation with Bioactive technology. Apply every 7-14 days. https://zaraidawai.pk/product/kocide-3000/
+- Cuproxat 34.5 SC (Tribasic Copper Sulphate, DJC) — liquid micronized copper, superior leaf coverage. Apply 200-400 ml per acre. https://zaraidawai.pk/product/cuproxat-34-5-sc-djc/
+- Profile 47% WP (Kasugamycin 2% + Copper Oxychloride 45%, Matanza) — bactericide + fungicide combo, penetrates vascular system. Apply 300-400 g per acre. https://zaraidawai.pk/product/profile-47-wp-matanza/
+
+CURL VIRUS, LEAF HOPPER, LEAF REDDENING, LEAF VARIEGATION, HERBICIDE DAMAGE:
+No fungicide products apply. For viral diseases and insect pests (whitefly, jassids), use registered insecticides from the insecticide category.`,
+    `بیکٹیریل بلائٹ کے لیے تجویز کردہ مصنوعات (zaraidawai.pk):
+- کاپر آکسی کلورائیڈ 50% WP: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- کرافٹ (کاپر آکسی کلورائیڈ): https://zaraidawai.pk/product/craft-copper-oxychloride/
+- کوکائیڈ 3000 (کاپر ہائیڈرو آکسائیڈ، FMC): https://zaraidawai.pk/product/kocide-3000/
+- کیوپروزیٹ 34.5 SC: https://zaraidawai.pk/product/cuproxat-34-5-sc-djc/
+- پروفائل 47% WP (کاسوگامائسن + کاپر آکسی کلورائیڈ): https://zaraidawai.pk/product/profile-47-wp-matanza/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "maize", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+RUST (Common Rust):
+- Finer 50SC (Azoxystrobin + Tebuconazole) — dual-action strobilurin + triazole, 200 ml per acre. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- DUER 40 SC (Pyraclostrobin 10% + Tebuconazole 30%) — systemic curative, 100 ml per acre. https://zaraidawai.pk/product/duer-40-sc/
+- Nextor 75 WG (Tebuconazole 50% + Trifloxystrobin 25%, Matanza) — mesostemic + systemic action, 65 g per acre. https://zaraidawai.pk/product/nextor-75-wg/
+- Recado 32.5 SC (Azoxystrobin 17.7% + Difenoconazole 11%) — preventive and curative, 200 ml per acre. https://zaraidawai.pk/product/recodo-32-5-sc/
+- Humulus 80% WG Sulphur (Sayban) — broad-spectrum sulphur fungicide, also miticidal. 1 kg per acre. https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+
+GRAY LEAF SPOT / HELMINTHOSPORIOSIS / FUNGAL LEAF SPOT / CURVULARIA:
+- Finer 50SC (Azoxystrobin + Tebuconazole) — 200 ml per acre. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- DUER 40 SC (Pyraclostrobin + Tebuconazole) — 100 ml per acre. https://zaraidawai.pk/product/duer-40-sc/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — systemic + contact dual action, 600 g per acre. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+- Recado 32.5 SC — 200 ml per acre. https://zaraidawai.pk/product/recodo-32-5-sc/
+
+STRIPE DISEASE / VIROSIS / HOLCUS LEAF SPOT / ABIOTIC DISEASE:
+No fungicide products apply. Manage insect vectors (planthoppers, aphids) with registered insecticides.`,
+    `زنگ، گرے لیف اسپاٹ، ہیلمنتھوسپوریوسس کے لیے (zaraidawai.pk):
+- فائنر 50 ایس سی: https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- ڈیور 40 ایس سی: https://zaraidawai.pk/product/duer-40-sc/
+- نیکسٹر 75 ڈبلیو جی: https://zaraidawai.pk/product/nextor-75-wg/
+- ریکاڈو 32.5 ایس سی: https://zaraidawai.pk/product/recodo-32-5-sc/
+- کابریو ٹاپ ایف ایم سی: https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+- ہیومولس 80% گندھک: https://zaraidawai.pk/product/humulus-80-wg-sulphur/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "onion", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+PURPLE BLOTCH:
+- Rovral 500SC (Iprodione, FMC) — three-way protection: protectant, kickback, and systemic. 200 ml pack. https://zaraidawai.pk/product/rovral-500sc/
+- Limousine 48% EC (Azoxystrobin 8% + Chlorothalonil 40%, Matanza) — systemic + contact, 250-300 ml per 100L. https://zaraidawai.pk/product/limousine-48-ec/
+- Veto 50% WP (Propineb 42% + Metalaxyl-M 8%) — protective + curative, 560 g per acre for onion. https://zaraidawai.pk/product/veto-50-wp/
+- Flumax 60% EC (Fluazinam 40% + Metalaxyl-M 20%, Agpharma) — targets purple blotch, 150-200 ml per acre. https://zaraidawai.pk/product/flumax-60-ec/
+- Kelsey 50% WP (Dimethomorph 6% + Mancozeb 44%, Bravo) — systemic + contact, 250 g per acre. https://zaraidawai.pk/product/kelsey-50-wp/
+
+STEMPHYLIUM BLIGHT / ALTERNARIA LEAF BLIGHT:
+- Rovral 500SC (Iprodione, FMC) — highly effective against Stemphylium and Alternaria. https://zaraidawai.pk/product/rovral-500sc/
+- Limousine 48% EC (Azoxystrobin + Chlorothalonil) — 250-300 ml per 100L. https://zaraidawai.pk/product/limousine-48-ec/
+- Flumax 60% EC — 150-200 ml per acre. https://zaraidawai.pk/product/flumax-60-ec/
+
+BULB BLIGHT / NECK ROT (Botrytis):
+- Rovral 500SC (Iprodione, FMC) — excellent Botrytis control, apply in last 4 weeks before harvest. https://zaraidawai.pk/product/rovral-500sc/
+- Run Way 15% SC (Procymidone + Hexaconazole, Matanza) — targets grey mould and neck rot specifically. https://zaraidawai.pk/product/run-way-15-sc/
+
+IRIS YELLOW VIRUS / FUSARIUM / VIROSIS:
+No fungicide products apply. For thrips (IYSV vector) use registered insecticides. For Fusarium basal rot use carbendazim soil drench (not available in this category).`,
+    `جامنی دھبے، اسٹمفیلیم، الٹرنیریا کے لیے (zaraidawai.pk):
+- روول 500 ایس سی (آئپروڈیون): https://zaraidawai.pk/product/rovral-500sc/
+- لیموزین 48% ای سی: https://zaraidawai.pk/product/limousine-48-ec/
+- ویٹو 50% ڈبلیو پی: https://zaraidawai.pk/product/veto-50-wp/
+- فلو میکس 60% ای سی: https://zaraidawai.pk/product/flumax-60-ec/
+- کیلسی 50% ڈبلیو پی: https://zaraidawai.pk/product/kelsey-50-wp/
+بلب بلائٹ/نیک روٹ کے لیے:
+- روول 500 ایس سی: https://zaraidawai.pk/product/rovral-500sc/
+- رن وے 15% ایس سی: https://zaraidawai.pk/product/run-way-15-sc/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "potato", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+PINK ROT (Phytophthora erythroseptica):
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%, Tara Crop Sciences) — targets Phytophthora directly, downy mildew and late blight. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — systemic + contact protection. Apply 250-300 g per 100L. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Veto 50% WP (Propineb 42% + Metalaxyl-M 8%) — 500-600 g per acre for potato. https://zaraidawai.pk/product/veto-50-wp/
+- Flumax 60% EC (Fluazinam 40% + Metalaxyl-M 20%) — strong Phytophthora activity, 150-200 ml per acre. https://zaraidawai.pk/product/flumax-60-ec/
+- Kelsey 50% WP (Dimethomorph 6% + Mancozeb 44%) — 250-500 g per acre. https://zaraidawai.pk/product/kelsey-50-wp/
+
+BLACK SCURF (Rhizoctonia solani):
+- Rovral 500SC (Iprodione, FMC) — effective against Rhizoctonia; apply as seed piece dip or furrow treatment. https://zaraidawai.pk/product/rovral-500sc/
+
+LATE BLIGHT (if present on potato):
+- Cymoxanil Mancozeb (Cymoxanil 8% + Mancozeb 64%, AMB) — curative + protective, apply every 7-10 days. https://zaraidawai.pk/product/cymoxanil-mancozeb/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — 600 g per acre. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+
+BLACKLEG / BROWN ROT / SOFT ROT / BLACKSPOT BRUISING / DRY ROT / COMMON SCAB:
+No fungicide products on zaraidawai.pk directly address these. For common scab: Humulus 80% WG Sulphur (Sayban) can help lower soil pH when applied to soil. https://zaraidawai.pk/product/humulus-80-wg-sulphur/`,
+    `گلابی سڑن کے لیے (zaraidawai.pk):
+- سوئنگ 72% ڈبلیو پی (میٹالیکسل + مینکوزیب): https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- بونٹ 72% ڈبلیو پی: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- ویٹو 50% ڈبلیو پی: https://zaraidawai.pk/product/veto-50-wp/
+- فلو میکس 60% ای سی: https://zaraidawai.pk/product/flumax-60-ec/
+- کیلسی 50% ڈبلیو پی: https://zaraidawai.pk/product/kelsey-50-wp/
+کالی کھرنڈ کے لیے: روول 500 ایس سی: https://zaraidawai.pk/product/rovral-500sc/
+لیٹ بلائٹ کے لیے: سائیموکسینل مینکوزیب: https://zaraidawai.pk/product/cymoxanil-mancozeb/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "rice", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides and bactericides are available for purchase in Pakistan at zaraidawai.pk:
+
+BACTERIAL LEAF BLIGHT (Xanthomonas oryzae):
+- Profile 47% WP (Kasugamycin 2% + Copper Oxychloride 45%, Matanza) — specifically effective for rice bacterial leaf blight (BLB). Apply 300-400 g per acre. Visible recovery within 3-5 days. https://zaraidawai.pk/product/profile-47-wp-matanza/
+- Copper Oxychloride 50% WP (Suvastu Agri) — protective bactericide/fungicide. Apply 1 kg per 100-120L water. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- Craft (Copper Oxychloride 50% WP, Matanza) — broad-spectrum bactericide, 1 kg per acre. https://zaraidawai.pk/product/craft-copper-oxychloride/
+- Cuproxat 34.5 SC (Tribasic Copper Sulphate, DJC) — liquid copper, dual fungicide/bactericide, 200-400 ml per acre for paddy. https://zaraidawai.pk/product/cuproxat-34-5-sc-djc/
+
+RICE BLAST (Magnaporthe oryzae):
+- Finer 50SC (Azoxystrobin + Tebuconazole) — treats blast and sheath blight in rice. Apply 200 ml per acre. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- Knight 40% SC (Azoxystrobin 11% + Tebuconazole 25%, Bravo) — specifically listed for rice blast and sheath blight. Apply 200 ml per acre. https://zaraidawai.pk/product/knight-40-sc/
+- Nextor 75 WG (Tebuconazole 50% + Trifloxystrobin 25%, Matanza) — rice blast and sheath blight, 65 g per acre at booting stage. https://zaraidawai.pk/product/nextor-75-wg/
+- DUER 40 SC (Pyraclostrobin 10% + Tebuconazole 30%) — rice blast and brown leaf spot, 100 ml per acre. https://zaraidawai.pk/product/duer-40-sc/
+
+TUNGRO:
+No fungicide products apply. Control the green leafhopper vector using registered insecticides.`,
+    `بیکٹیریل پتہ بلائٹ کے لیے (zaraidawai.pk):
+- پروفائل 47% ڈبلیو پی (BLB کے لیے خاص): https://zaraidawai.pk/product/profile-47-wp-matanza/
+- کاپر آکسی کلورائیڈ 50% WP: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- کرافٹ: https://zaraidawai.pk/product/craft-copper-oxychloride/
+- کیوپروزیٹ 34.5 SC: https://zaraidawai.pk/product/cuproxat-34-5-sc-djc/
+رائس بلاسٹ کے لیے:
+- فائنر 50 ایس سی: https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- نائٹ 40 ایس سی: https://zaraidawai.pk/product/knight-40-sc/
+- نیکسٹر 75 ڈبلیو جی: https://zaraidawai.pk/product/nextor-75-wg/
+- ڈیور 40 ایس سی: https://zaraidawai.pk/product/duer-40-sc/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sugarcane", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+BROWN RUST (Puccinia melanocephala):
+- Finer 50SC (Azoxystrobin + Tebuconazole) — 200 ml per acre, strobilurin + triazole dual action. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- Nextor 75 WG (Tebuconazole 50% + Trifloxystrobin 25%) — 65 g per acre. https://zaraidawai.pk/product/nextor-75-wg/
+- DUER 40 SC (Pyraclostrobin 10% + Tebuconazole 30%) — 100 ml per acre. https://zaraidawai.pk/product/duer-40-sc/
+
+BROWN SPOT (Cercospora longipes):
+- Copper Oxychloride 50% WP (Suvastu Agri) — preventive spray. Apply 1 kg per 100-120L water. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- Craft (Copper Oxychloride 50% WP, Matanza) — 1 kg per acre. https://zaraidawai.pk/product/craft-copper-oxychloride/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — broad-spectrum fungal control. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+
+POKKAH BOENG (Fusarium moniliforme):
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — spray inside leaf whorl. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+- Finer 50SC (Azoxystrobin + Tebuconazole) — systemic curative action. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+
+BANDED CHLOROSIS / GRASSY SHOOT / SETT ROT / VIRAL DISEASE / YELLOW LEAF / SMUT:
+No fungicide products on zaraidawai.pk directly address these diseases. Grassy shoot and viral diseases require insect vector control. Sett rot and smut require hot water sett treatment (50C for 2 hours) before planting.`,
+    `بھوری زنگ کے لیے (zaraidawai.pk):
+- فائنر 50 ایس سی: https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- نیکسٹر 75 ڈبلیو جی: https://zaraidawai.pk/product/nextor-75-wg/
+- ڈیور 40 ایس سی: https://zaraidawai.pk/product/duer-40-sc/
+بھورے دھبوں کے لیے:
+- کاپر آکسی کلورائیڈ 50% WP: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- کابریو ٹاپ ایف ایم سی: https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+پوکا بوئنگ کے لیے:
+- کابریو ٹاپ ایف ایم سی: https://zaraidawai.pk/product/cabrio-top-fmc-300g/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sunflower", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+DOWNY MILDEW (Plasmopara halstedii):
+- Aliette 80% WP Bayer (Fosetyl-Aluminium 80%) — true two-way systemic, moves up and down in plant, effective against Phytophthora and downy mildew. Apply 250 g per 100L water. https://zaraidawai.pk/product/aliette-80-wp-bayer-250g/
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%, Tara Crop Sciences) — targets downy mildew and Phytophthora. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — systemic + contact, apply 250 g per 100L. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Veto 50% WP (Propineb 42% + Metalaxyl-M 8%) — protective + curative against downy mildew. https://zaraidawai.pk/product/veto-50-wp/
+- Flumax 60% EC (Fluazinam 40% + Metalaxyl-M 20%) — strong downy mildew activity, 150-200 ml per acre. https://zaraidawai.pk/product/flumax-60-ec/
+
+GRAY MOLD / BOTRYTIS (Botrytis cinerea):
+- Rovral 500SC (Iprodione, FMC) — excellent Botrytis control, 10-14 day residual, stops fungal growth up to 48 hours after infection. https://zaraidawai.pk/product/rovral-500sc/
+- Run Way 15% SC (Procymidone 12.73% + Hexaconazole 1.81%, Matanza) — targets grey mould and Sclerotinia specifically. https://zaraidawai.pk/product/run-way-15-sc/
+
+LEAF SCARS (Alternaria / Cercospora):
+- Limousine 48% EC (Azoxystrobin 8% + Chlorothalonil 40%, Matanza) — systemic + contact protection. https://zaraidawai.pk/product/limousine-48-ec/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — broad-spectrum, translaminar movement. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+- Copper Oxychloride 50% WP — protective contact spray. https://zaraidawai.pk/product/copper-oxychloride-50-wp/`,
+    `ڈاؤنی ملڈیو کے لیے (zaraidawai.pk):
+- ایلیٹ 80% WP بیئر (فوسیٹل-ایلومینیم): https://zaraidawai.pk/product/aliette-80-wp-bayer-250g/
+- سوئنگ 72% ڈبلیو پی: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- بونٹ 72% ڈبلیو پی: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- ویٹو 50% ڈبلیو پی: https://zaraidawai.pk/product/veto-50-wp/
+- فلو میکس 60% ای سی: https://zaraidawai.pk/product/flumax-60-ec/
+سرمئی پھپھوندی کے لیے: روول 500 ایس سی: https://zaraidawai.pk/product/rovral-500sc/
+پتوں کے نشان: لیموزین 48% ای سی: https://zaraidawai.pk/product/limousine-48-ec/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "tomato", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides and bactericides are available for purchase in Pakistan at zaraidawai.pk:
+
+LATE BLIGHT (Phytophthora infestans):
+- Cymoxanil Mancozeb (Cymoxanil 8% + Mancozeb 64%, AMB) — curative + protective dual action, apply every 7-10 days. https://zaraidawai.pk/product/cymoxanil-mancozeb/
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%) — systemic + contact, 250-300 g per 100L. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%) — targets late blight and Phytophthora. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Kelsey 50% WP (Dimethomorph 6% + Mancozeb 44%) — 250-500 g per acre, curative and preventive. https://zaraidawai.pk/product/kelsey-50-wp/
+- Veto 50% WP (Propineb 42% + Metalaxyl-M 8%) — 500-600 g per acre. https://zaraidawai.pk/product/veto-50-wp/
+- Flumax 60% EC (Fluazinam 40% + Metalaxyl-M 20%) — strong late blight and downy mildew activity. https://zaraidawai.pk/product/flumax-60-ec/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — early and late blight, 600 g per acre. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+
+EARLY BLIGHT / ALTERNARIA (Alternaria solani):
+- Rovral 500SC (Iprodione, FMC) — early blight and leaf spot, 10-14 day residual. https://zaraidawai.pk/product/rovral-500sc/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — 600 g per acre. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+- Limousine 48% EC (Azoxystrobin 8% + Chlorothalonil 40%) — early blight in tomato, 300 ml per 100L. https://zaraidawai.pk/product/limousine-48-ec/
+- Recado 32.5 SC (Azoxystrobin 17.7% + Difenoconazole 11%) — early and late blight, 200 ml per acre. https://zaraidawai.pk/product/recodo-32-5-sc/
+- Veto 50% WP — 500-600 g per acre. https://zaraidawai.pk/product/veto-50-wp/
+- Kelsey 50% WP — 250-500 g per acre. https://zaraidawai.pk/product/kelsey-50-wp/
+
+BACTERIAL DISEASE / BACTERIAL SPOT (Pseudomonas / Xanthomonas):
+- Kocide 3000 (Copper Hydroxide 53.4%, FMC) — premium copper bactericide, apply every 7-14 days. https://zaraidawai.pk/product/kocide-3000/
+- Copper Oxychloride 50% WP — 1 kg per 100-120L water. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+- Craft (Copper Oxychloride 50% WP, Matanza) — broad-spectrum bactericide/fungicide. https://zaraidawai.pk/product/craft-copper-oxychloride/
+- Cuproxat 34.5 SC (Tribasic Copper Sulphate) — liquid copper, superior coverage. Apply 400 ml per acre for tomato. https://zaraidawai.pk/product/cuproxat-34-5-sc-djc/
+- Profile 47% WP (Kasugamycin 2% + Copper Oxychloride 45%) — systemic antibiotic + copper, 300 g per acre. https://zaraidawai.pk/product/profile-47-wp-matanza/
+
+MITES (Spider Mite / Russet Mite):
+- Humulus 80% WG Sulphur (Sayban) — sulphur is both fungicidal and miticidal. Apply 1 kg per acre. https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+
+LEAF MOLD (Passalora fulva):
+- Limousine 48% EC (Azoxystrobin + Chlorothalonil) — chlorothalonil component effective against leaf mold. https://zaraidawai.pk/product/limousine-48-ec/
+- Rovral 500SC (Iprodione) — leaf spot and mold control. https://zaraidawai.pk/product/rovral-500sc/
+
+SEPTORIA LEAF SPOT:
+- Limousine 48% EC (Azoxystrobin + Chlorothalonil) — 300 ml per 100L. https://zaraidawai.pk/product/limousine-48-ec/
+- Cabrio Top FMC (Pyraclostrobin + Metiram) — broad-spectrum. https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+
+BLOSSOM END ROT / FUSARIUM WILT / VIROSIS / LEAF CURL:
+No fungicide products on zaraidawai.pk address these. Blossom end rot requires calcium management. Fusarium wilt requires resistant varieties and Trichoderma biocontrol. Leaf curl (TYLCV) and virosis require whitefly/thrips insecticide control.`,
+    `لیٹ بلائٹ کے لیے (zaraidawai.pk):
+- سائیموکسینل مینکوزیب: https://zaraidawai.pk/product/cymoxanil-mancozeb/
+- بونٹ 72%: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- سوئنگ 72%: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- کیلسی 50%: https://zaraidawai.pk/product/kelsey-50-wp/
+- ویٹو 50%: https://zaraidawai.pk/product/veto-50-wp/
+- فلو میکس 60%: https://zaraidawai.pk/product/flumax-60-ec/
+- کابریو ٹاپ: https://zaraidawai.pk/product/cabrio-top-fmc-300g/
+ارلی بلائٹ/الٹرنیریا: روول 500SC، لیموزین، ریکاڈو
+بیکٹیریل بیماری: کوکائیڈ 3000، کاپر آکسی کلورائیڈ، پروفائل 47%
+مائٹ: ہیومولس 80% گندھک: https://zaraidawai.pk/product/humulus-80-wg-sulphur/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "wheat", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+STRIPE RUST (Yellow Rust) / LEAF RUST (Brown Rust):
+- Finer 50SC (Azoxystrobin + Tebuconazole) — dual-action strobilurin + triazole, 200 ml per acre in 100-120L water. Apply at flag leaf stage. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- Nextor 75 WG (Tebuconazole 50% + Trifloxystrobin 25%, Matanza) — mesostemic + systemic, excellent rainfastness, 65 g per acre. Apply at flag leaf stage. https://zaraidawai.pk/product/nextor-75-wg/
+- DUER 40 SC (Pyraclostrobin 10% + Tebuconazole 30%) — intense curative power, 100 ml per acre. https://zaraidawai.pk/product/duer-40-sc/
+- Recado 32.5 SC (Azoxystrobin 17.7% + Difenoconazole 11%) — yellow rust and brown rust in wheat, 200 ml per acre. Apply at booting or flag leaf stage. https://zaraidawai.pk/product/recodo-32-5-sc/
+- Humulus 80% WG Sulphur (Sayban) — broad-spectrum including rust suppression, 1 kg per acre. https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+
+SEPTORIA (Septoria Tritici Blotch):
+- Finer 50SC (Azoxystrobin + Tebuconazole) — apply at GS31 (1st node) and GS39 (flag leaf), 200 ml per acre. https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- Nextor 75 WG (Tebuconazole + Trifloxystrobin) — 65 g per acre at GS39. https://zaraidawai.pk/product/nextor-75-wg/
+- DUER 40 SC (Pyraclostrobin + Tebuconazole) — 100 ml per acre. https://zaraidawai.pk/product/duer-40-sc/
+- Recado 32.5 SC (Azoxystrobin + Difenoconazole) — 200 ml per acre. https://zaraidawai.pk/product/recodo-32-5-sc/
+
+Note: For all wheat fungal diseases, apply at early detection (January-March in Pakistan). Timing is critical — protect the flag leaf for maximum yield benefit.`,
+    `گندم کی بیماریوں کے لیے تجویز کردہ مصنوعات (zaraidawai.pk):
+پیلی زنگ، بھوری زنگ، سیپٹوریا:
+- فائنر 50 ایس سی (200 ملی/ایکڑ): https://zaraidawai.pk/product/finer-50sc-200ml-azoxystrobin-tebuconazole/
+- نیکسٹر 75 ڈبلیو جی (65 گرام/ایکڑ): https://zaraidawai.pk/product/nextor-75-wg/
+- ڈیور 40 ایس سی (100 ملی/ایکڑ): https://zaraidawai.pk/product/duer-40-sc/
+- ریکاڈو 32.5 ایس سی (200 ملی/ایکڑ): https://zaraidawai.pk/product/recodo-32-5-sc/
+- ہیومولس 80% گندھک (1 کلو/ایکڑ): https://zaraidawai.pk/product/humulus-80-wg-sulphur/`
+  );
+
+  // ── WEED CONTROL & RECOMMENDED HERBICIDES ────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "cotton", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Weeds compete with cotton for water, nutrients and light especially in the first 6 weeks. Early weed control is critical for yield. The following herbicides are available at zaraidawai.pk:
+
+PRE-EMERGENT (apply before weeds germinate, within 3 days of sowing):
+- Jhatka (Pendimethalin 20% + Acetochlor 25%) — controls annual grasses and broadleaf weeds, apply 1–1.5 L per acre immediately after sowing before weeds emerge. https://zaraidawai.pk/product/jhatka/
+- Mytinil Pendimethalin 33% EC — pre-emergent grass and broadleaf control, apply 1–1.5 L per acre in 100–120 L water before crop and weed emergence. https://zaraidawai.pk/product/mytinil-pendimethalin-33-ec/
+- Roubust 40% EC (Acetochlor 40%) — effective against annual grasses, apply 600 ml per acre before weed emergence. https://zaraidawai.pk/product/roubust-40-ec/
+- Stomp 455CS (Pendimethalin 455 g/L, FMC) — pre-emergent control of annual grasses and broadleaf weeds. https://zaraidawai.pk/product/stomp-455cs/
+
+POST-EMERGENT (apply after weeds have emerged):
+- Percept 10.8% EC (Haloxyfop-P-Methyl) — selective grass killer, safe for cotton (broadleaf crop), apply 350 ml per acre when grasses are at 3–5 leaf stage. Excellent for controlling Phalaris minor, Sorghum halepense. https://zaraidawai.pk/product/percept-10-8-ec/
+- Tiphos (Glyphosate 41%) — non-selective, use only for pre-plant weed knockdown or inter-row spot treatment with shielded sprayer; kills all vegetation on contact, 500–1000 ml per acre. https://zaraidawai.pk/product/tiphos/
+- Wiper / Panel (non-selective) — pre-plant clearing of stubborn perennial weeds before cotton sowing. Do not spray on cotton foliage.
+
+Note: Avoid 2,4-D near cotton fields — drift causes severe epinasty (leaf twisting) damage. Always calibrate sprayers and use protective equipment.`,
+    `کپاس میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پہلے 6 ہفتوں میں جڑی بوٹی کنٹرول ضروری ہے۔
+پہلے سے (Pre-emergent): جھٹکا (1-1.5 لیٹر/ایکڑ): https://zaraidawai.pk/product/jhatka/ | میٹینل پینڈیمیتھالن (1-1.5 لیٹر/ایکڑ): https://zaraidawai.pk/product/mytinil-pendimethalin-33-ec/ | روبسٹ 40 (600 ملی/ایکڑ): https://zaraidawai.pk/product/roubust-40-ec/
+بعد میں (Post-emergent): پرسیپٹ (350 ملی/ایکڑ، گھاس کش): https://zaraidawai.pk/product/percept-10-8-ec/ | ٹیفوس (500-1000 ملی/ایکڑ، غیر منتخب): https://zaraidawai.pk/product/tiphos/
+احتیاط: کپاس کے قریب 2,4-D اسپرے نہ کریں — ڈرفٹ سے پتے مڑ جاتے ہیں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "maize", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Weeds in maize fields cause 30–80% yield loss if uncontrolled. Critical weed-free period is the first 6 weeks. The following herbicides are available at zaraidawai.pk:
+
+PRE-EMERGENT:
+- Jhatka (Pendimethalin 20% + Acetochlor 25%) — controls annual grasses and broadleaf weeds in maize, apply 1–1.5 L per acre before weed emergence after sowing. https://zaraidawai.pk/product/jhatka/
+
+POST-EMERGENT (apply when weeds are small, 3–5 leaf stage):
+- Find Nicosulfuron 4% SC — post-emergence control of annual and perennial grasses and some broadleaf weeds in maize, highly effective against Sorghum halepense (Khabal grass). Note: currently out of stock — check zaraidawai.pk for availability. https://zaraidawai.pk/product/find-nicosulfuron-4-sc/
+- Killshot Halosulfuron Methyl 75% WG — specifically targets sedges (Cyperus rotundus, Cyperus esculentus) and some broadleaf weeds, 20 g per pack for maize fields. https://zaraidawai.pk/product/killshot-halosulfuron-methyl-75-wg/
+- Tiphos (Glyphosate 41%) — non-selective, use only for pre-plant knockdown or directed inter-row spray with shielded sprayer, 800–1000 ml per acre. https://zaraidawai.pk/product/tiphos/
+
+Note: Do not apply nicosulfuron within 7 days of organophosphate insecticide use — can cause crop injury. Use adjuvants as directed on label for post-emergent herbicides.`,
+    `مکئی میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پہلے 6 ہفتوں میں 30-80 فیصد پیداوار کا نقصان ممکن۔
+پہلے سے: جھٹکا (1-1.5 لیٹر/ایکڑ): https://zaraidawai.pk/product/jhatka/
+بعد میں: فائنڈ نیکوسلفیورون (آؤٹ آف اسٹاک): https://zaraidawai.pk/product/find-nicosulfuron-4-sc/ | کلشاٹ (سیج کنٹرول، 20 گرام): https://zaraidawai.pk/product/killshot-halosulfuron-methyl-75-wg/ | ٹیفوس (800-1000 ملی/ایکڑ): https://zaraidawai.pk/product/tiphos/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "onion", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Onion is a slow-growing, poor competitor against weeds — especially in the first 8 weeks. Weed pressure can reduce yields by 50% or more. The following herbicides are available at zaraidawai.pk:
+
+PRE-EMERGENT (apply before weed emergence, immediately after transplanting or direct seeding):
+- Hatrick 45% EC (Pendimethalin + Acetochlor + Oxyfluorfen) — three-way combination for broadleaf and grass control in onion. Apply before weed emergence. https://zaraidawai.pk/product/hatrick-45-ec/
+- Pull Up 51.5% EC (Oxyfluorfen + Pendimethalin) — registered for use in onion fields, broad spectrum, 600–800 ml per acre, residual activity of 40–50 days. https://zaraidawai.pk/product/pull-up-51-5-ec/
+- Mytinil Pendimethalin 33% EC — apply 1–1.5 L per acre as pre-emergent. https://zaraidawai.pk/product/mytinil-pendimethalin-33-ec/
+- Stomp 455CS (Pendimethalin 455 g/L, FMC) — annual grasses and broadleaf control in onion, registered for allium crops. https://zaraidawai.pk/product/stomp-455cs/
+
+PRE/POST-EMERGENT:
+- Roubust 40% EC (Acetochlor 40%) — annual grass control, apply 600 ml per acre before or shortly after weed emergence. https://zaraidawai.pk/product/roubust-40-ec/
+- Tiphos (Glyphosate 41%) — non-selective, use only for pre-plant field preparation, 500–600 ml per acre. Do not apply on growing onion crop. https://zaraidawai.pk/product/tiphos/
+
+Note: Hand-weeding at 3–4 weeks after transplanting is still important in onion. Avoid deep tillage which brings weed seeds to surface.`,
+    `پیاز میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پہلے 8 ہفتوں میں پیداوار 50 فیصد تک کم ہو سکتی ہے۔
+پہلے سے: ہیٹرک 45 (وسیع اسپیکٹرم): https://zaraidawai.pk/product/hatrick-45-ec/ | پل اپ 51.5 (600-800 ملی/ایکڑ، 40-50 دن اثر): https://zaraidawai.pk/product/pull-up-51-5-ec/ | میٹینل پینڈیمیتھالن: https://zaraidawai.pk/product/mytinil-pendimethalin-33-ec/ | اسٹومپ: https://zaraidawai.pk/product/stomp-455cs/ | روبسٹ (600 ملی/ایکڑ): https://zaraidawai.pk/product/roubust-40-ec/
+غیر منتخب (صرف پہلے): ٹیفوس (500-600 ملی/ایکڑ): https://zaraidawai.pk/product/tiphos/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "potato", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Weeds in potato fields compete strongly for nutrients and water and can also harbour pests and diseases. Early weed control before canopy closure is essential. The following herbicide is available at zaraidawai.pk:
+
+PRE-EMERGENT:
+- Pull Up 51.5% EC (Oxyfluorfen + Pendimethalin) — specifically registered for potato fields, broad-spectrum control of annual broadleaf and grass weeds, apply 600–800 ml per acre after planting before potato and weed emergence. Residual activity of 40–50 days protects the critical early growth phase. https://zaraidawai.pk/product/pull-up-51-5-ec/
+
+CULTURAL WEED CONTROL:
+- Ridging (hilling up) at 4–5 weeks buries young weeds and is the most effective mechanical method in potato.
+- Hand weeding at 3 and 6 weeks after planting.
+- Mulching with straw suppresses weeds and conserves moisture.
+
+Note: Always apply pre-emergent herbicides to moist soil for best efficacy. Avoid applications when rain is forecast within 2 hours.`,
+    `آلو میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پہلے سے: پل اپ 51.5 ای سی (آلو کے لیے رجسٹرڈ، 600-800 ملی/ایکڑ، 40-50 دن اثر): https://zaraidawai.pk/product/pull-up-51-5-ec/
+مکینیکل: لگانے کے 4-5 ہفتے بعد مٹی چڑھانا (ریجنگ) سب سے مؤثر طریقہ۔ 3 اور 6 ہفتے بعد ہاتھ سے گوڈی۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "rice", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Weeds — especially Echinochloa (Sawai), sedges (Cyperus), and broadleaf weeds — are the most damaging yield reducers in rice, causing 30–80% loss. The following herbicides are available at zaraidawai.pk:
+
+POST-EMERGENT BROADLEAF & SEDGE CONTROL:
+- Basagran 48% SL (Bentazone) — broad-spectrum post-emergent herbicide for broadleaf weeds and sedges in rice. Effective against Cyperus difformis, Alisma plantago, Eclipta alba, Monochoria. Apply after flooding at 2–3 leaf stage of weeds. https://zaraidawai.pk/product/basagran-48-sl/
+- Killshot Halosulfuron Methyl 75% WG — highly effective against Cyperus rotundus and Cyperus esculentus (nut sedges) and Scirpus species in flooded rice. Apply post-emergence. https://zaraidawai.pk/product/killshot-halosulfuron-methyl-75-wg/
+
+POST-EMERGENT GRASS, BROADLEAF & SEDGE (ALL-IN-ONE):
+- Winsta + Booster (Bispyribac Sodium + Bensulfuron Methyl) — dual-action combination covering grasses (Echinochloa, Leptochloa), broadleaf weeds, and sedges in transplanted and direct-seeded rice. Apply 60–90 g per acre at 15–25 days after transplanting when weeds are small. One of the most comprehensive rice weed control solutions. https://zaraidawai.pk/product/winsta-booster/
+
+CULTURAL PRACTICES:
+- Maintain 5–8 cm flood depth for 3 weeks after transplanting to suppress most weed species.
+- Use certified clean seed to avoid introducing weed seeds.
+- Hand-weed at 3 and 6 weeks after transplanting in direct-seeded fields.
+
+Note: Drain field 1–2 days before Basagran application and reflood after 24–48 hours for best efficacy.`,
+    `چاول میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+بعد از انکرن:
+- باساگران 48 ایس ایل (بینٹازون، پتی اور سیج کنٹرول): https://zaraidawai.pk/product/basagran-48-sl/
+- کلشاٹ (ناگ گھاس کنٹرول): https://zaraidawai.pk/product/killshot-halosulfuron-methyl-75-wg/
+- ونسٹا + بوسٹر (60-90 گرام/ایکڑ، گھاس+پتی+سیج تینوں): https://zaraidawai.pk/product/winsta-booster/
+ثقافتی: ٹرانسپلانٹ کے 3 ہفتے بعد 5-8 سینٹی میٹر پانی کھڑا رکھیں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sugarcane", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Weeds in sugarcane compete intensely in the first 3 months. Nut sedges (Cyperus) are a particularly damaging weed in sugarcane fields. The following herbicides are available at zaraidawai.pk:
+
+SEDGE CONTROL:
+- Killshot Halosulfuron Methyl 75% WG — highly selective control of Cyperus rotundus (motha/nut sedge) and Cyperus esculentus in sugarcane. Apply post-emergence when sedges are actively growing. https://zaraidawai.pk/product/killshot-halosulfuron-methyl-75-wg/
+- Basagran 48% SL (Bentazone) — post-emergent broadleaf and sedge control in sugarcane. Apply when weeds are at 2–4 leaf stage. https://zaraidawai.pk/product/basagran-48-sl/
+
+CULTURAL WEED CONTROL:
+- Trash mulching (leaving sugarcane tops/leaves after harvest) — highly effective natural weed suppression.
+- Inter-row tillage (hoeing) at 4–6 weeks after planting.
+- Proper earthing-up at 8–10 weeks suppresses weeds between rows.
+
+Note: Maintain a weed-free period for at least 90 days after planting for maximum yield. Sedge infestation can be more damaging than other weeds in ratoon crops.`,
+    `گنے میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پہلے 3 مہینے سب سے اہم ہیں۔ موتھا (سائپرس) خاص نقصاندہ ہے۔
+سیج کنٹرول: کلشاٹ (موتھا کش): https://zaraidawai.pk/product/killshot-halosulfuron-methyl-75-wg/ | باساگران 48 ایس ایل (پتی+سیج): https://zaraidawai.pk/product/basagran-48-sl/
+ثقافتی: کٹائی کے بعد پتیاں بچھانا (ملچنگ)، 4-6 ہفتے بعد گوڈی، 8-10 ہفتے بعد مٹی چڑھانا۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sunflower", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Sunflower is a broadleaf crop that requires selective grass-specific herbicides. The critical weed-free period is the first 6 weeks after emergence. The following herbicide is available at zaraidawai.pk:
+
+POST-EMERGENT GRASS CONTROL:
+- Percept 10.8% EC (Haloxyfop-P-Methyl) — selective graminicide (grass killer) that is safe for broadleaf crops like sunflower. Controls annual and perennial grasses including Phalaris minor, Sorghum halepense (Khabal), and Avena fatua. Apply 350 ml per acre when grasses are at 3–5 leaf stage in 100–120 L water. https://zaraidawai.pk/product/percept-10-8-ec/
+
+CULTURAL WEED CONTROL:
+- Inter-row hoeing at 3 and 6 weeks after sowing.
+- Proper plant spacing (60 × 30 cm) enables earlier canopy closure to shade out weeds.
+- Pre-sowing deep tillage destroys perennial weed roots.
+
+Note: Do NOT use 2,4-D or MCPA in sunflower — these are broadleaf herbicides that will severely damage or kill the crop.`,
+    `سورج مکھی میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+سورج مکھی ایک چوڑے پتوں والی فصل ہے — صرف گھاس مار ادویات محفوظ ہیں۔
+بعد از انکرن: پرسیپٹ 10.8 ای سی (350 ملی/ایکڑ، گھاس مار، سورج مکھی کے لیے محفوظ): https://zaraidawai.pk/product/percept-10-8-ec/
+احتیاط: سورج مکھی پر 2,4-D یا MCPA کبھی نہ ڈالیں — یہ فصل تباہ کر دیتی ہیں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "tomato", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Tomato and other vegetable crops can suffer significantly from weed competition especially in the transplanting establishment phase. The following herbicide is available at zaraidawai.pk for vegetable crops:
+
+POST-EMERGENT GRASS & BROADLEAF CONTROL:
+- Fushu (Quizalofop-P-Ethyl + Metribuzin) — dual-action herbicide for grasses and broadleaf weeds in vegetables including tomato. Quizalofop controls grasses; Metribuzin controls broadleaf weeds. Apply post-emergence when weeds are small and actively growing. https://zaraidawai.pk/product/fushu/
+
+CULTURAL WEED CONTROL:
+- Black plastic mulch before transplanting — highly effective at eliminating almost all weeds and conserving moisture.
+- Hand weeding at 2 and 4 weeks after transplanting.
+- Drip irrigation limits water to the crop root zone, reducing weed germination in inter-row spaces.
+
+Note: Metribuzin can be phytotoxic to tomato seedlings in stress conditions (cold, drought, waterlogged). Test on a small area first. Do not apply to stressed or newly transplanted seedlings. Spacing transplants at the correct density encourages faster canopy closure.`,
+    `ٹماٹر میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+بعد از انکرن: فوشو (کوئزالوفوپ + میٹریبیوزن، گھاس اور پتی کنٹرول): https://zaraidawai.pk/product/fushu/
+ثقافتی: ٹرانسپلانٹ سے پہلے سیاہ پلاسٹک ملچ (سب سے مؤثر)، ڈرپ آبپاشی، 2 اور 4 ہفتے بعد ہاتھ سے گوڈی۔
+احتیاط: تازہ لگائے پودوں پر یا تناؤ کی حالت میں میٹریبیوزن نقصاندہ ہو سکتا ہے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "wheat", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Weeds — especially Phalaris minor (Dumbi Sitti / Kandiari), wild oat (Avena fatua), and broadleaf weeds (Rumex, Chenopodium) — cause 30–40% wheat yield loss in Pakistan if uncontrolled. Apply herbicides at the right growth stage for maximum effectiveness. The following herbicides are available at zaraidawai.pk:
+
+POST-EMERGENT (apply at 3–4 leaf stage of wheat, 30–45 DAS):
+- Thirus 25% OD (Mesosulfuron-methyl + Florasulam + MCPA) — triple-action post-emergent herbicide targeting Phalaris minor (Dumbi Sitti), wild oat, and broadleaf weeds in wheat. Apply 400 ml per acre in 100–120 L water. Best applied when weeds are 2–4 leaf stage, temperature 10–25°C. https://zaraidawai.pk/product/thirus-25-od/
+- ZarPlus Wheat Herbicide (Mesosulfuron-methyl + MCPA + Florasulam) — comprehensive weed control in wheat targeting Phalaris minor (Kandiari/Dumbi Sitti) as well as broadleaf weeds like Rumex and Chenopodium. Apply 400 ml per acre. Apply at 3–4 leaf stage of wheat. Same active ingredients as Thirus — highly effective against resistant Phalaris biotypes. https://zaraidawai.pk/product/zarplus-wheat-herbicide/
+
+WEED IDENTIFICATION GUIDE:
+- Phalaris minor (Dumbi Sitti / Kandiari) — thin grass-like leaves with ridged/striped surface, most common wheat weed in Pakistan, causes greatest yield loss
+- Wild Oat (Avena fatua / Jangli Jai) — hairy leaves, twisted awn, tall growing grass
+- Rumex (Jangli Palak) — broad, dock-like leaves
+- Chenopodium (Bathu) — white-mealy leaves, common in winter
+
+Note: Apply at correct crop and weed stage for maximum kill. Avoid application in extreme cold (below 5°C) or heat (above 30°C). Both Thirus and ZarPlus are sulfonylurea-based — do not apply more than once per season. Tillage systems (zero-till) can significantly reduce Phalaris minor populations over multiple seasons.`,
+    `گندم میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پاکستان میں ڈمبی سٹی (Phalaris minor) اور جنگلی جو (Avena fatua) گندم کی پیداوار 30-40 فیصد کم کرتے ہیں۔
+بعد از انکرن (30-45 دن بعد، گندم 3-4 پتی مرحلے پر):
+- تھیروس 25 او ڈی (400 ملی/ایکڑ، ڈمبی سٹی + پتی جڑی بوٹیاں): https://zaraidawai.pk/product/thirus-25-od/
+- زارپلس (400 ملی/ایکڑ، کنڈیاری + بتھو + جنگلی پالک): https://zaraidawai.pk/product/zarplus-wheat-herbicide/
+احتیاط: موسم میں صرف ایک بار اسپرے کریں، 5°C سے کم یا 30°C سے زیادہ درجہ حرارت پر اسپرے نہ کریں۔`
+  );
+
+  // ── RECOMMENDED INSECTICIDES & MITICIDES ─────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "cotton", 18, "18. Recommended Insecticides & Miticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار اور چیچڑ مار ادویات",
+    `The following insecticides and miticides for cotton pests are available at zaraidawai.pk:
+
+BOLLWORM COMPLEX (American / Spotted / Pink Bollworm):
+- Dagger Plus (Emamectin Benzoate 1.8% + Lufenuron 7.2%) — ovi-larvicidal dual action, kills eggs & larvae, 150–200 ml per acre. https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+- Additor Plus 10% SC (Emamectin 1.8% + Lufenuron 7.2%, Comega) — equivalent to Dagger Plus, stops feeding within minutes, 150–200 ml per acre. https://zaraidawai.pk/product/additor-plus-emamectin-benzoate-lufenuron-copy/
+- Cyperfos 44% EC (Cypermethrin 3.74% + Profenofos 37.4%) — synergistic pyrethroid + organophosphate, kills adults and eggs, 500–600 ml per acre. https://zaraidawai.pk/product/cyperfos-44-ec/
+- Codex Chlorpyrifos 40% EC (Matanza) — contact/stomach/vapor action, 800–1000 ml per acre. https://zaraidawai.pk/product/codex-40-ec-chloropyrifos/
+- Trocar Chlorpyrifos 40% EC (Comerga) — organophosphate, 800 ml–1 L per acre. https://zaraidawai.pk/product/chlorpyrifos/
+- Lambda Cyhalothrin 2.5% EC (Matanza) — pyrethroid, rapid knockdown, 250–330 ml per acre. https://zaraidawai.pk/product/lambda-cyhalothrin/
+- Talstar FMC (Bifenthrin 10%, FMC) — bollworm and whitefly, 14–21 days residual. https://zaraidawai.pk/product/talstar-fmc/
+
+WHITEFLY / JASSIDS / SUCKING INSECTS:
+- Bold 20% SL (Acetamiprid 20%, Matanza) — systemic, rapid knockdown of aphids, whiteflies, jassids in cotton, 250 ml per acre. https://zaraidawai.pk/product/bold-20-sl/
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — translaminar + systemic, 20–40 g per acre in 200–240 L water. PHI 15 days. https://zaraidawai.pk/product/dermot-20-sp/
+- Zoomer 25% WG (Thiamethoxam, Bravo) — systemic neonicotinoid, aphids, jassids, whiteflies. https://zaraidawai.pk/product/zoomer-25-wg/
+- Adventure Nitenpyram (DJC) — rapid paralysis of sucking insects and Lepidoptera, 50 g pack. https://zaraidawai.pk/product/adventure-nitenpyram/
+- Confidor 20%SL (Imidacloprid, Bayer) — systemic, sucking pests in cotton. (Check stock.) https://zaraidawai.pk/product/confidor-20sl/
+- Bifenthrin 10% EC (Matanza) — pyrethroid, whitefly + mites + bollworms, 250–400 ml per acre. https://zaraidawai.pk/product/bifenthrin-10-ec/
+- Fighter (Abamectin + Imidacloprid, DJC) — dual contact + systemic, aphids, whiteflies, thrips, 500 ml pack. https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+
+MITICIDES — SPIDER MITES / RED MITES:
+- Oberon 24 SC (Spiromesifen 22.9% + Abamectin 1.1%, Bayer) — complete life cycle control of whitefly and red mites, 100 ml per acre. Safe for tomato and cotton. https://zaraidawai.pk/product/oberon-bayer-miticide/
+- Excellent 1 30% EC (Abamectin 2.7% + Spirodiclofen 24.5%, MDS Agro Tech) — contact + translaminar, red spider mites, whitefly, thrips in cotton, 200 ml per acre. https://zaraidawai.pk/product/excellent-1-30-ec/
+- Achar 20% SE (Fenpropathrin 10.43% + Etoxazole 10.43%, Matanza) — fast knockdown + growth regulator, mites, thrips, whitefly, jassid, 100 ml per 100 L water, 45-day residual. https://zaraidawai.pk/product/achar-20-se-matanza-life-sciences/
+
+Note: Rotate insecticide groups every 2 sprays to prevent resistance. Avoid mixing organophosphates with pyrethroids unnecessarily. Whitefly management is critical because it also vectors Cotton Leaf Curl Virus (CLCuV).`,
+    `کپاس کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+بولورم: ڈیگر پلس (150-200ملی): https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/ | سائپرفوس (500-600ملی): https://zaraidawai.pk/product/cyperfos-44-ec/ | کوڈیکس (800-1000ملی): https://zaraidawai.pk/product/codex-40-ec-chloropyrifos/
+سفید مکھی/جیسیڈ: بولڈ (Acetamiprid): https://zaraidawai.pk/product/bold-20-sl/ | ڈرموٹ (20-40گرام): https://zaraidawai.pk/product/dermot-20-sp/ | زومر: https://zaraidawai.pk/product/zoomer-25-wg/ | اوبیرون (مائٹ+وائٹ فلائی): https://zaraidawai.pk/product/oberon-bayer-miticide/
+چیچڑ مار: ایکسیلنٹ 1 (200ملی): https://zaraidawai.pk/product/excellent-1-30-ec/ | اچار (45 دن اثر): https://zaraidawai.pk/product/achar-20-se-matanza-life-sciences/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "maize", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for maize pests are available at zaraidawai.pk:
+
+FALL ARMYWORM (Spodoptera frugiperda) — most destructive new pest in Pakistan maize:
+- Coragen FMC (Chlorantraniliprole 20% SC, FMC) — ryanodine receptor modulator, feeding stops within 15–30 min, 50 ml per acre, 21-day residual, safe for beneficials. https://zaraidawai.pk/product/coragen-fmc/
+- Maxo 11.6% SC (Chlorantraniliprole 9% + Emamectin Benzoate 2.6%, Asia Crop Science) — dual systemic + contact, 90–100 ml per acre, 15–21 day residual. https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/
+- Additor Plus 10% SC (Emamectin 1.8% + Lufenuron 7.2%) — 150–200 ml per acre, stops feeding within minutes. https://zaraidawai.pk/product/additor-plus-emamectin-benzoate-lufenuron-copy/
+- Dagger Plus (Emamectin Benzoate 1.8% + Lufenuron 7.2%) — armyworm and leaf folder, 150 ml per acre. https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+- Emadox 9% SC (Emamectin Benzoate + Indoxacarb, New Agri Care) — feeding stops within 3–4 hours, 120 ml pack. https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/
+
+STEM BORER (Chilo partellus):
+- Coragen FMC — 50 ml per acre (also controls corn borer). https://zaraidawai.pk/product/coragen-fmc/
+- Maxo 11.6% SC — 90–100 ml per acre. https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/
+- Codex Chlorpyrifos 40% EC — contact/stomach/vapor, 600–1000 ml per acre. https://zaraidawai.pk/product/codex-40-ec-chloropyrifos/
+- Trocar Chlorpyrifos 40% EC — 600–800 ml per acre. https://zaraidawai.pk/product/chlorpyrifos/
+- Zeacare Carbosulfan + Emamectin Benzoate — effective in foliar or irrigation application for stem borers. https://zaraidawai.pk/product/zeacare-carbosulfan-emamectinbenzoate/
+
+SUCKING INSECTS (Aphids, Thrips):
+- Zoomer 25% WG (Thiamethoxam) — systemic, aphids and sucking insects. https://zaraidawai.pk/product/zoomer-25-wg/
+- Login (Dinotefuran + Thiamethoxam, Ittefaq) — broad-spectrum sucking pest control, 100 ml pack. https://zaraidawai.pk/product/login-dinotefuran-thiamethoxam/
+
+Note: For fall armyworm, spray into the whorl (growing point) for best results. Use Coragen or Maxo at early instar stages (before 3rd instar). Rotate diamide (Coragen/Maxo) with emamectin-based products.`,
+    `مکئی کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+آرمی ورم/بورر: کوراجن (50ملی/ایکڑ، 21 دن): https://zaraidawai.pk/product/coragen-fmc/ | میکسو (90-100ملی): https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/ | ایماڈوکس: https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/ | کوڈیکس (600-1000ملی): https://zaraidawai.pk/product/codex-40-ec-chloropyrifos/
+چوسنے والے کیڑے: زومر: https://zaraidawai.pk/product/zoomer-25-wg/ | لاگن: https://zaraidawai.pk/product/login-dinotefuran-thiamethoxam/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "onion", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for onion pests are available at zaraidawai.pk:
+
+THRIPS (Thrips tabaci) — most damaging pest of onion in Pakistan:
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — systemic + translaminar, 20–40 g per acre in 200–240 L water. PHI 7 days. https://zaraidawai.pk/product/dermot-20-sp/
+- Bold 20% SL (Acetamiprid 20%, Matanza) — rapid knockdown of thrips, aphids, jassids. https://zaraidawai.pk/product/bold-20-sl/
+- Confidor 20%SL (Imidacloprid, Bayer) — systemic control of sucking pests in onion. (Check stock.) https://zaraidawai.pk/product/confidor-20sl/
+- Login (Dinotefuran + Thiamethoxam) — broad-spectrum sucking pest control. https://zaraidawai.pk/product/login-dinotefuran-thiamethoxam/
+- Zoomer 25% WG (Thiamethoxam) — systemic neonicotinoid, leafhoppers and sucking pests. https://zaraidawai.pk/product/zoomer-25-wg/
+
+ONION FLY / LEAF MINERS:
+- Cyperfos 44% EC (Cypermethrin + Profenofos) — leaf miner and fly larvae control, 400–500 ml per acre on vegetables. https://zaraidawai.pk/product/cyperfos-44-ec/
+
+Note: Thrips hide inside onion leaves — ensure spray reaches into the leaf base for effective control. Rotate neonicotinoids (acetamiprid, thiamethoxam, imidacloprid) with other chemistry groups to delay resistance.`,
+    `پیاز کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+تھرپس: ڈرموٹ (20-40گرام/ایکڑ): https://zaraidawai.pk/product/dermot-20-sp/ | بولڈ: https://zaraidawai.pk/product/bold-20-sl/ | زومر: https://zaraidawai.pk/product/zoomer-25-wg/ | کانفیڈور (اسٹاک چیک کریں): https://zaraidawai.pk/product/confidor-20sl/
+پتہ کان: سائپرفوس (400-500ملی): https://zaraidawai.pk/product/cyperfos-44-ec/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "potato", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for potato pests are available at zaraidawai.pk:
+
+POTATO TUBER MOTH / CATERPILLARS / BEETLES:
+- Trial Trichlorfon (Matanza) — broad-spectrum organophosphate, effective against caterpillars, beetles, and chewing pests on vegetables and potato. Apply at first sign of pest activity. https://zaraidawai.pk/product/trial-trichlorfon/
+- Emadox 9% SC (Emamectin Benzoate + Indoxacarb) — disrupts nerve cells, kills larvae within 24–48 hours. https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/
+- Dagger Plus (Emamectin Benzoate + Lufenuron) — ovi-larvicidal, prevents egg hatching and kills larvae. https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+
+APHIDS / WHITEFLIES / SUCKING PESTS:
+- Dermot 20% SP (Acetamiprid 20%) — translaminar + systemic, whiteflies, aphids, thrips, leafhoppers. https://zaraidawai.pk/product/dermot-20-sp/
+- Bold 20% SL (Acetamiprid 20%) — rapid knockdown. https://zaraidawai.pk/product/bold-20-sl/
+- Priority 10.8% EC (Pyriproxyfen, Kanzo AG) — insect growth regulator targeting whitefly eggs and nymphs, mealybugs, aphids — prevents reinfestation. https://zaraidawai.pk/product/priority-10-8-ec/
+- Fighter (Abamectin + Imidacloprid) — aphids, whiteflies, thrips, mites in vegetables. https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+
+Note: Potato aphids also vector PVY and PLRV viruses — early and consistent control is critical. Use insect growth regulators like Priority to break the pest cycle.`,
+    `آلو کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+کیٹرپلر/بھنگ: ٹرائل ٹرائکلورفون: https://zaraidawai.pk/product/trial-trichlorfon/ | ایماڈوکس: https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/
+تیلا/سفید مکھی: ڈرموٹ: https://zaraidawai.pk/product/dermot-20-sp/ | پرائیوریٹی (گروتھ ریگولیٹر): https://zaraidawai.pk/product/priority-10-8-ec/ | فائٹر: https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "rice", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for rice pests are available at zaraidawai.pk:
+
+STEM BORER (Yellow Stem Borer, Striped Stem Borer):
+- Coragen FMC (Chlorantraniliprole 20% SC, FMC) — best-in-class for rice stem borer and leaf folder, 40–50 ml per acre, feeding stops within 15–30 min, 21-day residual. https://zaraidawai.pk/product/coragen-fmc/
+- Maxo 11.6% SC (Chlorantraniliprole + Emamectin Benzoate) — dual systemic, 90 ml per acre for rice stem borer. https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/
+- Lambda Cyhalothrin 2.5% EC (Matanza) — pyrethroid, stem borers + leaf folder, 200–250 ml per acre in rice. https://zaraidawai.pk/product/lambda-cyhalothrin/
+- Talstar FMC (Bifenthrin 10%, FMC) — stem borer and leaf folder in paddy, quick knockdown. https://zaraidawai.pk/product/talstar-fmc/
+
+LEAF FOLDER:
+- Coragen FMC — 40–50 ml per acre. https://zaraidawai.pk/product/coragen-fmc/
+- Maxo 11.6% SC — 90 ml per acre. https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/
+
+BROWN PLANTHOPPER / WHITEFLY / SUCKING INSECTS:
+- Dermot 20% SP (Acetamiprid 20%) — 20–40 g per acre for rice. PHI 7 days. https://zaraidawai.pk/product/dermot-20-sp/
+- Zoomer 25% WG (Thiamethoxam) — systemic, sucking insects in rice. https://zaraidawai.pk/product/zoomer-25-wg/
+
+Note: Apply Coragen at early instar (1st–2nd instar larvae) for best stem borer control. For tungro virus, focus on controlling the green leafhopper vector (use thiamethoxam or acetamiprid). Always drain field before spraying, then reflood.`,
+    `چاول کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+تنا بورر/پتہ فولڈر: کوراجن (40-50ملی/ایکڑ): https://zaraidawai.pk/product/coragen-fmc/ | میکسو (90ملی): https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/ | لیمبڈا سائی ہالوتھرن (200-250ملی): https://zaraidawai.pk/product/lambda-cyhalothrin/ | ٹالسٹار: https://zaraidawai.pk/product/talstar-fmc/
+چوسنے والے: ڈرموٹ (20-40گرام): https://zaraidawai.pk/product/dermot-20-sp/ | زومر: https://zaraidawai.pk/product/zoomer-25-wg/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sugarcane", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for sugarcane pests are available at zaraidawai.pk:
+
+BORERS (Top Borer, Gurdaspur Borer, Shoot Borer):
+- Coragen FMC (Chlorantraniliprole 20% SC, FMC) — premier borer control in sugarcane, top borer + Gurdaspur borer, 50–60 ml per acre. https://zaraidawai.pk/product/coragen-fmc/
+- Maxo 11.6% SC (Chlorantraniliprole + Emamectin Benzoate) — shoot borer and top borer, 100 ml per acre. https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/
+
+TERMITES / PYRILLA:
+- Codex Chlorpyrifos 40% EC (Matanza) — contact/stomach/vapor, termites + black bug + borers in sugarcane, 1000 ml per acre (soil flooding method for termites). https://zaraidawai.pk/product/codex-40-ec-chloropyrifos/
+- Trocar Chlorpyrifos 40% EC (Comerga) — termites, pyrilla, borers, 1 L per acre. https://zaraidawai.pk/product/chlorpyrifos/
+- Talstar FMC (Bifenthrin 10%) — termite control in sugarcane. https://zaraidawai.pk/product/talstar-fmc/
+
+SUCKING PESTS:
+- Confidor 20%SL (Imidacloprid, Bayer) — sucking pests in sugarcane. (Check stock.) https://zaraidawai.pk/product/confidor-20sl/
+- Zoomer 25% WG (Thiamethoxam) — systemic neonicotinoid. https://zaraidawai.pk/product/zoomer-25-wg/
+
+Note: Apply boricides at the early borer infestation stage (< 5% dead hearts). Chlorpyrifos soil application is most effective for termite control — apply during irrigation (flooding method). For Pyrilla (planthopper), acetamiprid or thiamethoxam sprays are effective.`,
+    `گنے کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+بورر: کوراجن (50-60ملی/ایکڑ): https://zaraidawai.pk/product/coragen-fmc/ | میکسو (100ملی): https://zaraidawai.pk/product/maxo-11-6-sc-emamectin-benzoate-and-chlorantraniliprole/
+دیمک/پائریلا: کوڈیکس (1000ملی): https://zaraidawai.pk/product/codex-40-ec-chloropyrifos/ | ٹروکار (1لیٹر): https://zaraidawai.pk/product/chlorpyrifos/ | ٹالسٹار: https://zaraidawai.pk/product/talstar-fmc/
+چوسنے والے: زومر: https://zaraidawai.pk/product/zoomer-25-wg/ | کانفیڈور: https://zaraidawai.pk/product/confidor-20sl/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "sunflower", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for sunflower pests are available at zaraidawai.pk:
+
+APHIDS / THRIPS / JASSIDS (sucking pests on sunflower):
+- Bold 20% SL (Acetamiprid 20%, Matanza) — rapid knockdown of aphids, thrips. https://zaraidawai.pk/product/bold-20-sl/
+- Dermot 20% SP (Acetamiprid 20%) — translaminar + systemic. https://zaraidawai.pk/product/dermot-20-sp/
+- Zoomer 25% WG (Thiamethoxam) — systemic, sucking pests. https://zaraidawai.pk/product/zoomer-25-wg/
+
+CATERPILLARS / ARMYWORM:
+- Dagger Plus (Emamectin Benzoate + Lufenuron) — bollworm and armyworm complex, kills eggs and larvae. https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+- Lambda Cyhalothrin 2.5% EC (Matanza) — pyrethroid, broad-spectrum caterpillar control. https://zaraidawai.pk/product/lambda-cyhalothrin/
+
+MITES (spider mites under dry/hot conditions):
+- Novastar FMC (Bifenthrin + Abamectin) — thrips, mites, aphids, whiteflies in vegetables and field crops. https://zaraidawai.pk/product/novastar-56ec/
+- Achar 20% SE (Fenpropathrin + Etoxazole) — mites, thrips, aphids, 100 ml per 100 L water, 45-day residual. https://zaraidawai.pk/product/achar-20-se-matanza-life-sciences/
+
+Note: Sunflower is attractive to pollinators — avoid spraying open flowers. Apply in early morning or evening to protect bees.`,
+    `سورج مکھی کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+تیلا/تھرپس: بولڈ: https://zaraidawai.pk/product/bold-20-sl/ | زومر: https://zaraidawai.pk/product/zoomer-25-wg/
+کیٹرپلر: ڈیگر پلس: https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/ | لیمبڈا سائی ہالوتھرن: https://zaraidawai.pk/product/lambda-cyhalothrin/
+چیچڑ: نوواسٹار: https://zaraidawai.pk/product/novastar-56ec/ | اچار (45دن): https://zaraidawai.pk/product/achar-20-se-matanza-life-sciences/
+احتیاط: پھولوں پر اسپرے نہ کریں — شہد کی مکھیوں کو نقصان ہوتا ہے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "tomato", 18, "18. Recommended Insecticides & Miticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار اور چیچڑ مار ادویات",
+    `The following insecticides and miticides for tomato pests are available at zaraidawai.pk:
+
+BOLLWORM / FRUIT BORER / ARMYWORM / DIAMONDBACK MOTH:
+- Dagger Plus (Emamectin Benzoate 1.8% + Lufenuron 7.2%) — armyworm, fruit borer, diamondback moth, 150 ml per acre. https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+- Additor Plus 10% SC (Emamectin 1.8% + Lufenuron 7.2%) — same action, 150 ml per acre. https://zaraidawai.pk/product/additor-plus-emamectin-benzoate-lufenuron-copy/
+- Emadox 9% SC (Emamectin Benzoate + Indoxacarb) — feeding stops within 3–4 hours, larval and egg kill. https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/
+- Trial Trichlorfon (Matanza) — caterpillars and beetles in vegetables. https://zaraidawai.pk/product/trial-trichlorfon/
+
+WHITEFLY / APHIDS / THRIPS / LEAFHOPPER:
+- Dermot 20% SP (Acetamiprid 20%) — translaminar, whiteflies, aphids, thrips, leafhoppers, 30 g per acre. PHI 3 days for chilli. https://zaraidawai.pk/product/dermot-20-sp/
+- Bold 20% SL (Acetamiprid 20%) — rapid knockdown. https://zaraidawai.pk/product/bold-20-sl/
+- Priority 10.8% EC (Pyriproxyfen, Kanzo AG) — insect growth regulator, breaks whitefly and mealybug life cycle by preventing egg development. https://zaraidawai.pk/product/priority-10-8-ec/
+- Fighter (Abamectin + Imidacloprid) — dual contact + systemic, aphids, whiteflies, thrips, mites. https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+- Novastar FMC (Bifenthrin + Abamectin) — thrips, mites, leafminers, whiteflies in vegetables. https://zaraidawai.pk/product/novastar-56ec/
+- Cyperfos 44% EC (Cypermethrin + Profenofos) — bollworm, whitefly, leaf miner, mealybug in tomato, 400–500 ml per acre. https://zaraidawai.pk/product/cyperfos-44-ec/
+
+MITICIDES — SPIDER MITES / BROAD MITES:
+- Oberon 24 SC (Spiromesifen + Abamectin, Bayer) — complete mite life cycle control in chilli/tomato, 100 ml per acre. Very safe for tomato. https://zaraidawai.pk/product/oberon-bayer-miticide/
+- Excellent 1 30% EC (Abamectin + Spirodiclofen) — broad mites, yellow mites, whitefly in chillies and vegetables, 200 ml per acre. https://zaraidawai.pk/product/excellent-1-30-ec/
+- Achar 20% SE (Fenpropathrin + Etoxazole) — 100 ml per 100 L water, 45-day residual. https://zaraidawai.pk/product/achar-20-se-matanza-life-sciences/
+
+Note: Tomato yellow leaf curl virus (ToLCV) is spread by whitefly — whitefly control directly prevents virus spread. Rotate chemical groups every spray cycle. PHI of 3–7 days must be respected before harvest.`,
+    `ٹماٹر کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+بورر/آرمی ورم: ڈیگر پلس (150ملی): https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/ | ایماڈوکس: https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/
+سفید مکھی/تیلا: ڈرموٹ (30گرام): https://zaraidawai.pk/product/dermot-20-sp/ | پرائیوریٹی (گروتھ ریگولیٹر): https://zaraidawai.pk/product/priority-10-8-ec/ | اوبیرون (مائٹ+وائٹ فلائی): https://zaraidawai.pk/product/oberon-bayer-miticide/
+چیچڑ: ایکسیلنٹ 1 (200ملی): https://zaraidawai.pk/product/excellent-1-30-ec/ | اچار (45دن اثر): https://zaraidawai.pk/product/achar-20-se-matanza-life-sciences/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "wheat", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for wheat pests are available at zaraidawai.pk:
+
+APHIDS (English Grain Aphid, Rose Grain Aphid) — most common wheat pest in Pakistan, also vectors BYDV:
+- Bold 20% SL (Acetamiprid 20%, Matanza) — rapid knockdown of aphids and sucking insects in wheat. https://zaraidawai.pk/product/bold-20-sl/
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — 20–40 g per acre, translaminar + systemic. https://zaraidawai.pk/product/dermot-20-sp/
+- Zoomer 25% WG (Thiamethoxam, Bravo) — systemic neonicotinoid, aphids and leafhoppers in wheat. https://zaraidawai.pk/product/zoomer-25-wg/
+
+ARMY WORM / CATERPILLARS:
+- Lambda Cyhalothrin 2.5% EC (Matanza) — pyrethroid, broad-spectrum caterpillar control in wheat. https://zaraidawai.pk/product/lambda-cyhalothrin/
+- Trial Trichlorfon (Matanza) — caterpillars and beetles in cereals. https://zaraidawai.pk/product/trial-trichlorfon/
+
+Note: Aphid threshold for wheat is 10–15 aphids per tiller — spray only when threshold is exceeded. Single spray of acetamiprid or thiamethoxam is usually sufficient. Avoid spraying at flowering to protect pollinators.`,
+    `گندم کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+تیلا: بولڈ: https://zaraidawai.pk/product/bold-20-sl/ | ڈرموٹ (20-40گرام): https://zaraidawai.pk/product/dermot-20-sp/ | زومر: https://zaraidawai.pk/product/zoomer-25-wg/
+کیٹرپلر: لیمبڈا سائی ہالوتھرن: https://zaraidawai.pk/product/lambda-cyhalothrin/ | ٹرائل ٹرائکلورفون: https://zaraidawai.pk/product/trial-trichlorfon/
+نوٹ: 10-15 تیلے فی تنہ سے زیادہ ہوں تو اسپرے کریں۔`
+  );
+
   console.log("✅ seedInitialData() complete");
 }
 

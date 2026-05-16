@@ -23,6 +23,75 @@ async function getAuthHeader(): Promise<Record<string, string>> {
   return { Authorization: `Bearer ${session.access_token}` };
 }
 
+const DISEASE_UR: Record<string, string> = {
+  // Cotton
+  bacterial_blight: "بیکٹیریل بلائٹ",
+  curl_virus: "کرل وائرس",
+  healthy: "صحت مند",
+  herbicide_damage: "جڑی بوٹی مار نقصان",
+  leaf_hopper_jassids: "لیف ہاپر",
+  leaf_reddening: "پتوں کا سرخ ہونا",
+  leaf_variegation: "پتوں کا رنگ بدلنا",
+  // Maize
+  fungal_leaf: "فنگل بیماری",
+  gray_leaf_spot: "سرمئی دھبے",
+  holcus_leaf_spot: "ہولکس دھبے",
+  abiotic_disease: "غیر حیاتی بیماری",
+  curvularia: "کروولیریا",
+  helminthosporiosis: "ہیلمنتھوسپوریوسس",
+  rust: "زنگ",
+  stripe_disease: "دھاری بیماری",
+  virosis: "وائرل بیماری",
+  // Onion
+  iris_yellow_virus: "ایرس یلو وائرس",
+  stemphylium_blight: "اسٹمفیلیم بلائٹ",
+  purple_blotch: "جامنی دھبے",
+  alternaria: "الٹرنیریا",
+  bulb_blight: "بلب بلائٹ",
+  fusarium: "فیوزیریم",
+  // Potato
+  black_scurf: "کالی کھرنڈ",
+  blackleg: "کالی ٹانگ",
+  blackspot_bruising: "کالے دھبے",
+  brown_rot: "بھوری سڑن",
+  common_scab: "عام کھرنڈ",
+  dry_rot: "خشک سڑن",
+  pink_rot: "گلابی سڑن",
+  soft_rot: "نرم سڑن",
+  // Rice
+  bacterial_leaf_blight: "بیکٹیریل پتہ بلائٹ",
+  rice_blast: "رائس بلاسٹ",
+  tungro: "ٹنگرو",
+  // Sugarcane
+  banded_chlorosis: "بینڈڈ کلوروسس",
+  brown_spot: "بھورے دھبے",
+  brown_rust: "بھوری زنگ",
+  grassy_shoot: "گھاس جیسی ٹہنی",
+  pokkah_boeng: "پوکا بوئنگ",
+  sett_rot: "سیٹ سڑن",
+  viral_disease: "وائرل بیماری",
+  yellow_leaf: "پیلے پتے",
+  smut: "سمٹ",
+  // Sunflower
+  downy_mildew: "ڈاؤنی ملڈیو",
+  gray_mold: "سرمئی پھپھوندی",
+  leaf_scars: "پتوں کے نشان",
+  // Tomato
+  bacterial_disease: "بیکٹیریل بیماری",
+  blossom_end_rot: "پھول سرے کی سڑن",
+  mite: "مائٹ",
+  late_blight: "لیٹ بلائٹ",
+  early_blight: "ارلی بلائٹ",
+  bacterial_spot: "بیکٹیریل دھبے",
+  leaf_curl: "پتوں کا مڑنا",
+  leaf_mold: "پتوں کی پھپھوندی",
+  septoria_leaf_spot: "سیپٹوریا دھبے",
+  // Wheat
+  septoria: "سیپٹوریا",
+  stripe_rust: "دھاری زنگ",
+  leaf_rust: "پتہ زنگ",
+};
+
 type CropKey = "Cotton" | "Wheat" | "Maize" | "Potato" | "Tomato" | "Sugarcane" | "Onion" | "Sunflower" | "Rice";
 
 const CROPS: CropKey[] = ["Cotton", "Wheat", "Maize", "Potato", "Tomato", "Sugarcane", "Onion", "Sunflower", "Rice"];
@@ -164,13 +233,18 @@ export default function DetectScreen() {
               : { backgroundColor: isDark ? "#1c0a00" : "#fff7ed", borderLeftColor: "#f97316" },
           ]}>
             <Text style={[styles.resultTitle, { color: colors.text }]}>
-              {result.is_healthy ? "Result: Healthy" : "Disease Detected"}
+              {result.is_healthy
+                ? `Result: Healthy / ${DISEASE_UR["healthy"]}`
+                : "Disease Detected"}
             </Text>
 
             {!result.is_healthy && (
               <>
                 <Text style={[styles.resultLabel, { color: colors.textSub }]}>Disease</Text>
-                <Text style={[styles.resultValue, { color: colors.text }]}>{result.display_disease}</Text>
+                <Text style={[styles.resultValue, { color: colors.text }]}>
+                  {result.display_disease}
+                  {DISEASE_UR[result.disease] ? ` / ${DISEASE_UR[result.disease]}` : ""}
+                </Text>
               </>
             )}
 

@@ -16,6 +16,34 @@ print("Loading embedding model...")
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
 
+CHUNK_MAX_CHARS = 550
+
+
+def _chunk_body(plant_name: str, title: str, body: str) -> list[str]:
+    """Split a section body into paragraph-level chunks ≤ CHUNK_MAX_CHARS each."""
+    header = f"{plant_name} - {title}\n"
+    paragraphs = [p.strip() for p in body.split("\n\n") if p.strip()]
+    chunks: list[str] = []
+    current = header
+
+    for para in paragraphs:
+        candidate = current + para + "\n\n"
+        if len(candidate) <= CHUNK_MAX_CHARS:
+            current = candidate
+        else:
+            if current != header:
+                chunks.append(current.strip())
+            while len(header + para) > CHUNK_MAX_CHARS:
+                cut = para[:CHUNK_MAX_CHARS - len(header)]
+                chunks.append((header + cut).strip())
+                para = para[len(cut):]
+            current = header + para + "\n\n"
+
+    if current.strip() != header.strip():
+        chunks.append(current.strip())
+
+    return chunks or [header + body[:CHUNK_MAX_CHARS]]
+
 
 def _build_collection() -> chromadb.Collection:
     if not os.path.exists(DATA_PATH):
@@ -31,16 +59,17 @@ def _build_collection() -> chromadb.Collection:
 
     documents, metadatas, ids = [], [], []
     for s in sections:
-        text = f"{s['plant_name']} - {s['title_en']}\n{s['body_en']}"
-        documents.append(text)
-        metadatas.append({
-            "plant_id":   s["plant_id"],
-            "plant_name": s["plant_name"],
-            "section":    s["title_en"],
-        })
-        ids.append(f"{s['plant_id']}_{s['order_index']}")
+        chunks = _chunk_body(s["plant_name"], s["title_en"], s["body_en"])
+        for i, chunk in enumerate(chunks):
+            documents.append(chunk)
+            metadatas.append({
+                "plant_id":   s["plant_id"],
+                "plant_name": s["plant_name"],
+                "section":    s["title_en"],
+            })
+            ids.append(f"{s['plant_id']}_{s['order_index']}_{i}")
 
-    print(f"Embedding {len(documents)} plant sections...")
+    print(f"Embedding {len(documents)} chunks from plant sections...")
     embeddings = embedder.encode(documents).tolist()
 
     collection.add(
@@ -67,7 +96,7 @@ collection = _get_collection()
 
 
 def retrieve(query: str, n: int = 4) -> str:
-    """Return the top-n relevant plant sections as a formatted string."""
+    """Return the top-n relevant plant chunks as a formatted string."""
     query_vec = embedder.encode([query]).tolist()
     results = collection.query(
         query_embeddings=query_vec,

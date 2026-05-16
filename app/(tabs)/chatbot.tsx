@@ -1,11 +1,14 @@
 import { Ionicons } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
 import { useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Keyboard,
   KeyboardAvoidingView,
+  Linking,
   Platform,
   StyleSheet,
   Text,
@@ -18,9 +21,11 @@ import { useTheme } from "../../contexts/theme";
 import { supabase } from "../../lib/supabase";
 
 const API_BASE = process.env.EXPO_PUBLIC_ML_BACKEND_URL ?? "http://localhost:8000";
+console.log("[Chatbot] API_BASE =", API_BASE);
 
 async function getAuthHeader(): Promise<Record<string, string>> {
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session }, error } = await supabase.auth.getSession();
+  console.log("[Chatbot] getSession →", session ? `user=${session.user.email}` : "no session", error ? `err=${error.message}` : "");
   if (!session) return {};
   return { Authorization: `Bearer ${session.access_token}` };
 }
@@ -67,17 +72,25 @@ export default function ChatbotScreen() {
 
     try {
       const authHeader = await getAuthHeader();
-      const res = await fetch(`${API_BASE}/chat`, {
+      const url = `${API_BASE}/chat`;
+      console.log("[Chatbot] POST", url, "hasAuth=", !!authHeader.Authorization);
+      const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...authHeader },
         body: JSON.stringify({ message: text, history }),
       });
 
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
-      const data = await res.json();
+      console.log("[Chatbot] response status =", res.status);
+      if (!res.ok) {
+        const body = await res.text();
+        console.log("[Chatbot] error body =", body);
+        throw new Error(`Server error ${res.status}: ${body}`);
+      }
 
+      const data = await res.json();
       setMessages((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: data.reply }]);
-    } catch {
+    } catch (err) {
+      console.log("[Chatbot] fetch error =", String(err));
       setMessages((prev) => [...prev, {
         id: (Date.now() + 1).toString(),
         role: "assistant",
@@ -88,8 +101,30 @@ export default function ChatbotScreen() {
     }
   }, [input, loading, messages]);
 
+  // Parse text into segments: plain | bold | url
+  const parseSegments = (text: string) => {
+    const regex = /(\*\*[^*]+\*\*)|(https?:\/\/[^\s\)\]\n]+)/g;
+    const segments: { type: "text" | "bold" | "url"; content: string }[] = [];
+    let last = 0;
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > last) segments.push({ type: "text", content: text.slice(last, match.index) });
+      if (match[1]) segments.push({ type: "bold", content: match[1].slice(2, -2) });
+      else if (match[2]) segments.push({ type: "url", content: match[2] });
+      last = match.index + match[0].length;
+    }
+    if (last < text.length) segments.push({ type: "text", content: text.slice(last) });
+    return segments;
+  };
+
+  const copyToClipboard = async (text: string) => {
+    await Clipboard.setStringAsync(text);
+    Alert.alert("Copied", "Message copied to clipboard.");
+  };
+
   const renderItem = ({ item }: { item: Message }) => {
     const isUser = item.role === "user";
+    const segments = parseSegments(item.content);
     return (
       <View style={[styles.bubbleRow, isUser ? styles.rowRight : styles.rowLeft]}>
         {!isUser && (
@@ -97,16 +132,23 @@ export default function ChatbotScreen() {
             <Text style={styles.avatarText}>🌿</Text>
           </View>
         )}
-        <View style={[
-          styles.bubble,
-          isUser
-            ? styles.userBubble
-            : [styles.botBubble, { backgroundColor: colors.card }],
-        ]}>
+        <TouchableOpacity
+          activeOpacity={0.85}
+          onLongPress={() => copyToClipboard(item.content)}
+          style={[styles.bubble, isUser ? styles.userBubble : [styles.botBubble, { backgroundColor: colors.card }]]}
+        >
           <Text style={isUser ? styles.userText : [styles.botText, { color: colors.text }]}>
-            {item.content}
+            {segments.map((seg, i) => {
+              if (seg.type === "bold") return <Text key={i} style={[styles.boldText, { color: colors.text }]}>{seg.content}</Text>;
+              if (seg.type === "url") return (
+                <Text key={i} style={styles.linkText} onPress={() => Linking.openURL(seg.content)}>
+                  {seg.content}
+                </Text>
+              );
+              return <Text key={i}>{seg.content}</Text>;
+            })}
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -197,6 +239,8 @@ const styles = StyleSheet.create({
 
   userText: { color: "#fff", fontSize: 14, lineHeight: 20 },
   botText: { fontSize: 14, lineHeight: 20 },
+  boldText: { fontWeight: "700" },
+  linkText: { color: "#16a34a", textDecorationLine: "underline", fontSize: 14, lineHeight: 20 },
 
   typingRow: { flexDirection: "row", alignItems: "center", paddingHorizontal: 12, marginBottom: 4 },
   typingBubble: { borderRadius: 16, paddingHorizontal: 16, paddingVertical: 10, elevation: 1 },

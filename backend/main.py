@@ -77,17 +77,21 @@ _SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
 
 async def _verify_token(credentials: HTTPAuthorizationCredentials = Depends(_security)):
     token = credentials.credentials
+    logger.info(f"AUTH token prefix={token[:20]}... supabase_url={_SUPABASE_URL} anon_key_set={bool(_SUPABASE_ANON_KEY)}")
     async with httpx.AsyncClient(timeout=5) as client:
         res = await client.get(
             f"{_SUPABASE_URL}/auth/v1/user",
             headers={"Authorization": f"Bearer {token}", "apikey": _SUPABASE_ANON_KEY},
         )
+    logger.info(f"AUTH supabase response: {res.status_code}")
     if res.status_code == 401:
         raise HTTPException(401, "Token expired — please log in again")
     if res.status_code != 200:
         logger.error(f"Supabase auth check failed: {res.status_code} {res.text[:200]}")
         raise HTTPException(401, "Invalid token")
-    return res.json()
+    user = res.json()
+    logger.info(f"AUTH ok — user={user.get('email')}")
+    return user
 
 SYSTEM_PROMPT = (
     "You are LeafEye's expert farming assistant for Pakistani farmers and home gardeners. "
@@ -96,6 +100,7 @@ SYSTEM_PROMPT = (
     "(Cotton, Maize, Wheat, Chilli, Coriander, Lemon, Garlic, Onion, Sugarcane, Sunflower, Tomato, Potato, Rice) "
     "and homegrown plants (Aloe Vera, Carrot, Ginger, Lettuce, Mint). "
     "Use the provided context from the LeafEye plant database to answer questions accurately. "
+    "IMPORTANT: When the context includes product recommendations with zaraidawai.pk URLs, always include the full URL for each product you mention so the farmer can buy it directly. "
     "Always respond in English by default. "
     "Only switch to Urdu if the user writes in Urdu script (Arabic letters) or Roman Urdu (Urdu written in English letters like 'is plant me kya masla ha'). "
     "When replying in Urdu, use Urdu script — NOT Hindi. Never mix languages in a single response. "
@@ -107,6 +112,7 @@ SYSTEM_PROMPT = (
 # ──────────────────────────────────────────────
 _model = None
 _class_names: List[str] = []
+_temperature: float = 1.0
 
 _INFER_TRANSFORM = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -117,22 +123,29 @@ _INFER_TRANSFORM = transforms.Compose([
 
 @app.on_event("startup")
 async def load_detection_model():
-    global _model, _class_names
+    global _model, _class_names, _temperature
     here = Path(__file__).parent
-    model_path = here / "efficientnet_leafeye.pt"
+    model_path = here / "efficientnet_leafeye_b3.pt"
     class_path = here / "class_names.json"
     if not (model_path.exists() and class_path.exists()):
         print("Detection model not found — /detect will return 503 until trained.")
         return
     with open(class_path) as f:
         _class_names = json.load(f)
-    m = models.efficientnet_b0(weights=None)
+    m = models.efficientnet_b3(weights=None)
     in_feats = m.classifier[1].in_features
-    m.classifier = nn.Sequential(nn.Dropout(p=0.3), nn.Linear(in_feats, len(_class_names)))
-    m.load_state_dict(torch.load(model_path, map_location="cpu"))
+    m.classifier = nn.Sequential(nn.Dropout(p=0.4), nn.Linear(in_feats, len(_class_names)))
+    checkpoint = torch.load(model_path, map_location="cpu")
+    # support both new format {state_dict, temperature} and old plain state_dict
+    if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
+        m.load_state_dict(checkpoint["state_dict"])
+        _temperature = float(checkpoint.get("temperature", 1.0))
+    else:
+        m.load_state_dict(checkpoint)
+        _temperature = 1.0
     m.eval()
     _model = m
-    print(f"Detection model loaded — {len(_class_names)} classes")
+    print(f"Detection model loaded — {len(_class_names)} classes — temperature={_temperature:.4f}")
 
 
 # ──────────────────────────────────────────────
@@ -169,7 +182,7 @@ async def chat(request: ChatRequest, _user=Depends(_verify_token)):
             )
 
         messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-        for msg in request.history[-10:]:
+        for msg in request.history[-6:]:
             messages.append({"role": msg.role, "content": msg.content})
         messages.append({"role": "user", "content": user_content})
 
@@ -177,7 +190,7 @@ async def chat(request: ChatRequest, _user=Depends(_verify_token)):
             model="qwen/qwen3-32b",
             messages=messages,
             temperature=0.3,
-            max_tokens=4000,
+            max_tokens=2500,
             reasoning_effort="none",
         )
 
@@ -208,7 +221,7 @@ async def detect(crop: str = Form(...), image: UploadFile = File(...), _user=Dep
     tensor = _INFER_TRANSFORM(img).unsqueeze(0)
 
     with torch.no_grad():
-        logits = _model(tensor)
+        logits = _model(tensor) / _temperature
         probs = torch.softmax(logits, dim=1)[0]
 
     crop_lower = crop.lower()
