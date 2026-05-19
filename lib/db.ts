@@ -24,7 +24,7 @@ let initialized = false;
 
 async function getDb(): Promise<SQLiteDatabase> {
   if (!dbPromise) {
-    const dbName = "leafeye_v26.db"; // new DB → clean seed
+    const dbName = "leafeye_v27.db"; // new DB → clean seed
     console.log("📦 getDb() → opening", dbName, "with expo-sqlite");
     dbPromise = SQLite.openDatabaseAsync(dbName);
   }
@@ -3773,7 +3773,7 @@ Fumigate warehouses using Aluminum Phosphide tablets under expert supervision.`,
 
   // ── GARLIC ──────────────────────────────────────────────────────────────
   await db.runAsync(`INSERT INTO plants (id, name_en, name_ur, type) VALUES (?, ?, ?, ?);`,
-    "garlic", "Garlic", "لہسن", "crop");
+    "garlic", "Garlic", "لہسن", "home");
 
   await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
     "garlic", 1, "1. General Information", "١. عمومی معلومات",
