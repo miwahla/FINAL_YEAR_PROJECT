@@ -24,7 +24,7 @@ let initialized = false;
 
 async function getDb(): Promise<SQLiteDatabase> {
   if (!dbPromise) {
-    const dbName = "leafeye_v27.db"; // new DB → clean seed
+    const dbName = "leafeye_v28.db"; // new DB → clean seed
     console.log("📦 getDb() → opening", dbName, "with expo-sqlite");
     dbPromise = SQLite.openDatabaseAsync(dbName);
   }
@@ -4649,6 +4649,581 @@ Fumigate warehouses using Aluminum Phosphide tablets under expert supervision.`,
     "mint", 14, "14. Post Harvest / Storage", "١٤. ذخیرہ کاری",
     `Fresh mint: store stems in a glass of water (like flowers) at room temperature for 1–2 weeks. Alternatively, wrap in a damp paper towel, place in a zip-lock bag, and refrigerate for up to 2 weeks. Dried mint: dry in shade (not direct sun) to preserve colour and aroma — takes 1–2 weeks. Store dried mint in airtight glass jars away from light and heat for up to 1 year. Mint can also be frozen — wash, dry, chop, and freeze in ice cube trays with water.`,
     `تازہ پودینہ: تنوں کو کمرے کے درجہ حرارت پر پانی کے گلاس میں (پھولوں کی طرح) 1 سے 2 ہفتوں کے لیے رکھیں۔ متبادل طور پر گیلے کاغذی تولیے میں لپیٹیں، زپ لاک بیگ میں رکھیں اور 2 ہفتوں تک فریج میں رکھیں۔ خشک پودینہ: رنگ اور خوشبو محفوظ رکھنے کے لیے سایہ میں خشک کریں (براہ راست دھوپ نہیں) — 1 سے 2 ہفتے لگتے ہیں۔ خشک پودینہ روشنی اور گرمی سے دور ایئر ٹائٹ شیشے کے برتنوں میں 1 سال تک ذخیرہ کریں۔ پودینہ منجمد بھی کیا جا سکتا ہے — دھوئیں، خشک کریں، کاٹیں اور پانی کے ساتھ آئس کیوب ٹریز میں منجمد کریں۔`
+  );
+
+  // ── HOMEGROWN PLANTS: DISEASE DETAILS, PRODUCTS, HERBICIDES & INSECTICIDES ──
+
+  // ── GARLIC (homegrown) ───────────────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "garlic", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `PURPLE BLOTCH (purple_blotch)
+Cause: Alternaria porri fungus. Spread by airborne conidia and rain splash. Favored by warm (28-30C), humid conditions with free moisture on leaves. Thrips damage predisposes plants.
+Symptoms: White lesions with purple centres on leaves and scapes, developing concentric rings. Yellow streaks along leaf from lesion. Severely affected leaves die back from tips.
+Treatment: Apply iprodione (Rovral 500SC, 2 mL/L) or mancozeb (Dithane M-45, 2.5 g/L) every 7-10 days. Add a spreader-sticker for better adhesion on waxy leaves. Avoid overhead irrigation. Use certified disease-free planting material.
+
+BASAL ROT / FUSARIUM (basal_rot)
+Cause: Fusarium culmorum or F. oxysporum soilborne fungi. Survive years in soil. Favored by warm soil (25-30C), poor drainage, mechanical injury during transplanting.
+Symptoms: Roots turn pink to brown and rot. Basal plate of bulb becomes soft and brown. Plants yellow, wilt, and die progressively. Infected bulbs in storage develop a white-pink mold at the base.
+Treatment: Treat seed cloves with Thiram or Iprodione before planting. Drench soil with Carbendazim (Bavistin 0.1%) at planting. Practice 3-4 year rotation away from alliums. Improve field drainage. Destroy infected plants.
+
+WHITE ROT (white_rot)
+Cause: Sclerotium cepivorum fungus. Sclerotia persist in soil for 20+ years. Highly favored by cool (10-20C) moist conditions. Spreads on contaminated tools and soil.
+Symptoms: Rapid yellowing and wilting of leaves, starting from outer leaves. Fluffy white mycelium at bulb base with tiny black sclerotia (mustard-seed sized). Roots rot away. Entire plant collapses.
+Treatment: No effective chemical cure once established. Prevent by using clean planting material and sterilising tools. Soil drench with Tebuconazole or Iprodione at planting can reduce incidence. Avoid moving soil between infested and clean areas.
+
+RUST (rust)
+Cause: Puccinia allii fungus. Spreads via wind-dispersed urediniospores. Favored by cool (10-20C), humid conditions with regular dew. More common in cooler growing periods.
+Symptoms: Numerous small, elongated, bright orange to rust-brown pustules (uredia) on leaves and scapes. Heavily infected leaves turn yellow and die back. Reduces photosynthesis and bulb size.
+Treatment: Spray propiconazole (Tilt 250 EC, 0.5 mL/L) or mancozeb (Dithane M-45, 2.5 g/L) at first pustule appearance. Repeat every 10-14 days. Remove and destroy heavily infected leaves. Avoid dense plantings; ensure air circulation.`,
+    `جامنی دھبہ: وجہ: الٹرنیریا فنگس، گرم نم موسم میں۔ علامات: پتوں پر جامنی مراکز والے سفید دھبے، پیلی دھاریاں۔ علاج: روول 500SC یا ڈائیتھین M-45 ہر 7-10 دن، اوپر سے آبپاشی سے گریز۔
+بنیادی سڑن/فیوزیریم: وجہ: فیوزیریم فنگس، گرم خراب نکاسی والی مٹی۔ علامات: جڑیں گلابی بھوری، بلب کی بنیاد نرم بھوری، پودے پیلے پڑ کر مر جاتے ہیں۔ علاج: بیج کو تھائرم سے ٹریٹ کریں، Carbendazim مٹی ڈرینچ، 3-4 سالہ فصل ردوبدل۔
+سفید سڑن: وجہ: اسکلیروشیم فنگس، مٹی میں 20 سال تک رہتا ہے۔ علامات: تیزی سے پتے پیلے، بلب کی بنیاد پر سفید پھپھوندی اور سیاہ دانے۔ علاج: صاف بیج، آلات صاف رکھیں، Tebuconazole مٹی ڈرینچ۔
+زنگ: وجہ: Puccinia فنگس، ٹھنڈی نم ہوا۔ علامات: پتوں پر نارنجی-زنگ رنگ کے گچھے۔ علاج: ٹلٹ 250 یا ڈائیتھین M-45 پہلے گچھے پر اسپرے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "garlic", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+PURPLE BLOTCH (Alternaria porri):
+- Rovral 500SC (Iprodione, FMC) — excellent Alternaria and purple blotch control, 10-14 day residual, apply 10-14 mL per 10L water. https://zaraidawai.pk/product/rovral-500sc/
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — systemic + contact, broad-spectrum for allium diseases. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Copper Oxychloride 50% WP — protective contact spray for fungal and bacterial issues. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+
+RUST (Puccinia allii):
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%) — broad-spectrum, targets rust and downy diseases. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Humulus 80% WG Sulphur (Sayban) — sulfur is highly effective against rust. Apply 1 kg per acre. https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+
+BASAL ROT / FUSARIUM / WHITE ROT:
+- Rovral 500SC (Iprodione) — soil drench and seed treatment for Fusarium and Sclerotium. https://zaraidawai.pk/product/rovral-500sc/
+- Kocide 3000 (Copper Hydroxide 53.4%, FMC) — copper-based broad-spectrum protective treatment. https://zaraidawai.pk/product/kocide-3000/`,
+    `جامنی دھبے کے لیے (zaraidawai.pk):
+- روول 500SC: https://zaraidawai.pk/product/rovral-500sc/
+- بونٹ 72% WP: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- کاپر آکسی کلورائیڈ: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+زنگ کے لیے: سوئنگ 72%: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/ | ہیومولس 80% گندھک: https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+بنیادی سڑن: روول 500SC | کوکائیڈ 3000: https://zaraidawai.pk/product/kocide-3000/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "garlic", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Garlic is a slow-growing crop and a poor competitor against weeds. Weed control in the first 6-8 weeks after planting is critical. The following herbicides are available at zaraidawai.pk:
+
+PRE-EMERGENT (apply immediately after planting, before garlic and weed emergence):
+- Pull Up 51.5% EC (Oxyfluorfen + Pendimethalin) — registered for allium crops, broad-spectrum control of annual broadleaf and grass weeds, 600-800 mL per acre, 40-50 day residual. https://zaraidawai.pk/product/pull-up-51-5-ec/
+- Stomp 455CS (Pendimethalin 455 g/L, FMC) — annual grass and broadleaf control in allium crops. Apply before emergence. https://zaraidawai.pk/product/stomp-455cs/
+
+CULTURAL WEED CONTROL:
+- Hand weeding at 4 and 8 weeks after planting.
+- Straw mulch between rows suppresses weeds and conserves moisture.
+- Avoid deep cultivation near garlic plants as roots are shallow.
+
+Note: Garlic planted in beds is easier to weed than broadcast-planted. Pre-emergent herbicides must be applied to moist soil for best efficacy.`,
+    `لہسن میں جڑی بوٹی کنٹرول (zaraidawai.pk):
+پہلے 6-8 ہفتے سب سے اہم ہیں۔
+پہلے سے: پل اپ 51.5 ای سی (آل-ام فصلوں کے لیے، 600-800 ملی/ایکڑ): https://zaraidawai.pk/product/pull-up-51-5-ec/ | اسٹومپ 455CS: https://zaraidawai.pk/product/stomp-455cs/
+ثقافتی: لگانے کے 4 اور 8 ہفتے بعد ہاتھ سے گوڈی، قطاروں کے درمیان بھوسے کی ملچ۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "garlic", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for garlic pests are available at zaraidawai.pk:
+
+THRIPS (Thrips tabaci) — most damaging pest of garlic in Pakistan:
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — systemic + translaminar, 20-40 g per acre in 200-240 L water. Effective against thrips in allium crops. https://zaraidawai.pk/product/dermot-20-sp/
+- Bold 20% SL (Acetamiprid 20%, Matanza) — rapid knockdown of thrips and aphids. https://zaraidawai.pk/product/bold-20-sl/
+- Confidor 20% SL (Imidacloprid, Bayer) — systemic neonicotinoid for sucking pests. https://zaraidawai.pk/product/confidor-20sl/
+- Zoomer 25% WG (Thiamethoxam) — systemic sucking pest control. https://zaraidawai.pk/product/zoomer-25-wg/
+
+ONION FLY / LEAF MINERS:
+- Cyperfos 44% EC (Cypermethrin + Profenofos) — leaf miner and fly larvae control. https://zaraidawai.pk/product/cyperfos-44-ec/
+
+Note: Rotate insecticide classes each spray to prevent resistance. Thrips hide inside garlic leaves — ensure spray penetrates into the canopy.`,
+    `لہسن کے لیے تجویز کردہ ادویات (zaraidawai.pk):
+تھرپس: ڈرموٹ 20% SP: https://zaraidawai.pk/product/dermot-20-sp/ | بولڈ 20% SL: https://zaraidawai.pk/product/bold-20-sl/ | کانفیڈور: https://zaraidawai.pk/product/confidor-20sl/ | زومر: https://zaraidawai.pk/product/zoomer-25-wg/
+پیاز مکھی: سائپرفوس 44%: https://zaraidawai.pk/product/cyperfos-44-ec/`
+  );
+
+  // ── ALOE VERA (homegrown) ────────────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "aloevera", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `ROOT ROT (root_rot)
+Cause: Pythium aphanidermatum or Phytophthora spp. soilborne oomycetes. The primary cause is overwatering and waterlogged, poorly-drained soil. Favored by warm, moist conditions.
+Symptoms: Leaves turn soft, mushy, and translucent at the base before turning brown. Roots appear brown, mushy, and have no white healthy tips. The entire plant may collapse suddenly. A foul smell from the base is diagnostic.
+Treatment: No chemical cure once advanced. Prevention is critical: use very well-drained sandy soil, water only when completely dry. If caught early: unpot, remove all rotted roots with a clean knife, dust with sulfur powder, let dry for 2-3 days, repot in fresh dry mix. Soil drench with Metalaxyl (Bonut 72% WP, 2 g/L) can arrest early infection.
+
+ALOE RUST (aloe_rust)
+Cause: Fungal pathogen (Phakopsora-like rust). Favored by high humidity, poor air circulation, and overhead watering. Less common in dry conditions.
+Symptoms: Small, circular, orange-brown pustules on both leaf surfaces. Leaves may yellow around pustules. Severe infections cause leaf disfigurement and reduced gel quality.
+Treatment: Remove and destroy infected leaves. Improve air circulation and avoid overhead watering. Spray mancozeb (Dithane M-45, 2.5 g/L) or wettable sulfur. Allow soil to dry more between waterings.
+
+BACTERIAL SOFT ROT (bacterial_soft_rot)
+Cause: Erwinia carotovora or Pectobacterium spp. bacteria. Enter through wounds or via insects. Favored by warm, wet conditions and waterlogged soil.
+Symptoms: Water-soaked, soft, mushy lesions on leaves — often with a foul odour. Infected tissue rapidly turns dark brown to black and collapses. Distinct from root rot as it starts mid-leaf or at wound sites, not only at base.
+Treatment: No effective chemical cure. Remove all infected tissue with a sterilised knife. Let wounds dry completely before replanting. Avoid wetting leaves and keep soil dry. Copper bactericide spray (Kocide 3000) may slow spread.
+
+MEALYBUG (mealybug)
+Cause: Planococcus citri or Pseudococcus spp. soft-scale insects. Cluster in leaf axils and at plant base. Favored by warm, dry indoor conditions and stressed plants.
+Symptoms: White cottony masses in leaf axils and crevices at the plant base. Leaves may yellow and become sticky from honeydew secretion. Sooty mold may develop on honeydew.
+Treatment: Wipe accessible mealybugs with a cotton swab dipped in 70% isopropyl alcohol. Spray neem oil (5 mL/L + soap) or imidacloprid (Confidor 20% SL, 0.5 mL/L). Repeat every 7 days for 3 applications. Isolate affected plants.
+
+SCALE INSECTS (scale_insects)
+Cause: Various Coccidae (soft scale) and Diaspididae (armoured scale) species. Overwinter on plant. Favored by dry indoor conditions.
+Symptoms: Small (1-3 mm) brown, tan, or white waxy bumps along leaf surfaces and margins. Leaves yellow and weaken. Honeydew and sooty mold may follow heavy infestations.
+Treatment: Scrape scales off with an old toothbrush dipped in soapy water or rubbing alcohol. Spray neem oil (5 mL/L). For severe infestations, imidacloprid (Confidor 20% SL) systemic drench is highly effective. Repeat treatment after 10 days.`,
+    `جڑ کی سڑن: وجہ: Pythium/Phytophthora، زیادہ پانی اور گیلی مٹی۔ علامات: پتے نرم گیلے بھورے، جڑیں گلی ہوئی، بدبو۔ علاج: اچھی نکاسی، گیلی جڑیں کاٹیں، خشک کریں، تازہ مکسچر میں لگائیں، Bonut 72% ڈرینچ۔
+ایلو زنگ: وجہ: فنگس، زیادہ نمی۔ علامات: پتوں پر نارنجی بھورے گچھے۔ علاج: متاثرہ پتے ہٹائیں، ڈائیتھین M-45 یا گندھک اسپرے۔
+بیکٹیریل نرم سڑن: وجہ: Erwinia بیکٹیریا۔ علامات: پتوں پر گیلے بدبودار دھبے۔ علاج: متاثرہ حصہ کاٹیں، مٹی خشک رکھیں، Kocide 3000 اسپرے۔
+میلی بگ: علامات: پتوں کی جوڑوں میں سفید روئی۔ علاج: الکوحل سے پونچھیں، نیم تیل اسپرے، کانفیڈور۔
+اسکیل: علامات: پتوں پر بھورے موم کے گچھے۔ علاج: صابن والے پانی سے رگڑیں، نیم تیل، کانفیڈور ڈرینچ۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "aloevera", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following products are available for purchase in Pakistan at zaraidawai.pk:
+
+ROOT ROT (Pythium / Phytophthora):
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — systemic metalaxyl for Pythium and Phytophthora root diseases. Soil drench 2-3 g/L water around root zone. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%) — same mode of action, alternative brand. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Veto 50% WP (Propineb 42% + Metalaxyl-M 8%) — protective + curative for root and crown rot diseases. https://zaraidawai.pk/product/veto-50-wp/
+
+ALOE RUST / FUNGAL SPOTS:
+- Humulus 80% WG Sulphur (Sayban) — sulfur is effective against rust and foliar fungi; apply as light spray. https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+- Copper Oxychloride 50% WP — protective spray for fungal and bacterial leaf diseases. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+
+BACTERIAL SOFT ROT:
+- Kocide 3000 (Copper Hydroxide 53.4%, FMC) — copper bactericide to slow bacterial spread. https://zaraidawai.pk/product/kocide-3000/
+
+Note: Aloe vera is a succulent — prevention through correct watering is more effective than chemical treatment. Use products sparingly and at low concentrations.`,
+    `جڑ کی سڑن (zaraidawai.pk):
+- بونٹ 72%: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- سوئنگ 72%: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- ویٹو 50%: https://zaraidawai.pk/product/veto-50-wp/
+زنگ: ہیومولس 80% گندھک: https://zaraidawai.pk/product/humulus-80-wg-sulphur/ | کاپر آکسی کلورائیڈ: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+بیکٹیریل سڑن: کوکائیڈ 3000: https://zaraidawai.pk/product/kocide-3000/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "aloevera", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Aloe vera is a slow-growing succulent and does not compete well with weeds during establishment. However, once established it shades the ground effectively.
+
+RECOMMENDED METHOD — MANUAL WEEDING ONLY:
+Chemical herbicides are NOT recommended near aloe vera plants. The roots are shallow and aloe vera can readily absorb herbicide residues from the soil, which may affect gel quality and plant health.
+
+CULTURAL WEED CONTROL:
+- Hand-pull weeds around aloe plants, especially in the first 3 months after planting.
+- Apply a layer of coarse gravel, pebbles, or sand mulch (3-5 cm) around plants — this suppresses weeds while improving drainage and appearance.
+- In garden beds: shallow hoeing between plants, being careful of surface roots.
+- Maintain wider plant spacing (45 cm) to allow access for weeding.
+
+Note: If weeds become unmanageable in a large planting, a contact herbicide (glyphosate) can be applied very carefully with a directed spray shield, avoiding all contact with aloe leaves and stems.`,
+    `ایلو ویرا میں جڑی بوٹی کنٹرول:
+کیمیائی ادویات ایلو ویرا کے قریب ہرگز استعمال نہ کریں — جڑیں آسانی سے جذب کر لیتی ہیں۔
+صرف ہاتھ سے گوڈی کریں، پہلے 3 ماہ خاص توجہ دیں۔
+پودوں کے گرد 3-5 سینٹی میٹر بجری یا ریت کی ملچ جڑی بوٹیاں دباتی ہے اور نکاسی بہتر بناتی ہے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "aloevera", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for aloe vera pests are available at zaraidawai.pk:
+
+MEALYBUGS / SCALE INSECTS (most common pests of aloe vera):
+- Confidor 20% SL (Imidacloprid, Bayer) — systemic neonicotinoid absorbed by roots; highly effective against mealybugs and scale when used as a soil drench (0.5 mL/L). https://zaraidawai.pk/product/confidor-20sl/
+- Priority 10.8% EC (Pyriproxyfen, Kanzo AG) — insect growth regulator disrupting mealybug egg development; prevents reinfestation. Apply as foliar spray. https://zaraidawai.pk/product/priority-10-8-ec/
+- Fighter (Abamectin + Imidacloprid) — contact + systemic, effective on mealybugs, scale, and aphids. https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+
+APHIDS:
+- Bold 20% SL (Acetamiprid 20%) — rapid knockdown of soft-bodied sucking pests. https://zaraidawai.pk/product/bold-20-sl/
+
+ORGANIC FIRST CHOICE:
+- Neem oil (5 mL/L + a few drops dish soap) — safe, effective for mealybugs, scale, and aphids; no systemic uptake concerns. Apply every 7 days. Available at general agri stores.
+
+Note: Aloe vera is used medicinally and topically — prefer organic controls where possible. If using systemic insecticides (imidacloprid), wait at least 4 weeks before harvesting leaves.`,
+    `ایلو ویرا کیڑوں کے لیے (zaraidawai.pk):
+میلی بگ/اسکیل: کانفیڈور 20% SL (مٹی ڈرینچ): https://zaraidawai.pk/product/confidor-20sl/ | پرائیوریٹی (گروتھ ریگولیٹر): https://zaraidawai.pk/product/priority-10-8-ec/ | فائٹر: https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+تیلا: بولڈ 20% SL: https://zaraidawai.pk/product/bold-20-sl/
+نامیاتی: نیم تیل (5 ملی/لیٹر + صابن) — ہر 7 دن۔ نوٹ: دواؤں استعمال سے 4 ہفتے پہلے پتے نہ کاٹیں۔`
+  );
+
+  // ── CARROT (homegrown) ───────────────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "carrot", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `ALTERNARIA LEAF BLIGHT (alternaria)
+Cause: Alternaria dauci fungus. Spreads via airborne conidia and infected seeds. Favored by warm (25-30C), humid conditions and free moisture on leaves. Older leaves are affected first.
+Symptoms: Dark brown to black spots with a yellow halo on leaves, starting from leaf margins and tips. Spots enlarge and coalesce under severe infection. Infected seedlings show damping-off. Leaf blight reduces photosynthesis and can cause premature defoliation.
+Treatment: Use certified, Thiram-treated seed. Apply mancozeb (Dithane M-45, 2.5 g/L) or iprodione (Rovral 500SC) every 10-14 days. Avoid overhead irrigation. Remove infected plant debris after harvest.
+
+CAVITY SPOT (cavity_spot)
+Cause: Pythium violae or P. sulcatum soilborne oomycetes, or calcium deficiency exacerbating physical gaps in root tissue. Favored by wet, poorly-drained soil and fluctuating moisture.
+Symptoms: Elliptical, sunken, tan to grey cavities on the outer surface of roots, 5-20 mm long with slightly raised margins. Lesions do not extend into the root interior. Quality downgrade in store.
+Treatment: Apply calcium nitrate (2-3 kg per 100 m2) to soil before planting. Ensure consistent soil moisture — avoid waterlogging followed by drought. Metalaxyl soil drench (Bonut 72% WP, 2 g/L) at planting reduces Pythium incidence. Practice 3-year rotation.
+
+DAMPING OFF (damping_off)
+Cause: Pythium spp., Rhizoctonia solani soilborne fungi. Affect seedlings from germination to 4-leaf stage. Favored by wet, cold soil, dense seeding, and poor drainage.
+Symptoms: Seedlings collapse at soil level — stem becomes water-soaked, thin, and pinched (wire-stem). Mass seedling death in patches. Seedlings may also fail to emerge (pre-emergence damping off).
+Treatment: Treat seed with Thiram or Captan (2 g/kg seed) before sowing. Avoid over-irrigation. Use raised beds with excellent drainage. Drench seedbeds with Metalaxyl (Bonut 72% WP, 2 g/L) at sowing. Thin seedlings to reduce humidity.
+
+POWDERY MILDEW (powdery_mildew)
+Cause: Erysiphe heraclei fungus. Spreads by wind-dispersed conidia. Favored by dry, warm days followed by cool, humid nights. Does not require free water on leaves.
+Symptoms: White, powdery, flour-like coating on upper leaf surfaces, petioles, and stems. Infected leaves may yellow and die. Primarily affects older leaves first and spreads upward.
+Treatment: Apply wettable sulfur (Humulus 80% WG, 2 g/L) at first signs. Remove severely infected leaves. Improve plant spacing for better air circulation. Copper oxychloride also provides good control.
+
+ROOT-KNOT NEMATODE (root_knot_nematode)
+Cause: Meloidogyne incognita, M. javanica nematodes. Persist in soil. Favored by warm, sandy soils. Spread by infected transplants and contaminated tools/water.
+Symptoms: Irregular galls (knots) on carrot roots causing forked, stunted, misshapen roots. Above ground: general yellowing, wilting, stunted growth. Plants look nutrient-deficient despite fertilisation.
+Treatment: Soil solarisation (clear plastic over moist soil for 6-8 weeks in summer) is the most effective home garden method. Use clean soil for raised beds. Practice 3-year rotation with non-host crops (cereals, onion). Remove and destroy infected roots.`,
+    `الٹرنیریا پتوں کی جھلسن: وجہ: الٹرنیریا فنگس، گرم نم موسم۔ علامات: پتوں کے کناروں پر پیلے ہالے والے سیاہ بھورے دھبے۔ علاج: تھائرم بیج علاج، ڈائیتھین M-45 یا روول 500SC ہر 10-14 دن۔
+گہا کا دھبہ: وجہ: Pythium فنگس یا کیلشیم کمی۔ علامات: جڑ کی سطح پر دبے ہوئے تان بھورے گڑھے۔ علاج: Calcium Nitrate مٹی میں، Bonut 72% ڈرینچ، مستقل نمی۔
+ڈیمپنگ آف: وجہ: Pythium/Rhizoctonia۔ علامات: پودے تنے سے گر جاتے ہیں۔ علاج: تھائرم بیج علاج، Bonut ڈرینچ، اونچے بستر۔
+پاؤڈری ملڈیو: وجہ: Erysiphe فنگس۔ علامات: پتوں پر سفید آٹے جیسی تہہ۔ علاج: ہیومولس 80% گندھک، کاپر آکسی کلورائیڈ۔
+جڑ گرہ نیماٹوڈ: وجہ: Meloidogyne نیماٹوڈ۔ علامات: جڑوں پر گرہیں، بگڑی جڑیں، پیلاپن۔ علاج: مٹی سولرائزیشن، فصل ردوبدل، صاف مٹی۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "carrot", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+ALTERNARIA LEAF BLIGHT (Alternaria dauci):
+- Rovral 500SC (Iprodione, FMC) — excellent Alternaria control, 10-14 day residual, apply 10-14 mL per 10L water. https://zaraidawai.pk/product/rovral-500sc/
+- Limousine 48% EC (Azoxystrobin 8% + Chlorothalonil 40%, Matanza) — systemic + contact protection for leaf blight. https://zaraidawai.pk/product/limousine-48-ec/
+- Copper Oxychloride 50% WP — protective contact spray. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+
+DAMPING OFF / CAVITY SPOT (Pythium spp.):
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — metalaxyl component targets Pythium. Use as soil drench at sowing. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%) — alternative brand, same efficacy. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Veto 50% WP (Propineb + Metalaxyl-M) — protective + curative for Pythium diseases. https://zaraidawai.pk/product/veto-50-wp/
+
+POWDERY MILDEW (Erysiphe heraclei):
+- Humulus 80% WG Sulphur (Sayban) — sulfur is highly effective against powdery mildew. Apply 2 g/L at first signs. https://zaraidawai.pk/product/humulus-80-wg-sulphur/`,
+    `الٹرنیریا (zaraidawai.pk):
+- روول 500SC: https://zaraidawai.pk/product/rovral-500sc/
+- لیموزین 48%: https://zaraidawai.pk/product/limousine-48-ec/
+- کاپر آکسی کلورائیڈ: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+ڈیمپنگ آف/Pythium: بونٹ 72%: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/ | سوئنگ 72%: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/ | ویٹو 50%: https://zaraidawai.pk/product/veto-50-wp/
+پاؤڈری ملڈیو: ہیومولس 80% گندھک: https://zaraidawai.pk/product/humulus-80-wg-sulphur/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "carrot", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Carrot is a slow-germinating crop with narrow leaves — very sensitive to weed competition during the first 6 weeks. Weeds can completely suppress carrot seedlings. The following options are available:
+
+PRE-EMERGENT:
+- Pull Up 51.5% EC (Oxyfluorfen + Pendimethalin) — broad-spectrum control of annual broadleaf and grass weeds. Apply after seeding but before carrot and weed emergence. 600-800 mL per acre. Residual 40-50 days. https://zaraidawai.pk/product/pull-up-51-5-ec/
+
+CULTURAL WEED CONTROL (recommended for home gardens):
+- Hand weeding carefully between carrot rows (use a narrow hoe) at 3, 5, and 7 weeks after seeding.
+- Thin carrot seedlings to 5-8 cm spacing to reduce competition and allow weeding access.
+- A fine straw mulch between rows after seedlings emerge suppresses late-season weeds.
+
+Note: In small home gardens, manual weeding is preferable to herbicides. Carrots are eaten raw — minimise chemical use wherever possible.`,
+    `گاجر میں جڑی بوٹی کنٹرول:
+پہلے 6 ہفتے سب سے اہم — جڑی بوٹیاں پودے مکمل دبا سکتی ہیں۔
+پہلے سے: پل اپ 51.5 ای سی (600-800 ملی/ایکڑ): https://zaraidawai.pk/product/pull-up-51-5-ec/
+ثقافتی (گھریلو باغیچے کے لیے ترجیحی): لگانے کے 3، 5 اور 7 ہفتے بعد ہاتھ سے احتیاط سے گوڈی۔ گاجر کچی کھائی جاتی ہے — کم سے کم کیمیکل استعمال کریں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "carrot", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for carrot pests are available at zaraidawai.pk:
+
+CARROT FLY / ROOT FLY (Psila rosae) — larvae tunnel into carrot roots:
+- Best control is physical: cover beds with fine insect-proof mesh (50 mesh) to prevent egg-laying. No insecticide can reach eggs laid at the soil surface effectively.
+- Confidor 20% SL (Imidacloprid, Bayer) — systemic soil drench deters root-feeding larvae. Apply to soil before egg-laying period. https://zaraidawai.pk/product/confidor-20sl/
+
+APHIDS (Cavariella aegopodii — willow-carrot aphid):
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — translaminar + systemic, effective against aphids on carrot foliage. https://zaraidawai.pk/product/dermot-20-sp/
+- Bold 20% SL (Acetamiprid 20%, Matanza) — rapid knockdown of aphids and small sucking pests. https://zaraidawai.pk/product/bold-20-sl/
+- Fighter (Abamectin + Imidacloprid) — dual-action for aphids and mites on vegetables. https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+
+Note: Carrot is an edible root vegetable — observe pre-harvest intervals (PHI) strictly. For home gardens, neem oil (5 mL/L) is a safer alternative for aphid control. Carrots grown under mesh covers need no insecticide for carrot fly.`,
+    `گاجر کیڑوں کے لیے (zaraidawai.pk):
+گاجر مکھی: باریک جالی ڈھانپ (50 میش) سب سے مؤثر | کانفیڈور 20% SL (مٹی ڈرینچ): https://zaraidawai.pk/product/confidor-20sl/
+تیلا: ڈرموٹ 20% SP: https://zaraidawai.pk/product/dermot-20-sp/ | بولڈ 20% SL: https://zaraidawai.pk/product/bold-20-sl/ | فائٹر: https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+نوٹ: گاجر کچی کھائی جاتی ہے — PHI کا خیال رکھیں۔ گھریلو باغیچے میں نیم تیل محفوظ متبادل ہے۔`
+  );
+
+  // ── GINGER (homegrown) ───────────────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "ginger", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `SOFT ROT / RHIZOME ROT (soft_rot)
+Cause: Pythium aphanidermatum or P. myriotylum soilborne oomycetes. The most destructive ginger disease in Pakistan. Favored by waterlogged, warm (28-35C), poorly-drained conditions. Spreads via infected seed rhizomes and contaminated soil.
+Symptoms: Yellowing of lower leaves beginning at margins, wilting in hot afternoons. Rhizome becomes soft, water-soaked, and smells foul when cut. Brown discolouration inside rhizome tissue. Plants fall over and die rapidly. Foul smell from soil is diagnostic.
+Treatment: Prevention is the only reliable strategy. Use raised beds (20-30 cm) with excellent drainage. Treat seed rhizomes with Metalaxyl solution (Bonut 72% WP, 3 g/L) for 30 minutes before planting. Apply Metalaxyl soil drench at planting and 30 days later. Remove and burn all affected plants immediately. Do not replant in same area for 3-4 years.
+
+BACTERIAL WILT (bacterial_wilt)
+Cause: Ralstonia solanacearum (Race 4) soilborne bacterium. Survives in soil and infected debris for years. Spreads via contaminated tools, water, and infected seed rhizomes. No effective chemical control.
+Symptoms: Sudden wilting of shoots in hot afternoons. Yellowing begins at leaf margins. Infected shoots show brown vascular discolouration when cut. Rhizomes show brown streaking. A milky bacterial ooze drips from cut rhizome surfaces (diagnostic). Plant eventually dies; roots turn brown and rot.
+Treatment: No chemical cure. Remove and destroy all infected plants and surrounding soil (1 meter radius). Do not compost infected material. Use healthy certified seed rhizomes. Rotate with cereals or maize for 4+ years. Soil solarisation helps reduce inoculum before replanting.
+
+FUSARIUM YELLOWS (fusarium)
+Cause: Fusarium oxysporum f. sp. zingiberi soilborne fungus. Enters through wounds or natural root openings. Favored by warm, wet conditions and poor soil drainage.
+Symptoms: Gradual yellowing of leaves from lower leaves upward. Plants wilt progressively but less suddenly than bacterial wilt. Rhizomes show internal brown discolouration in vascular tissue. White-pink mycelium may be visible at rhizome base.
+Treatment: Treat seed rhizomes with Carbendazim (Bavistin, 0.1%) soak for 30 minutes before planting. Soil drench with Propiconazole (Tilt 250 EC, 0.5 mL/L) at planting. Improve drainage. Rotate with non-solanaceous crops for 3 years.
+
+SHOOT BORER (shoot_borer)
+Cause: Conogethes punctiferalis (Yellow Peach Moth) larvae. Adult lays eggs on tender shoots. Larvae bore into shoots. Active during warm, humid growing season.
+Symptoms: Dead hearts (central shoot withers and dies) visible from outside. Circular entry holes with frass (excrement) at the base of shoots. If central shoot pulled, it comes out easily from the boring point. Infested plants grow poorly.
+Treatment: Remove and destroy all dead hearts immediately when noticed — squeeze the larva inside. Spray Chlorpyrifos (Cyperfos 44% EC, 2 mL/L) or Chlorantraniliprole (Coragen FMC, 0.4 mL/L) at first sign of infestation. Repeat every 2-3 weeks during active growth.`,
+    `نرم سڑن/ریزوم سڑن: وجہ: Pythium، پاکستان میں ادرک کی سب سے تباہ کن بیماری، گرم پانی بھری مٹی۔ علامات: پتے پیلے مرجھائے، ریزوم نرم بدبودار۔ علاج: اونچے بستر، بیج کو Bonut 72% (3 گرام/لیٹر) 30 منٹ بھگوئیں، مٹی ڈرینچ، متاثرہ پودے فوری جلا دیں۔
+بیکٹیریل مرجھاؤ: وجہ: Ralstonia بیکٹیریا، کوئی کیمیائی علاج نہیں۔ علامات: دوپہر اچانک مرجھاؤ، ریزوم کٹنے پر دودھیا پانی بہتا ہے۔ علاج: متاثرہ پودے اور 1 میٹر دائرے کی مٹی تلف کریں، 4+ سال فصل ردوبدل۔
+فیوزیریم: وجہ: Fusarium فنگس۔ علامات: آہستہ آہستہ پیلاپن، ریزوم میں بھوری رگیں۔ علاج: Carbendazim 0.1% میں بیج بھگوئیں، ٹلٹ 250 ڈرینچ، نکاسی بہتر کریں۔
+شوٹ بورر: وجہ: Conogethes لاروا۔ علامات: مرکزی شاخ مر جاتی ہے، بھوسا اور سوراخ دکھتا ہے۔ علاج: مردہ شاخیں فوری ہٹائیں، Cyperfos یا Coragen اسپرے۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "ginger", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk:
+
+SOFT ROT / PYTHIUM (Pythium aphanidermatum):
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — the most effective product against Pythium rhizome rot; use for seed treatment soak (3 g/L) and soil drench at planting. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%) — alternative brand with same active ingredients. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Flumax 60% EC (Fluazinam 40% + Metalaxyl-M 20%) — strong Pythium activity, 150-200 mL per acre. https://zaraidawai.pk/product/flumax-60-ec/
+
+BACTERIAL WILT (Ralstonia solanacearum):
+- Kocide 3000 (Copper Hydroxide 53.4%, FMC) — copper bactericide; soil drench can reduce bacterial load before planting; not a cure once infected. https://zaraidawai.pk/product/kocide-3000/
+- Copper Oxychloride 50% WP — protective copper treatment. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+
+FUSARIUM YELLOWS (Fusarium oxysporum):
+- Rovral 500SC (Iprodione, FMC) — rhizome soak before planting; helps prevent Fusarium colonisation. https://zaraidawai.pk/product/rovral-500sc/
+- Cabrio Top FMC (Pyraclostrobin 5% + Metiram 55%) — broad-spectrum against Fusarium and foliar diseases. https://zaraidawai.pk/product/cabrio-top-fmc-300g/`,
+    `نرم سڑن/Pythium (zaraidawai.pk):
+- بونٹ 72%: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- سوئنگ 72%: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- فلو میکس 60%: https://zaraidawai.pk/product/flumax-60-ec/
+بیکٹیریل مرجھاؤ: کوکائیڈ 3000: https://zaraidawai.pk/product/kocide-3000/ | کاپر آکسی کلورائیڈ: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+فیوزیریم: روول 500SC: https://zaraidawai.pk/product/rovral-500sc/ | کابریو ٹاپ: https://zaraidawai.pk/product/cabrio-top-fmc-300g/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "ginger", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Ginger grows slowly in the early stages and requires good weed control for the first 2-3 months. After canopy closure, weeds are less of a problem.
+
+PRE-EMERGENT (apply before ginger emergence, 15-20 days after planting):
+- Pull Up 51.5% EC (Oxyfluorfen + Pendimethalin) — broad-spectrum pre-emergent for annual broadleaf and grass weeds. Apply 600-800 mL per acre. https://zaraidawai.pk/product/pull-up-51-5-ec/
+- Roubust 40% EC (Acetochlor 40%) — annual grass control, apply 600 mL per acre before or shortly after weed emergence. https://zaraidawai.pk/product/roubust-40-ec/
+
+CULTURAL WEED CONTROL:
+- Mulching with dry leaves, straw, or sugarcane trash (5-8 cm thick) is the most recommended practice for ginger — it suppresses weeds, conserves moisture, and maintains soil temperature.
+- Hand weeding at 30, 60, and 90 days after planting.
+- Shallow hoeing between ridges (avoid going deep near rhizomes).
+
+Note: After mulching, chemical herbicides are rarely needed. Mulch is highly recommended for ginger in Pakistan's climate.`,
+    `ادرک میں جڑی بوٹی کنٹرول:
+پہلے سے: پل اپ 51.5 (600-800 ملی/ایکڑ): https://zaraidawai.pk/product/pull-up-51-5-ec/ | روبسٹ 40% (600 ملی/ایکڑ): https://zaraidawai.pk/product/roubust-40-ec/
+ثقافتی: خشک پتوں، بھوسے یا گنے کے پتوں کی 5-8 سینٹی میٹر ملچ — جڑی بوٹی، نمی اور درجہ حرارت تینوں کنٹرول کرتی ہے۔ 30، 60 اور 90 دن بعد ہاتھ سے گوڈی۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "ginger", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for ginger pests are available at zaraidawai.pk:
+
+SHOOT BORER (Conogethes punctiferalis) — most economically important insect pest of ginger:
+- Coragen FMC (Chlorantraniliprole 20% SC, FMC) — best-in-class against shoot borers; feeding stops within 15-30 minutes, 21-day residual. Apply 40-50 mL per acre. https://zaraidawai.pk/product/coragen-fmc/
+- Cyperfos 44% EC (Cypermethrin + Profenofos) — pyrethroid + organophosphate combination, immediate knockdown of larvae. Apply 400-500 mL per acre. https://zaraidawai.pk/product/cyperfos-44-ec/
+- Lambda Cyhalothrin 2.5% EC (Matanza) — pyrethroid with quick knockdown of adult moths and larvae. https://zaraidawai.pk/product/lambda-cyhalothrin/
+
+RHIZOME SCALE (Aspidiella hartii):
+- Confidor 20% SL (Imidacloprid, Bayer) — systemic soil drench around rhizome zone; controls scale and other sucking insects on rhizomes. https://zaraidawai.pk/product/confidor-20sl/
+
+Note: Spray shoot borer controls preventively — start at 30 days after planting and repeat every 3 weeks during active growth. Early removal of dead hearts reduces larval population buildup.`,
+    `ادرک کیڑوں کے لیے (zaraidawai.pk):
+شوٹ بورر: کوریجن FMC (40-50 ملی/ایکڑ، 21 دن اثر): https://zaraidawai.pk/product/coragen-fmc/ | سائپرفوس 44% (400-500 ملی): https://zaraidawai.pk/product/cyperfos-44-ec/ | لیمبڈا سائی ہالوتھرن: https://zaraidawai.pk/product/lambda-cyhalothrin/
+ریزوم اسکیل: کانفیڈور 20% SL (مٹی ڈرینچ): https://zaraidawai.pk/product/confidor-20sl/
+نوٹ: لگانے کے 30 دن بعد احتیاطی اسپرے شروع کریں، ہر 3 ہفتے دہرائیں۔`
+  );
+
+  // ── LETTUCE (homegrown) ──────────────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "lettuce", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `DOWNY MILDEW (downy_mildew)
+Cause: Bremia lactucae obligate oomycete. Spreads by wind-dispersed sporangia and splashing water. Highly favored by cool (10-18C), humid conditions with leaf wetness. Most common and destructive lettuce disease in Pakistan's winter season.
+Symptoms: Pale yellow to light green angular patches on upper leaf surface, corresponding to white-grey downy sporulation on the lower surface. Lesions are bounded by leaf veins, giving a geometric pattern. Infected tissue eventually turns brown. Inner leaves of heading types can rot.
+Treatment: Apply Mancozeb + Metalaxyl (Swing 72% WP or Bonut 72% WP, 2.5 g/L) preventively every 7-10 days. Avoid overhead irrigation. Improve air circulation by reducing plant density. Use resistant varieties where available. Remove severely infected outer leaves.
+
+BOTTOM ROT (bottom_rot)
+Cause: Rhizoctonia solani soilborne fungus. Most damaging in wet, warm conditions (20-28C) with poor drainage. Infects through soil contact with lower leaves.
+Symptoms: Brown, water-soaked lesions on outer stem and lower leaves at soil level. Lesions expand upward. Infected tissue collapses and turns slimy. Entire plant may rot from the base. Damping-off of seedlings is the same pathogen affecting younger plants.
+Treatment: Avoid overwatering and ensure good drainage. Do not plant in previously infested soil without solarisation. Apply iprodione (Rovral 500SC, 2 mL/L) as a preventive soil drench. Rotate with non-host crops. Space plants adequately for airflow.
+
+TIPBURN (tipburn)
+Cause: Physiological — not a pathogen. Caused by calcium deficiency in rapidly growing inner leaves due to high transpiration rates and inadequate calcium movement to young tissue. Exacerbated by high temperatures, sudden temperature fluctuations, and high nitrogen fertilisation.
+Symptoms: Brown, papery necrosis along margins of young inner leaves. Outer leaves remain healthy. In heading types, inner leaves show tip browning. Condition worsens with heat and rapid growth. Does not spread plant-to-plant.
+Treatment: Spray calcium nitrate (0.5-1%) every 5-7 days during rapid growth. Provide shade netting (30-50%) during hot spells. Avoid excessive nitrogen. Ensure consistent soil moisture. Plant heat-tolerant, tipburn-resistant varieties.
+
+LETTUCE MOSAIC VIRUS (lettuce_mosaic)
+Cause: Lettuce Mosaic Virus (LMV), transmitted non-persistently by aphids (Myzus persicae, Macrosiphum euphorbiae). Also seed-transmitted (use certified virus-free seed). Widespread wherever aphids occur.
+Symptoms: Mosaic of light and dark green areas on young leaves. Leaf crinkle, puckering, and distortion. Stunting of plant. Outer leaves may show vein clearing. Severe infections prevent heading.
+Treatment: No cure once infected. Remove and destroy infected plants. Control aphid vectors: spray imidacloprid (Confidor 20% SL), acetamiprid (Dermot 20% SP), or neem oil. Use certified virus-free seed. Install reflective silver mulches to deter aphids. Plant away from infected fields.`,
+    `ڈاؤنی ملڈیو: وجہ: Bremia اومائسیٹ، پاکستان کے موسم سرما میں سب سے عام، ٹھنڈا نم موسم۔ علامات: پتوں کے اوپر پیلے دھبے، نیچے سفید پھپھوندی۔ علاج: سوئنگ 72% یا بونٹ 72% ہر 7-10 دن، اوپر سے پانی سے گریز۔
+نچلی سڑن: وجہ: Rhizoctonia فنگس۔ علامات: مٹی کی سطح پر تنے کی بھوری سڑن۔ علاج: روول 500SC مٹی ڈرینچ، اچھی نکاسی، فصل ردوبدل۔
+سرے کا جلنا: وجہ: فزیولوجیکل — کیلشیم کمی۔ علامات: اندرونی پتوں کے کنارے بھورے۔ علاج: Calcium Nitrate 0.5-1% اسپرے، سایہ نیٹ، مستقل نمی۔
+لیٹوس موزیک وائرس: وجہ: LMV وائرس، تیلوں سے۔ علامات: موزیک پیٹرن، پتوں کی بگاڑ، بونا پن۔ علاج: متاثرہ پودے ہٹائیں، تیلا کنٹرول کریں، تصدیق شدہ بیج استعمال کریں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "lettuce", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides and related products are available for purchase in Pakistan at zaraidawai.pk:
+
+DOWNY MILDEW (Bremia lactucae):
+- Bonut 72% WP (Metalaxyl 8% + Mancozeb 64%, Sayban) — systemic metalaxyl targets Bremia; protective mancozeb component covers secondary fungi. Apply 2.5 g/L every 7-10 days. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- Swing 72% WP (Metalaxyl 8% + Mancozeb 64%) — alternative brand with same activity. https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- Veto 50% WP (Propineb 42% + Metalaxyl-M 8%) — protective + curative, apply 500-600 g per acre. https://zaraidawai.pk/product/veto-50-wp/
+- Aliette 80% WP Bayer (Fosetyl-Aluminium 80%) — true two-way systemic, highly effective against downy mildew. Apply 250 g per 100L. https://zaraidawai.pk/product/aliette-80-wp-bayer-250g/
+
+BOTTOM ROT (Rhizoctonia solani):
+- Rovral 500SC (Iprodione, FMC) — excellent Rhizoctonia control as preventive soil drench. https://zaraidawai.pk/product/rovral-500sc/
+- Copper Oxychloride 50% WP — protective broad-spectrum spray. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+
+TIPBURN / LETTUCE MOSAIC:
+No fungicide addresses these conditions. Tipburn requires calcium management. Lettuce mosaic requires aphid vector control (see insecticides section 18).`,
+    `ڈاؤنی ملڈیو (zaraidawai.pk):
+- بونٹ 72%: https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/
+- سوئنگ 72%: https://zaraidawai.pk/product/swing-metalaxyl-mancozeb/
+- ویٹو 50%: https://zaraidawai.pk/product/veto-50-wp/
+- ایلیٹ 80% WP: https://zaraidawai.pk/product/aliette-80-wp-bayer-250g/
+نچلی سڑن: روول 500SC: https://zaraidawai.pk/product/rovral-500sc/ | کاپر آکسی کلورائیڈ: https://zaraidawai.pk/product/copper-oxychloride-50-wp/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "lettuce", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Lettuce is a leafy vegetable eaten fresh without cooking — chemical herbicide use is strongly discouraged in home gardens. Manual and cultural methods are preferred.
+
+MANUAL / CULTURAL WEED CONTROL (strongly recommended for leafy vegetables):
+- Hand weeding at 2 and 4 weeks after transplanting or direct seeding.
+- Use transplants rather than direct seeding — transplants compete better with weeds.
+- Mulching with straw or black plastic sheeting between rows suppresses weeds and conserves moisture.
+- Proper bed preparation with shallow raking removes weed seedlings before sowing.
+- Maintain wider row spacing (25-30 cm) for better weeding access.
+
+PRE-EMERGENT (only for large-scale production where manual weeding is not feasible):
+- Pull Up 51.5% EC (Oxyfluorfen + Pendimethalin) — apply after transplanting before weed emergence. Avoid direct contact with lettuce transplants. https://zaraidawai.pk/product/pull-up-51-5-ec/
+
+Note: Lettuce absorbs compounds from soil readily. For home garden use, avoid all herbicide applications within 4 weeks of harvest. Prefer mechanical weeding for leafy salad crops.`,
+    `سلاد پتی میں جڑی بوٹی کنٹرول:
+سلاد پتی کچی کھائی جاتی ہے — گھریلو باغیچے میں کیمیائی ادویات سے سختی سے گریز کریں۔
+ترجیحی طریقہ: ہاتھ سے گوڈی (2 اور 4 ہفتے بعد)، ٹرانسپلانٹ کا استعمال، بھوسے یا سیاہ پلاسٹک ملچ۔
+بڑے پیمانے پر اگانے کے لیے: پل اپ 51.5 (ٹرانسپلانٹ کے بعد لگائیں): https://zaraidawai.pk/product/pull-up-51-5-ec/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "lettuce", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for lettuce pests are available at zaraidawai.pk:
+
+APHIDS (Myzus persicae, Macrosiphum euphorbiae) — most important vectors of Lettuce Mosaic Virus:
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — translaminar + systemic, effective against aphids. Observe PHI of 7 days before harvest. https://zaraidawai.pk/product/dermot-20-sp/
+- Confidor 20% SL (Imidacloprid, Bayer) — systemic, soil drench or foliar for aphid control. https://zaraidawai.pk/product/confidor-20sl/
+- Bold 20% SL (Acetamiprid 20%) — rapid knockdown. https://zaraidawai.pk/product/bold-20-sl/
+
+CATERPILLARS / CUTWORMS:
+- Emadox 9% SC (Emamectin Benzoate + Indoxacarb) — disrupts nerve cells, kills caterpillars within 24-48 hours. Observe PHI. https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/
+- Dagger Plus (Emamectin Benzoate + Lufenuron) — ovi-larvicidal for caterpillars. https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+
+ORGANIC FIRST CHOICE:
+- Neem oil (5 mL/L + soap) — safe for edible leafy vegetables, effective against aphids and soft-bodied pests. No PHI concern. Available at general agri stores.
+- Insecticidal soap spray — effective against aphids and mites, zero residue.
+
+Note: Lettuce is eaten fresh. For home gardens, neem oil and insecticidal soap are strongly preferred. If using chemical insecticides, always observe the pre-harvest interval (PHI) strictly.`,
+    `سلاد پتی کیڑوں کے لیے (zaraidawai.pk):
+تیلا: ڈرموٹ 20% SP (PHI 7 دن): https://zaraidawai.pk/product/dermot-20-sp/ | کانفیڈور: https://zaraidawai.pk/product/confidor-20sl/ | بولڈ 20%: https://zaraidawai.pk/product/bold-20-sl/
+کیٹرپلر: ایماڈوکس 9%: https://zaraidawai.pk/product/emadox-9-sc-emamectin-benzoate-and-indoxacarb/ | ڈیگر پلس: https://zaraidawai.pk/product/dagger-plus-emamectin-lufenuron-150ml-sayban/
+نامیاتی (ترجیحی): نیم تیل (5 ملی/لیٹر + صابن) — کوئی PHI نہیں، گھریلو باغیچے کے لیے بہترین۔`
+  );
+
+  // ── MINT (homegrown) ─────────────────────────────────────────────────────────
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "mint", 15, "15. Disease Details & Remedies", "١٥. بیماریوں کی تفصیل اور علاج",
+    `MINT RUST (mint_rust)
+Cause: Puccinia menthae fungus. Spreads via wind-dispersed urediniospores. Survives in infected plant debris and stolons. Favored by cool to moderate (15-22C), humid conditions with leaf wetness. More common in autumn and spring.
+Symptoms: Small, orange-yellow pustules (uredia) on lower leaf surfaces and stems in early stages. Later, dark brown to black pustules (telia) develop. Leaves may turn yellow and fall. Severely infected plants have distorted, twisted stems. Fungus may persist in stolons and re-infect new growth.
+Treatment: Remove and destroy all visibly infected leaves and stems immediately. Do not compost infected material. Spray mancozeb (Dithane M-45, 2.5 g/L) at first pustule. Sulfur-based fungicide (Humulus 80% WG, 2 g/L) is effective and safer near harvest. Improve air circulation. Do not water overhead. Replace severely infected plants with clean stock.
+
+POWDERY MILDEW (powdery_mildew)
+Cause: Erysiphe biocellata fungus. Spreads by wind-dispersed conidia. Does not require free water — favored by dry conditions with high humidity and moderate temperatures (20-28C). Common in crowded, poorly-ventilated plantings.
+Symptoms: White, powdery, flour-like coating on upper leaf surfaces and young stems. Infected leaves may curl, yellow, and distort. Young growth is most affected. Reduces leaf fragrance and quality.
+Treatment: Improve plant spacing and air circulation. Remove heavily infected growth. Spray wettable sulfur (Humulus 80% WG, 2 g/L) — highly effective against powdery mildew. Diluted baking soda solution (1 tsp per litre + few drops dish soap) is a safe home remedy. Copper oxychloride also provides moderate control.
+
+VERTICILLIUM WILT (verticillium_wilt)
+Cause: Verticillium dahliae soilborne fungus. Persists in soil for many years. Enters through roots. No effective chemical cure once established in soil.
+Symptoms: Yellowing and wilting of leaves, typically starting on one side. Leaves turn yellow-brown and curl. Stems show brown discolouration of vascular tissue when cut lengthwise. Plant progressively declines, starting from lower leaves.
+Treatment: No chemical cure. The only effective solution is to replace all plants and the surrounding soil with fresh, clean growing medium. Do not replant mint in the same spot for 3+ years. Use clean runners/cuttings from healthy plants only. Soil solarisation can reduce Verticillium population before replanting.
+
+ANTHRACNOSE (anthracnose)
+Cause: Colletotrichum menthae fungus. Spread by rain splash, water, and infected cuttings. Favored by warm (25-30C), wet, humid conditions.
+Symptoms: Circular to irregular dark brown to black sunken lesions on stems and leaves. Pink-orange spore masses visible in the centres of lesions in humid conditions. Severely infected plants show dieback of shoots from tips.
+Treatment: Remove and destroy infected stems and leaves. Spray copper hydroxide (Kocide 3000) or mancozeb (Dithane M-45, 2.5 g/L) every 7-10 days. Avoid overhead irrigation and ensure good air circulation. Use clean, disease-free cuttings for propagation.`,
+    `پودینہ زنگ: وجہ: Puccinia فنگس، ٹھنڈی نم ہوا، خریف و بہار میں۔ علامات: پتوں کے نیچے نارنجی پھر سیاہ گچھے، پتے پیلے پڑتے ہیں۔ علاج: فوری متاثرہ پتے ہٹائیں، ڈائیتھین M-45 یا ہیومولس 80% گندھک اسپرے، اوپر سے پانی بند کریں۔
+پاؤڈری ملڈیو: وجہ: Erysiphe فنگس، گنجان پودے۔ علامات: پتوں پر سفید آٹے جیسی تہہ۔ علاج: ہیومولس 80% گندھک، بیکنگ سوڈا محلول (1 چمچ/لیٹر)، فاصلہ بڑھائیں۔
+Verticillium مرجھاؤ: وجہ: Verticillium فنگس، کوئی علاج نہیں۔ علامات: ایک طرف سے پیلاپن، رگیں بھوری۔ علاج: تمام پودے اور مٹی تبدیل کریں، 3+ سال نہ لگائیں۔
+اینتھراکنوز: وجہ: Colletotrichum فنگس۔ علامات: تنوں اور پتوں پر سیاہ دھنسے ہوئے دھبے۔ علاج: کوکائیڈ 3000 یا ڈائیتھین M-45 اسپرے، صاف قلمیں استعمال کریں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "mint", 16, "16. Recommended Products (zaraidawai.pk)", "١٦. تجویز کردہ مصنوعات",
+    `The following fungicides are available for purchase in Pakistan at zaraidawai.pk. Note: Mint is an edible herb — always observe pre-harvest intervals (PHI) and prefer sulfur-based products near harvest.
+
+MINT RUST (Puccinia menthae) / POWDERY MILDEW (Erysiphe biocellata):
+- Humulus 80% WG Sulphur (Sayban) — wettable sulfur is highly effective against both rust and powdery mildew; relatively safe for edible herbs. Apply 2 g/L. Avoid application above 35C (leaf burn risk). https://zaraidawai.pk/product/humulus-80-wg-sulphur/
+- Copper Oxychloride 50% WP — protective contact spray against rust and fungal diseases. Observe 7-day PHI. https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+
+ANTHRACNOSE (Colletotrichum menthae):
+- Kocide 3000 (Copper Hydroxide 53.4%, FMC) — copper-based, excellent against Colletotrichum anthracnose and bacterial diseases. https://zaraidawai.pk/product/kocide-3000/
+- Rovral 500SC (Iprodione, FMC) — effective against anthracnose and leaf spot diseases. https://zaraidawai.pk/product/rovral-500sc/
+
+GENERAL BROAD-SPECTRUM:
+- Limousine 48% EC (Azoxystrobin 8% + Chlorothalonil 40%) — systemic + contact, good against multiple foliar diseases. Observe PHI. https://zaraidawai.pk/product/limousine-48-ec/
+
+VERTICILLIUM WILT: No fungicide effectively controls Verticillium once established in soil. Plant replacement is required.`,
+    `پودینہ کے لیے (zaraidawai.pk) — پودینہ کھانے کی جڑی بوٹی ہے، PHI کا خیال رکھیں:
+زنگ/پاؤڈری ملڈیو: ہیومولس 80% گندھک: https://zaraidawai.pk/product/humulus-80-wg-sulphur/ | کاپر آکسی کلورائیڈ: https://zaraidawai.pk/product/copper-oxychloride-50-wp/
+اینتھراکنوز: کوکائیڈ 3000: https://zaraidawai.pk/product/kocide-3000/ | روول 500SC: https://zaraidawai.pk/product/rovral-500sc/
+عام: لیموزین 48%: https://zaraidawai.pk/product/limousine-48-ec/`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "mint", 17, "17. Weed Control & Recommended Herbicides (zaraidawai.pk)", "١٧. جڑی بوٹیوں کا انسداد اور تجویز کردہ ادویات",
+    `Mint spreads aggressively via underground stolons and quickly outcompetes most weeds once established. Weed control is mainly an issue during the first few weeks after planting.
+
+MANUAL / CULTURAL WEED CONTROL (only recommended method for edible herbs):
+Chemical herbicides should NEVER be used in mint grown for culinary use. The leaves are consumed directly without cooking, and herbicide residues cannot be removed by washing alone.
+
+- Hand-pull weeds around newly planted mint for the first 4-6 weeks.
+- Growing mint in containers naturally limits weed intrusion.
+- A light straw mulch between plants suppresses early weeds.
+- Mint's aggressive stolon spread quickly shades out weeds — no long-term weed management needed after establishment.
+
+Note: If growing mint in open garden beds, containment is more of a concern than weeds — use buried barriers (15 cm deep plastic edging) to prevent mint from spreading uncontrollably into other garden areas.`,
+    `پودینہ میں جڑی بوٹی کنٹرول:
+کھانے کی جڑی بوٹی پر کوئی کیمیائی ادویات ہرگز استعمال نہ کریں۔
+لگانے کے پہلے 4-6 ہفتے ہاتھ سے جڑی بوٹیاں اکھیڑیں۔ گملوں میں لگانا جڑی بوٹیوں کا مسئلہ خود بخود حل کرتا ہے۔
+پودینہ ایک بار جم جائے تو خود ہی جڑی بوٹیاں دبا لیتا ہے — لمبی مدت میں کوئی انتظام نہیں چاہیے۔ نوٹ: کھلے باغیچے میں پلاسٹک کی 15 سینٹی میٹر گہری بارڈرنگ سے پودینہ کو بے قابو پھیلنے سے روکیں۔`
+  );
+
+  await db.runAsync(`INSERT INTO plant_sections (plant_id, order_index, title_en, title_ur, body_en, body_ur) VALUES (?, ?, ?, ?, ?, ?);`,
+    "mint", 18, "18. Recommended Insecticides (zaraidawai.pk)", "١٨. تجویز کردہ کیڑے مار ادویات",
+    `The following insecticides for mint pests are available at zaraidawai.pk. Mint is consumed fresh — always prefer organic options and observe strict pre-harvest intervals for chemical products.
+
+APHIDS (Macrosiphum euphorbiae and others):
+- Bold 20% SL (Acetamiprid 20%, Matanza) — rapid knockdown of aphids and soft-bodied pests. Observe PHI of 7 days. https://zaraidawai.pk/product/bold-20-sl/
+- Dermot 20% SP (Acetamiprid 20%, Sayban) — systemic + translaminar aphid control. PHI 7 days. https://zaraidawai.pk/product/dermot-20-sp/
+
+SPIDER MITES (Tetranychus urticae):
+- Fighter (Abamectin + Imidacloprid) — dual action against mites and sucking insects. https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+
+ORGANIC FIRST CHOICE (strongly recommended for culinary mint):
+- Neem oil (5 mL/L + a few drops dish soap) — effective against aphids, spider mites, and scale; zero pre-harvest interval; safe for edible herbs. Apply in the evening to avoid phytotoxicity.
+- Insecticidal soap spray (soap + water) — safe, immediate contact kill of aphids and mites. No residue.
+
+Note: Mint is consumed fresh and frequently. Chemical insecticides should be a last resort. If used, stop spraying at least 10-14 days before harvest. Neem oil is the recommended standard treatment for home-grown culinary mint.`,
+    `پودینہ کیڑوں کے لیے (zaraidawai.pk) — پودینہ کھانے کی جڑی بوٹی، نامیاتی طریقے ترجیحی:
+تیلا: بولڈ 20% SL (PHI 7 دن): https://zaraidawai.pk/product/bold-20-sl/ | ڈرموٹ 20% SP: https://zaraidawai.pk/product/dermot-20-sp/
+مکڑی کیڑے: فائٹر (Abamectin+Imidacloprid): https://zaraidawai.pk/product/fighter-abamectin-imidacloprid/
+نامیاتی (ترجیحی): نیم تیل (5 ملی/لیٹر + صابن) — کوئی PHI نہیں۔ کیمیکل استعمال کریں تو کٹائی سے 10-14 دن پہلے بند کریں۔`
   );
 
   // ── DISEASE DETAILS & REMEDIES ──────────────────────────────────────────────

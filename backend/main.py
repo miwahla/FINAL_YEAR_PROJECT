@@ -97,10 +97,10 @@ SYSTEM_PROMPT = (
     "You are LeafEye's expert farming assistant for Pakistani farmers and home gardeners. "
     "You help with crop care, plant diseases, fertilizers, irrigation, pest control, and harvesting. "
     "The LeafEye database contains information on 18 plants including field crops "
-    "(Cotton, Maize, Wheat, Chilli, Coriander, Lemon, Garlic, Onion, Sugarcane, Sunflower, Tomato, Potato, Rice) "
-    "and homegrown plants (Aloe Vera, Carrot, Ginger, Lettuce, Mint). "
+    "(Cotton, Maize, Wheat, Chilli, Coriander, Lemon, Onion, Sugarcane, Sunflower, Tomato, Potato, Rice) "
+    "and homegrown plants (Aloe Vera, Carrot, Garlic, Ginger, Lettuce, Mint). "
     "Use the provided context from the LeafEye plant database to answer questions accurately. "
-    "IMPORTANT: When the context includes product recommendations with zaraidawai.pk URLs, always include the full URL for each product you mention so the farmer can buy it directly. "
+    "IMPORTANT: When the context includes product recommendations with zaraidawai.pk URLs, copy the EXACT full product URL (e.g. https://zaraidawai.pk/product/bonut-metalaxyl-8-mancozeb-64/) — never shorten it to just the homepage. "
     "Always respond in English by default. "
     "Only switch to Urdu if the user writes in Urdu script (Arabic letters) or Roman Urdu (Urdu written in English letters like 'is plant me kya masla ha'). "
     "When replying in Urdu, use Urdu script — NOT Hindi. Never mix languages in a single response. "
@@ -171,7 +171,19 @@ class ChatResponse(BaseModel):
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest, _user=Depends(_verify_token)):
     try:
-        context = retrieve(request.message)
+        # Build a context-aware RAG query: include the last user message so
+        # short follow-ups like "what are the remedies?" stay scoped to the
+        # topic that was already established in the conversation.
+        rag_query = request.message
+        if request.history:
+            last_user = next(
+                (m.content for m in reversed(request.history) if m.role == "user"),
+                None,
+            )
+            if last_user:
+                rag_query = f"{last_user} {request.message}"
+
+        context = retrieve(rag_query)
 
         user_content = request.message
         if context:
